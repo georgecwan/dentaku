@@ -18,8 +18,8 @@ class dentaku_bot(Client):
             command = command[0]
             try:
                 module = __import__(command)
-                my_class = getattr(module, command)
-                instance = my_class(parameters, client=self)
+                new_command = getattr(module, command)
+                instance = new_command(parameters, client=self)
             except ModuleNotFoundError:
                 self.send(
                     Message(text="Command not found."),

@@ -2,3 +2,4 @@ venv
 .idea
 export
 export.sh
+__pycache__

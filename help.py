@@ -3,7 +3,7 @@ from fbchat import Message
 from fbchat import Mention
 
 
-class Command_list(Command):
+class help(Command):
 
     def run(self):
         response_text = "@" + self.author.first_name + "!Website: Website Info"

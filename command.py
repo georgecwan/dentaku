@@ -10,8 +10,8 @@ class Command:
         self.client = client
         self.author = self.client.fetchUserInfo(self.author_id)[self.author_id]
 
-        self.markAsDelivered(self.thread_id, self.message_object.uid)
-        self.markAsRead(self.thread_id)
+        client.markAsDelivered(self.thread_id, self.message_object.uid)
+        client.markAsRead(self.thread_id)
 
         self.run()
 

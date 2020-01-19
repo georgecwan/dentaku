@@ -38,8 +38,12 @@ class dentaku_bot(Client):
 def export_env():
     with open("export.sh") as file_in:
         for line in file_in:
-            line.replace("export", "")
-            os.environ[line.split("=")[0].split(" ")[1]] = line[line.find("\"") + 1:line.rfind("\"")]
+            if "\"" in line:
+                os.environ[line.split("=")[0].split(" ")[1]] = line[line.find("\"") + 1:line.rfind("\"")]
+            else:
+                line = line.replace("export", "").replace(" ")
+                line = line.split("=")
+                os.environ[line[0]] = line[1]
 
 export_env()
 client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))

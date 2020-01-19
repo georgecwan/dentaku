@@ -41,7 +41,7 @@ def export_env():
             if "\"" in line:
                 os.environ[line.split("=")[0].split(" ")[1]] = line[line.find("\"") + 1:line.rfind("\"")]
             else:
-                line = line.replace("export", "").replace(" ")
+                line = line.replace("export", "").replace(" ","")
                 line = line.split("=")
                 os.environ[line[0]] = line[1]
 

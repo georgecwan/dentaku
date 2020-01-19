@@ -15,7 +15,10 @@ Dentaku is VikingsDev's open source messenger bot.
 export EMAIL=YOUR_FACEBOOK_ACCOUNT_EMAIL
 export PASSWORD=YOUR_FACEBOOK_ACCOUNT_PASSWORD
 ```
-5. Run the bot
+5. Activate variables and venv
+`source export.sh`
+`source venv/bin/activate`
+6. Run the bot
 `python main.py`
 
 ## Contribution guidelines

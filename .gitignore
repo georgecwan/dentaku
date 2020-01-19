@@ -3,3 +3,5 @@ venv
 export
 export.sh
 __pycache__
+credentials.json
+token.pickle

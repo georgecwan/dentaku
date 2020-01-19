@@ -47,5 +47,5 @@ def export_env():
 
 export_env()
 client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))
-client.send(Message(text="Dentaku is online."), thread_id=100011229734236, thread_type=ThreadType.USER)
+client.send(Message(text="Dentaku is online."), thread_id=client.uid, thread_type=ThreadType.USER)
 client.listen()

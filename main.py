@@ -3,6 +3,7 @@ import os
 from fbchat import Message
 from fbchat.models import *
 
+
 # Subclass fbchat.Client and override required methods
 class dentaku_bot(Client):
     def onMessage(self, author_id, message_object, thread_id, thread_type, **kwargs):
@@ -33,6 +34,14 @@ class dentaku_bot(Client):
                     thread_type=thread_type,
                 )
 
+
+def export_env():
+    with open("export.sh") as file_in:
+        for line in file_in:
+            line.replace("export", "")
+            os.environ[line.split("=")[0].split(" ")[1]] = line[line.find("\"") + 1:line.rfind("\"")]
+
+export_env()
 client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))
 client.send(Message(text="Dentaku is online."), thread_id=100011229734236, thread_type=ThreadType.USER)
 client.listen()

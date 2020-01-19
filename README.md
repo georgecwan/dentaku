@@ -12,10 +12,11 @@ Dentaku is VikingsDev's open source messenger bot.
 `touch export.sh`
 4. Edit `export.sh` using a text editor, and add
 ```
-export EMAIL=YOUR_FACEBOOK_ACCOUNT_EMAIL
-export PASSWORD=YOUR_FACEBOOK_ACCOUNT_PASSWORD
-export BITLY_GAT=YOUR_BITLY_GENERIC_ACCESS_TOKEN
+export EMAIL="YOUR_FACEBOOK_ACCOUNT_EMAIL"
+export PASSWORD="YOUR_FACEBOOK_ACCOUNT_PASSWORD"
+export BITLY_GAT="YOUR_BITLY_GENERIC_ACCESS_TOKEN"
 ```
+Note: Keep quotation marks!<br>
 Get your bit.ly [Generic Access Token](https://bitly.com/a/oauth_apps)(required if you want to use commands with link shorteners)<br>
 5. Activate variables and venv <br>
 `source export.sh`<br>

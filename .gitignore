@@ -1,6 +1,6 @@
 venv
 .idea
-export
+export.sh
 export.sh
 __pycache__
 credentials.json

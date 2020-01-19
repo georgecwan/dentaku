@@ -1,7 +1,7 @@
 from fbchat import log, Client
 import os
 from fbchat import Message
-
+from fbchat.models import *
 
 # Subclass fbchat.Client and override required methods
 class dentaku_bot(Client):
@@ -34,4 +34,5 @@ class dentaku_bot(Client):
                 )
 
 client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))
+client.send(Message(text="Dentaku is online."), thread_id=100011229734236, thread_type=ThreadType.USER)
 client.listen()

@@ -11,7 +11,7 @@ class countdown(Command):
         elif count <= 0:
             response_text = "Lets do it again!"
         else:
-            response_text = "!countdown" + str(count - 1)
+            response_text = "!countdown " + str(count - 1)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
         self.client.send(

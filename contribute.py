@@ -3,15 +3,13 @@ from fbchat import Message
 from fbchat import Mention
 
 
-class help(Command):
+class contribute(Command):
     def run(self):
         response_text = """
-        @ + {} +
-        \n!website: Website Info
-        \n!help: Shows list of commands
-        \n!good_video: List of videos.
-        \n!countdown [num]: Counts down from num. 
-        \n!contribute: Learn how to be a bounty hunter.
+        @{} 
+        \nYou can contribute to Dentaku here: https://github.com/VikingsDev/Dentaku
+        \nFor more information, check out vikingsDev Bounties: https://vikingsdev.ca/bounties
+        \nHappy contributing!
         """.format(self.author.first_name)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 

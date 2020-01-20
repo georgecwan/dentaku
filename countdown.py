@@ -15,7 +15,7 @@ class countdown(Command):
                 response_text = "!countdown " + str(count - 1)
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         except ValueError:
-            response_text = "You think you're soooo clever? Not anymore " + self.author.first_name ", because I now have error catching!"
+            response_text = "You think you're soooo clever? Not anymore " + self.author.first_name + ", because I now have error catching!"
         self.client.send(
             Message(text=response_text),
             thread_id=self.thread_id,

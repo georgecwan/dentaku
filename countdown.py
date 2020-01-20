@@ -5,7 +5,7 @@ from fbchat import Mention
 class countdown(Command):
 
     def run(self):
-        try
+        try:
             count = int(self.user_params[0])
             if count > 10:
                 response_text = "I'm too lazy to do that..." 
@@ -14,7 +14,7 @@ class countdown(Command):
             else:
                 response_text = "!countdown " + str(count - 1)
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
-        except
+        except ValueError:
             response_text = "You think you're soooo clever? Not anymore " + self.author.first_name ", because I now have error catching!"
         self.client.send(
             Message(text=response_text),

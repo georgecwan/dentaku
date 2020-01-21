@@ -10,8 +10,11 @@ class ud(Command):
     def run(self):
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         try:
-            word = self.user_params[0]
-            req = requests.get("https://www.urbandictionary.com/define.php?term="+self.user_params[0])
+            link = "https://www.urbandictionary.com/define.php?term="
+            for i in self.user_params:
+                link+=i+"+"
+            link=link[:-1]
+            req = requests.get(link)
             soup = bs4.BeautifulSoup(req.text,'html.parser')
             response_text = "@" + self.author.first_name + "\n" + soup.find_all("div",class_="meaning")[0].get_text()
         except:

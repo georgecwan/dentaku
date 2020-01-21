@@ -38,6 +38,8 @@ Now you can make your own commands by following the guidelines below. :)
 
 ## Contribution guidelines
 
+For a full, comphrehensive read on contribution, take a look at our [CONTRIBUTING.md](CONTRIBUTING.md)
+
 To add your own command, create a file named your command. For example, if I 
 wanted to make a command called dog, and I wanted users to run it as `!dog`, I would create a file
 called `dog.py`

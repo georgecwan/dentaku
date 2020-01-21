@@ -97,7 +97,7 @@ After you submit a PR, a VikingsDev Exec will look over the code and either appr
 
 # Community
 
-Join the [VikingsDev Community](https://vikingsdev.ca/#social)! We're most active on Messenger.
+Join the [VikingsDev Community](https://vikingsdev.ca/#social)! We're most active on Messenger. Or, directly join the [bot-testing Vikings Dev Messenger Chat](https://m.me/join/AbbIsvkc4VZd9ufs)!
 
 # Conventions
 

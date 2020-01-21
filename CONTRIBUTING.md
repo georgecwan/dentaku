@@ -23,6 +23,7 @@ Contribute to Dentaku and get Bounties!
 
 Responsibilities
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
+* **Claim an issue by commenting** before you start working on it! This makes sure that people won't work on the same issue at the same time.
 * **Document your code well.** Write comments and make sure your code is as easy to understand as possible.
 * **Be secure.** Keep API tokens, credentials, etc. out of the repository. If there are credentials you need to add as files, make sure you add the filename in the `.gitignore`
 * When adding commands always create new classes and a new file.

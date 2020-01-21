@@ -9,7 +9,10 @@ class Command:
         self.thread_type = parameters['thread_type']
         self.client = client
         self.author = self.client.fetchUserInfo(self.author_id)[self.author_id]
-
+        self.documentation = {
+            "parameters": "",
+            "function": ""
+        }
         client.markAsDelivered(self.thread_id, self.message_object.uid)
         client.markAsRead(self.thread_id)
 
@@ -17,4 +20,7 @@ class Command:
 
     def run(self):
         print("Running abstract command...")
+        return
+
+    def define_documentation(self):
         return

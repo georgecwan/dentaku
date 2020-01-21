@@ -1,17 +1,16 @@
 from command import Command
 from fbchat import Message
 from fbchat import Mention
+import requests
+import json
 
-
-class contribute(Command):
-
+class rate_limit(Command):
     def run(self):
+        response = json.loads(requests.get("https://api.github.com/rate_limit").text)
+        remaining = response['rate']['remaining']
         response_text = """
-        @{} 
-        \nYou can contribute to Dentaku here: https://github.com/VikingsDev/Dentaku
-        \nFor more information, check out vikingsDev Bounties: https://vikingsdev.ca/bounties
-        \nHappy contributing!
-        """.format(self.author.first_name)
+        @{}\nRemaining pings: {}
+        """.format(self.author.first_name, remaining)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
         self.client.send(

@@ -2,13 +2,14 @@ from command import Command
 from fbchat import Message
 from fbchat import Mention
 
+
 class countdown(Command):
 
     def run(self):
         try:
             count = int(self.user_params[0])
             if count > 10:
-                response_text = "I'm too lazy to do that..." 
+                response_text = "I'm too lazy to do that..."
             elif count <= 0:
                 response_text = "Lets do it again!"
             else:
@@ -21,3 +22,9 @@ class countdown(Command):
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "NUMBER",
+            "function": "Counts down recursively from NUMBER."
+        }

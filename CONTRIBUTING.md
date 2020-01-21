@@ -1,6 +1,6 @@
 # Introduction
 
-<img src="https://github.com/VikingsDev/Vikingsdev-art/blob/master/Bounties/bounties-logo.svg?sanitize=true" width="200px"/>
+<img src="https://github.com/VikingsDev/Vikingsdev-art/blob/master/Bounties/bounties-logo.svg?sanitize=true" width="50px"/>
 
 Contribute to Dentaku and get Bounties!
 

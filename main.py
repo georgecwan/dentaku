@@ -7,7 +7,6 @@ from fbchat.models import *
 # Subclass fbchat.Client and override required methods
 class dentaku_bot(Client):
     def onMessage(self, author_id, message_object, thread_id, thread_type, **kwargs):
-        print("CLIENT.UID=" + str(client.uid))
         if "!" in str(message_object.text)[0]:
             command = str(message_object.text).replace("!", "").split(" ")
             parameters = {
@@ -48,8 +47,7 @@ def export_env():
 
 export_env()
 client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))
-print(client.uid)
-if client.uid == "vikings.dev.73":
+if client.uid == "100045950177697":
     client.send(Message(text="Dentaku is online."), thread_id="100011229734236", thread_type=ThreadType.USER)
 else:
     client.send(Message(text="Dentaku is online."), thread_id=client.uid, thread_type=ThreadType.USER)

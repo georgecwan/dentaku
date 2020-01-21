@@ -1,23 +1,23 @@
 # Introduction
 
+<img src="https://github.com/VikingsDev/Vikingsdev-art/blob/master/Bounties/bounties-logo.svg?sanitize=true" width="200px"/>
 
->First off, thank you for considering contributing to Active Admin. It's people like you that make Active Admin such a great tool.
+Contribute to Dentaku and get Bounties!
 
-[source: [Active Admin](https://github.com/activeadmin/activeadmin/blob/master/CONTRIBUTING.md)] **Need more inspiration?** [1] [Read The Docs](http://read-the-docs.readthedocs.org/en/latest/contribute.html) [2] [Mustache.js](https://github.com/janl/mustache.js/#contributing)
+### What types of contributions we're looking for
 
-### Tell them why they should read your guidelines.
+[B] = Bounty eligible
 
->Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
-
-[source: [Hoodie](https://github.com/hoodiehq/hoodie/blob/master/CONTRIBUTING.md)]
-
-### Explain what kinds of contributions you are looking for.
-
-Keep an open mind! Improving documentation, bug triaging, or writing tutorials are all examples of helpful contributions that mean less work for you.
-
-> Elasticsearch is an open source project and we love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into Elasticsearch itself.
-
-[source: [Elasticsearch](https://github.com/elastic/elasticsearch/blob/master/CONTRIBUTING.md)] **Need more inspiration?** [1] [Devise](https://github.com/plataformatec/devise/wiki/Contributing) [2] [Geocoder](https://github.com/alexreisner/geocoder#known-issues) (“known issues”)
+* Bug finding
+   * If you find a bug with Dentaku, please report it in the Issues tab!
+* Feature requests
+   * If there's a feature you want to see in Dentaku, submit an issue!
+* Documentation [B]
+   * Helping us keep track of our documentation is always helpful.
+* Making Commands [B]
+   * If you have a brilliant idea for a command, or want to implement someone elses's idea in the Issues tab, feel free to fork and make a pull request.
+* Core Improvements [B]
+   * Sometimes the core functionality of the bot needs to be expanded, fixed, or optimized.
 
 ### Explain contributions you are NOT looking for (if any).
 

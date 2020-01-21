@@ -43,8 +43,11 @@ def furryfy(input):
 
 class uwu(Command):
     def run(self):
-        target = self.message_object.replied_to
-        response_text = furryfy(target.text)
+        try:
+            target = self.message_object.replied_to
+            response_text = furryfy(target.text)
+        except:
+            response_text = "I cannot perform this request due to an internal b-oFA error."
         self.client.send(
             Message(text=response_text, mentions= None),
             thread_id=self.thread_id,

@@ -47,6 +47,7 @@ def export_env():
 
 export_env()
 client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))
+print(client.uid)
 if client.uid == "vikings.dev.73":
     client.send(Message(text="Dentaku is online."), thread_id="100011229734236", thread_type=ThreadType.USER)
 else:

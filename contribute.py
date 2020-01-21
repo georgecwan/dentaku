@@ -4,6 +4,7 @@ from fbchat import Mention
 
 
 class contribute(Command):
+
     def run(self):
         response_text = """
         @{} 

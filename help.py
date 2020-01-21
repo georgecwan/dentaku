@@ -6,7 +6,7 @@ from fbchat import Mention
 class help(Command):
     def run(self):
         response_text = """
-        @ + {} +
+        @{}
         \n!website: Website Info
         \n!help: Shows list of commands
         \n!good_video: List of videos.

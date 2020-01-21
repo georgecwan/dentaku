@@ -46,8 +46,11 @@ class uwu(Command):
         try:
             target = self.message_object.replied_to
             response_text = furryfy(target.text)
-        except:
-            response_text = "I cannot perform this request due to an internal b-oFA error."
+        except AttributeError:
+            try:
+                response_text = furryfy(" ".join(self.user_params))
+            except:
+                response_text = "Something's not right! It's probably my life. This is a call for help."
         self.client.send(
             Message(text=response_text, mentions= None),
             thread_id=self.thread_id,

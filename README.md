@@ -70,26 +70,6 @@ These links might be helpful:
 [fbchat Examples](https://fbchat.readthedocs.io/en/stable/examples.html) <br>
 [fbchat Full Documentation](https://fbchat.readthedocs.io/en/stable/api.html)
 
-## command.py, the `Command` class
-All commands must inherit `command.py` <br>
-Inheriting `command.py` gives you these variables:
-### self.user_params <br>
-Parameters that the user passed in along with the command. <br>
-<br>Example: "!dog p1 p2 p3" <br>
-user_params = ["p1", "p2", "p3"] <br>
-### self.author_id <br>
-ID of the person who sent this command. <br>
-### self.message_object <br>
-The command's message object. <br>
-<br>Type: [fbchat.Message](https://fbchat.readthedocs.io/en/stable/api.html#fbchat.Message)
-### self.thread_id <br>
-ID of the chat this command was sent in. <br>
-### self.thread_type <br>
-Type of the chat this command was sent in. <br>
-<br>Type: [fbchat.ThreadType(enum)](https://fbchat.readthedocs.io/en/stable/api.html#fbchat.ThreadType)
-### self.client <br>
-The Dentaku user account. <br>
-<br>Type: [fbchat.Client](https://fbchat.readthedocs.io/en/stable/api.html#client)
-### self.author <br>
-The object of the person who sent this message. <br>
-<br>Type: [fbchat.User](https://fbchat.readthedocs.io/en/stable/api.html#fbchat.User)
+## Dentaku API Documentation
+
+[Check the Wiki for API Documentation](https://github.com/VikingsDev/Dentaku/wiki/API-Documentation)

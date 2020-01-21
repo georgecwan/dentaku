@@ -12,6 +12,7 @@ class help(Command):
         \n!good_video: List of videos.
         \n!countdown [num]: Counts down from num. 
         \n!contribute: Learn how to be a bounty hunter.
+        \na_chance_at_uni: All your hopes and dreams come true!
         """.format(self.author.first_name)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 

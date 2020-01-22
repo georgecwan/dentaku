@@ -9,8 +9,12 @@ sputters = [" .///.", " o:"," uwuwuwuu",
 " *blushes*", " uwu", " rawr", " xD", " *purr*",
 " ~murrrr~", " O//w//O", " (;" , " o3o", " 0///0",
  " *slurpp*", " XD", " *licks*", " *stares*", " ÚwÙ"]
+
+
 def splitl(word):
     return [char for char in word]
+
+
 def furryfy(input):
     owo = input
     owo = owo.replace(".","~")
@@ -37,9 +41,10 @@ def furryfy(input):
         elif replacing == " ":
             if randrange(12)==1:
                 oworay.insert(item,sputters[randrange(len(sputters))])
-            elif randrange(10)==1 and oworay[item+1]!= ("l") and oworay[item+1]!="r" and oworay[item+1]!="t":
+            elif randrange(10)==1 and oworay[item+1]!=("l") and oworay[item+1]!="r" and oworay[item+1]!="t":
                 oworay.insert(item+1,oworay[item+1]+"-")
     return("".join(oworay))
+
 
 class uwu(Command):
     def run(self):
@@ -52,7 +57,13 @@ class uwu(Command):
             except:
                 response_text = "Something's not right! It's probably my life. This is a call for help."
         self.client.send(
-            Message(text=response_text, mentions= None),
+            Message(text=response_text, mentions=None),
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "REPLIED_MESSAGE",
+            "function": "uwu-ify a REPLIED_MESSAGE"
+        }

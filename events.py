@@ -71,3 +71,9 @@ class events(Command):
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "None",
+            "function": "Find out what the next 3 vikingsDev events are."
+        }

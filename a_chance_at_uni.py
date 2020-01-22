@@ -2,6 +2,7 @@ from command import Command
 from fbchat import Message
 from fbchat import Mention
 
+
 class a_chance_at_uni(Command):
 
     def run(self):
@@ -18,3 +19,9 @@ class a_chance_at_uni(Command):
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "UNIVERSITY_NAME",
+            "function": "Reminds you that you're good enough."
+        }

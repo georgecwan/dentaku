@@ -21,6 +21,7 @@ class dentaku_bot(Client):
                 module = __import__(command)
                 new_command = getattr(module, command)
                 instance = new_command(parameters, client=self)
+                instance.run()
             except ModuleNotFoundError:
                 self.send(
                     Message(text="Command not found."),

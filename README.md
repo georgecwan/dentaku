@@ -4,12 +4,11 @@ Dentaku is VikingsDev's open source messenger bot.
 
 ## Setting up a development environment
 
-1. Clone the repository.
-`git clone https://github.com/VikingsDev/Dentaku.git`
-2. Create a virtual environment.
-`python -m venv venv`
-3. Create an export file.
-`touch export.sh`
+1. Clone the repository. `git clone https://github.com/VikingsDev/Dentaku.git`
+2. Create a virtual environment. `python -m venv venv` (install virtualenv with `pip install virtualenv` if needed)
+3. Create an export file. <br>
+macOS/Linux: `touch export.sh` <br>
+Windows: `Notepad export.sh` and accept the prompt to create the new file (or create the file manually in File Explorer) <br>
 4. Edit `export.sh` using a text editor, and add
 ```
 export EMAIL="YOUR_FACEBOOK_ACCOUNT_EMAIL"
@@ -20,12 +19,10 @@ Note: Replace the strings with your own information, but keep the quotation mark
 Get your bit.ly [Generic Access Token](https://bitly.com/a/oauth_apps), which is required if you want to use commands with link shorteners. <br>
 (Remember to hit save in the text editor before activating the variables!) <br>
 5. Activate the variables and venv. <br>
-`source export.sh` <br>
-`source venv/bin/activate` <br>
-6. Install the required packages. <br>
-`pip install -r requirements.txt` <br>
-7. Run the bot. <br>
-`python main.py` <br>
+macOS/Linux: `source export.sh` `source venv/bin/activate` <br>
+Windows: (The variables are automatically set when main.py is run) `venv\Scripts\activate.bat`
+6. Install the required packages. `pip install -r requirements.txt` <br>
+7. Run the bot. `python main.py` <br>
 You should see this:
 ```
 Logging in [YOUR_FACEBOOK_ACCOUNT_EMAIL]...
@@ -45,7 +42,7 @@ wanted to make a command called dog, and I wanted users to run it as `!dog`, I w
 called `dog.py`
 
 Inside `dog.py`, start with this template: <br>
-(replace all occurrences of dog with your command name)
+(replace all occurrences of 'dog' with your command name)
 ```
 from command import Command
 from fbchat import Message

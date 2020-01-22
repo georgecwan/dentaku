@@ -2,7 +2,7 @@ from fbchat import log, Client
 import os
 from fbchat import Message
 from fbchat.models import *
-
+import traceback
 
 # Subclass fbchat.Client and override required methods
 class dentaku_bot(Client):
@@ -30,7 +30,7 @@ class dentaku_bot(Client):
                 )
             except Exception as e:
                 self.send(
-                    Message(text="Error: " + str(e)),
+                    Message(text="Error: " + traceback.format_exc()),
                     thread_id=thread_id,
                     thread_type=thread_type,
                 )

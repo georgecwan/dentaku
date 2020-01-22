@@ -15,7 +15,7 @@ class Command:
         }
         client.markAsDelivered(self.thread_id, self.message_object.uid)
         client.markAsRead(self.thread_id)
-
+        self.define_documentation()
         self.run()
 
     def run(self):

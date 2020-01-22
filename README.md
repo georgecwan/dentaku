@@ -8,7 +8,7 @@ Dentaku is VikingsDev's open source messenger bot.
 2. Create a virtual environment. `python -m venv venv` (install virtualenv with `pip install virtualenv` if needed)
 3. Create an export file. <br>
 macOS/Linux: `touch export.sh` <br>
-Windows: `Notepad export.sh` and accept the prompt to create the new file (or create the file manually in File Explorer)
+Windows: `Notepad export.sh` and accept the prompt to create the new file (or create the file manually in File Explorer) <br>
 4. Edit `export.sh` using a text editor, and add
 ```
 export EMAIL="YOUR_FACEBOOK_ACCOUNT_EMAIL"

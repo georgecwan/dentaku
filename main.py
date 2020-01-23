@@ -16,7 +16,13 @@ class dentaku_bot(Client):
                 "thread_id": thread_id,
                 "thread_type": thread_type
             }
-            command = command[0]
+            if command[0] == '':
+                for each in command:
+                    if each != '':
+                        command = each
+                        break
+            else:
+                command = command[0]
             try:
                 module = __import__(command)
                 new_command = getattr(module, command)

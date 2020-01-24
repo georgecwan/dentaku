@@ -79,6 +79,6 @@ else:
         json.dump(database, file)
 for thread in threads:
     client.send(Message(
-        text="[" + datetime.now().strftime("%Y-%m-%d %-I:%M%p") + "] Dentaku deployed just now. #" + str(database['deployment'])),
+        text="[" + datetime.now().strftime("%Y-%m-%d %-I:%M %p") + "] Dentaku deployed just now. #" + str(database['deployment'])),
                 thread_id=client.uid, thread_type=ThreadType.USER)
 client.listen()

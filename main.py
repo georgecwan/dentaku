@@ -13,19 +13,19 @@ import time
 class dentaku_bot(Client):
     def onMessage(self, author_id, message_object, thread_id, thread_type, **kwargs):
         if "!" in str(message_object.text)[0]:
-            command = str(message_object.text).replace("!", "").split(" ")
+            message = str(message_object.text).replace("!", "").split(" ")
             command_index = 1
-            if command[0] == '':
-                for each in command:
+            if message[0] == '':
+                for each in message:
                     if each != '':
                         command = each
                         break
-                    command += 1
+                    command_index += 1
             else:
-                command = command[0]
+                command = message[0]
             try:
                 parameters = {
-                    "user": command[command_index:],
+                    "user": message[command_index:],
                     "author_id": author_id,
                     "message_object": message_object,
                     "thread_id": thread_id,
@@ -50,7 +50,7 @@ class dentaku_bot(Client):
 
 
 def export_env():
-    with open("export.sh") as file_in:
+    with open("export.sh", "r") as file_in:
         for line in file_in:
             if "\"" in line:
                 os.environ[line.split("=")[0].split(" ")[1]] = line[line.find("\"") + 1:line.rfind("\"")]

@@ -1,21 +1,21 @@
-from command import Command
+from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
 import os
-modules = [x for x in os.listdir(".") if x.endswith(".py")]
+modules = [x for x in os.listdir("commands") if x.endswith(".py")]
 modules = [x.replace(".py", "") for x in modules]
 modules.sort()
 # remove commands that are not for calling
-modules.remove("main")
 modules.remove("command")
 modules.remove("rate_limit")
+modules.remove("__init__")
 
 
 class help(Command):
 
     def get_instance(self, name):
         # returns an instance from the module 'name'
-        module = __import__(name)
+        module = __import__('commands.' + name, globals(), locals(), [name], 0)
         new_command = getattr(module, name)
         p = {
             "user": self.user_params,

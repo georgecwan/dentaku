@@ -1,7 +1,9 @@
 from fbchat import Client
+
 class Command:
 
     def __init__(self, parameters, client: Client):
+        self.database = parameters['database']
         self.user_params = parameters['user']
         self.author_id = parameters['author_id']
         self.message_object = parameters['message_object']

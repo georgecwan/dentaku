@@ -1,7 +1,7 @@
 from fbchat import Client
 class Command:
 
-    def __init__(self, parameters, client:Client):
+    def __init__(self, parameters, client: Client):
         self.user_params = parameters['user']
         self.author_id = parameters['author_id']
         self.message_object = parameters['message_object']
@@ -15,8 +15,7 @@ class Command:
         }
         client.markAsDelivered(self.thread_id, self.message_object.uid)
         client.markAsRead(self.thread_id)
-
-        self.run()
+        self.define_documentation()
 
     def run(self):
         print("Running abstract command...")

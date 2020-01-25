@@ -1,7 +1,5 @@
-from command import Command
-from fbchat import Message
+from commands.command import Command
 from fbchat.models import *
-from fbchat import Client
 from fbchat import Mention
 import bs4
 import requests

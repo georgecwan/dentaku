@@ -57,6 +57,20 @@ class dentaku_bot(Client):
                     thread_id=thread_id,
                     thread_type=thread_type,
                 )
+        else:
+            for word in keywords.keys():
+                if word in message_object.text:
+                    parameters = {
+                        "author_id": author_id,
+                        "message_object": message_object,
+                        "thread_id": thread_id,
+                        "thread_type": thread_type,
+                        "database": database
+                    }
+                    module = importlib.import_module(".." + keywords['word'], "keywords.subpkg")
+                    new_command = getattr(module, keywords['word'])
+                    instance = new_command(parameters, client=self)
+                    instance.run()
 
 
 def export_env():
@@ -78,7 +92,7 @@ if os.path.exists("database.json"):
         try:
             database = json.load(file)
         except json.decoder.JSONDecodeError:
-            print("JSON file is invalid. Repair or delete JSON.")
+            print("JSON file is invalid. Repair or delete database.json.")
             sys.exit()
         if 'deployment' in database:
             database['deployment'] += 1
@@ -90,6 +104,17 @@ else:
     database = {"deployment": 0, "subscription": []}
     with open('database.json', 'w') as file:
         json.dump(database, file)
+
+if os.path.exists("keywords.json"):
+    with open("keywords.json", 'r') as file:
+        try:
+            keywords = json.load(file)
+        except json.decoder.JSONDecodeError:
+            print("JSON file is invalid. Repair or delete keywords.json.")
+else:
+    keywords = {}
+    with open('keywords.json', 'w') as file:
+        json.dump(keywords, file)
 
 if 'testing' not in database:
     print("Testing mode will restrict all bot interactions to direct messages, or ThreadType.USER.")

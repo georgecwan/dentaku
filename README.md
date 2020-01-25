@@ -41,9 +41,9 @@ Windows: `Notepad export.sh` and accept the prompt to create the new file (or cr
 
 For a full, comprehensive read on contribution, take a look at our [CONTRIBUTING.md](CONTRIBUTING.md).
 
-To add your own command, create a file named your command. For example, if I 
+To add your own command, create a file named your command inside the `commands` folder. For example, if I 
 wanted to make a command called dog, and I wanted users to run it as `!dog`, I would create a file
-called `dog.py`
+called `dog.py` inside `commands`.
 
 Inside `dog.py`, start with this template: <br>
 (Replace all occurrences of 'dog' with your command name.)

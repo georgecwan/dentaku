@@ -1,8 +1,6 @@
-from command import Command
-from fbchat import Message
+from commands.command import Command
 from fbchat.models import *
-from fbchat import Client
-from fbchat import Mention
+
 whatarray = {}
 whatarray['bofa']='bofA deez nUts'
 whatarray['ligma']='ligma b a l l s'

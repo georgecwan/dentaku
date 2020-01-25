@@ -19,7 +19,6 @@ class weather(Command):
             h = text.find("href")
             e = text[h:].find(">")
             r = text[h:h + e]
-            print(r)
             link = "https://www.theweathernetwork.com" + r[6:-1]
             response_text = "@" + self.author.first_name + " Check for yourself at " + link
         except:

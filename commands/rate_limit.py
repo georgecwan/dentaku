@@ -1,4 +1,4 @@
-from command import Command
+from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
 import requests

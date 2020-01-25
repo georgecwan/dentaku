@@ -1,8 +1,5 @@
-from command import Command
-from fbchat import Message
+from commands.command import Command
 from fbchat.models import *
-from fbchat import Client
-from fbchat import Mention
 from random import randrange
 sputters = [" .///.", " o:"," uwuwuwuu",
 " *squirms*", " ovo", " o-owo", " *nuzzles*",

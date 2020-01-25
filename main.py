@@ -36,11 +36,12 @@ class dentaku_bot(Client):
                     "thread_id": thread_id,
                     "thread_type": thread_type
                 }
-                module = __import__(command)
-                new_command = getattr(module, command)
+                module = __import__('commands.' + command, globals(), locals(), [command], 0)
+                new_command = getattr(module,  command)
                 instance = new_command(parameters, client=self)
                 instance.run()
             except ModuleNotFoundError:
+                print(traceback.format_exc())
                 self.send(
                     Message(text="Command not found."),
                     thread_id=thread_id,

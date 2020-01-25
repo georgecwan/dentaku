@@ -1,4 +1,4 @@
-from command import Command
+from commands.command import Command
 from fbchat import Message, Mention, MessageReaction, FBchatException
 from random import choice as choose
 from random import seed, randint

@@ -1,17 +1,16 @@
 import json
 
-from command import Command
+from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
-from fbchat import ThreadType
 import os
 
 
 class subscribe(Command):
 
     def run(self):
-        if os.path.exists("database.json"):
-            with open("database.json", 'rw') as file:
+        if os.path.exists("../database.json"):
+            with open("../database.json", 'r') as file:
                 database = json.load(file)
         else:
             database = {}
@@ -35,7 +34,7 @@ class subscribe(Command):
                            @{}\nYou have been subscribed to deployment notifications!
                            """.format(self.author.first_name)
 
-        with open("database.json", 'w') as outfile:
+        with open("../database.json", 'w') as outfile:
             json.dump(database, outfile)
 
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]

@@ -9,9 +9,12 @@ from datetime import datetime
 import time
 from fbchat import ThreadType
 
+database = {}
+
 # Subclass fbchat.Client and override required methods
 class dentaku_bot(Client):
     def onMessage(self, author_id, message_object, thread_id, thread_type, **kwargs):
+        global database
         if database['testing'].lower() == "y" and thread_type != ThreadType.USER:
             return
         if "!" in str(message_object.text)[0]:
@@ -62,7 +65,7 @@ def export_env():
                 os.environ[line[0]] = line[1]
 
 def start_bot():
-
+    global database
     export_env()
     client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))
 

@@ -13,7 +13,12 @@ class hackathon(Command):
         title = str(source.find("h4", class_="mb-2").getText())
         date = str(source.find("span", class_="subheading").getText())
         loc = str(source.find_all("span", class_="subheading")[1].getText())
-        response_text = "@" + self.author.first_name + "\n The closest hackathon is " + title + "\n Date: " + date + "\n Location: " + loc
+        reg = str(source.find("a", string="REGISTER"))
+        reg = reg[reg.find("href") + 6:reg.find(">", reg.find("href")) - 1]
+        ml = str(source.find("a", string="Mailing List"))
+        ml = ml[ml.find("href") + 6:ml.find(">", ml.find("href")) - 1]
+        response_text = "@" + self.author.first_name + "\nThe closest hackathon is " + title + "\nDate: " + \
+                        date + "\nLocation: " + loc + "\nRegister at: " + reg + "\nMailing List: " + ml
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
         self.client.send(

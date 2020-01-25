@@ -1,7 +1,6 @@
 from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
-from random import seed
 from random import randint
 
 class draw_name(Command):

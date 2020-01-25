@@ -1,6 +1,8 @@
 import json
 import sys
-
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 from fbchat import log, Client
 import os
 from fbchat import Message
@@ -38,7 +40,8 @@ class dentaku_bot(Client):
                     "message_object": message_object,
                     "thread_id": thread_id,
                     "thread_type": thread_type,
-                    "database": database
+                    "database": database,
+                    "gdb": gdb
                 }
                 module = importlib.import_module(".." + command, "commands.subpkg")
                 new_command = getattr(module, command)
@@ -65,10 +68,11 @@ class dentaku_bot(Client):
                         "message_object": message_object,
                         "thread_id": thread_id,
                         "thread_type": thread_type,
-                        "database": database
+                        "database": database,
+                        "gdb":gdb
                     }
-                    module = importlib.import_module(".." + keywords['word'], "keywords.subpkg")
-                    new_command = getattr(module, keywords['word'])
+                    module = importlib.import_module(".." + keywords[word], "keywords.subpkg")
+                    new_command = getattr(module, keywords[word])
                     instance = new_command(parameters, client=self)
                     instance.run()
 
@@ -132,4 +136,11 @@ for thread in database['subscription']:
         text="[" + datetime.now().strftime("%Y-%m-%d %-I:%M %p") + "] Dentaku deployed just now. #" + str(
             database['deployment'])),
         thread_id=client.uid, thread_type=ThreadType.USER)
+
+ # Use a service account
+cred = credentials.Certificate('bruh-moment-860fc-e104b9f587f9.json')
+firebase_admin.initialize_app(cred)
+
+gdb = firestore.client()
+
 client.listen()

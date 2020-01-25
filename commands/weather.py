@@ -15,9 +15,7 @@ class weather(Command):
                 else:
                     link += i + "%20"
             webpage = requests.get(link)
-            text = bs4.BeautifulSoup(webpage.text, 'html.parser')
-            text = text.find("li", class_="result")
-            text = str(text)
+            text = str(bs4.BeautifulSoup(webpage.text, 'html.parser').find("li", class_="result"))
             h = text.find("href")
             e = text[h:].find(">")
             r = text[h:h + e]

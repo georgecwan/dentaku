@@ -4,10 +4,10 @@ from fbchat import Message
 from fbchat import Mention
 import os
 
+
 class testing(Command):
 
     def run(self):
-
         if not self.user_params:
             response_text = "@{} Test mode is currently {} which corresponds to \"{}\" in database.json. This means that the bot can{} accept group chat commands.".format(
                 self.author.first_name, 'on' if self.database['testing'] == "y" else 'off', self.database['testing'],
@@ -17,6 +17,21 @@ class testing(Command):
                 self.database['testing'] = 'y' if self.user_params[0] == "on" else 'n'
                 response_text = "@{} Test mode has been set to {}, which corresponds to \"{}\" in database.json.".format(
                     self.author.first_name, self.user_params[0], self.database['testing'])
+            else:
+                response_text = "@{} You do not have sufficient permissions to change this mode.".format(
+                    self.author.first_name)
+        elif self.user_params[0] == "t" or self.user_params[0] == "toggle":
+            if self.client.uid == self.author_id:
+                if 'testing' in self.database:
+                    if self.database['testing'] == 'y':
+                        self.database['testing'] = 'n'
+                    else:
+                        self.database['testing'] = 'y'
+                    response_text = "@{} Testing mode has been turned {}".format(self.author.first_name, (
+                        'on' if self.database['testing'] == 'y' else 'off'))
+                else:
+                    response_text = "@{} No mode has been set yet. Run `!testing on` or `!testing off` to set a mode.".format(
+                        self.author.first_name)
             else:
                 response_text = "@{} You do not have sufficient permissions to change this mode.".format(
                     self.author.first_name)

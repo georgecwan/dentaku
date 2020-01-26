@@ -62,7 +62,7 @@ class dentaku_bot(Client):
                 )
         else:
             for word in keywords.keys():
-                if word in message_object.text:
+                if word.lower() in message_object.text.lower():
                     try:
                         parameters = {
                             "author_id": author_id,

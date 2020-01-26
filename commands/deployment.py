@@ -24,5 +24,5 @@ class deployment(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "None",
-            "function": "More information on the vikingsDev website!"
+            "function": "Gives deployment number and time."
         }

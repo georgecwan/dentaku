@@ -29,12 +29,17 @@ class subscribe(Command):
                                No action taken. You were are currently not subscribed to deployments.
                                """.format(self.author.first_name)
         else:
-            database['subscription'].append(self.author_id)
-            response_text = """
+            if self.author_id in database['subscription']:
+                response_text = """
+                               @{} You were already subscribed!
+                               """.format(self.author.first_name)
+            else:
+                database['subscription'].append(self.author_id)
+                response_text = """
                            @{}\nYou have been subscribed to deployment notifications!
                            """.format(self.author.first_name)
 
-        with open("../database.json", 'w') as outfile:
+        with open("database.json", 'w') as outfile:
             json.dump(database, outfile)
 
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]

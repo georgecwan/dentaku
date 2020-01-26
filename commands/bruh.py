@@ -28,10 +28,10 @@ class bruh(Command):
 
             try:
                 bruh_doc = messenger_ref.collection(u'bruhs').document(bruh_id).get().to_dict()
+                status = bruh_doc['status']
             except TypeError:
                 status = "Removed"
 
-            status = bruh_doc['status']
             if status == 'Removed':
                 response_text = "@{}\nThis Bruh Moment does not exist.".format(self.author.first_name)
             else:

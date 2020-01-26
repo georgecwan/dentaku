@@ -23,7 +23,8 @@ class help(Command):
             "message_object": self.message_object,
             "thread_id": self.thread_id,
             "thread_type": self.thread_type,
-            "database": self.database
+            "database": self.database,
+            "gdb": self.gdb
         }
         return new_command(p, self.client)
 

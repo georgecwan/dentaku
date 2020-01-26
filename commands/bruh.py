@@ -1,3 +1,5 @@
+import json
+
 from fbchat import Message
 from fbchat import Mention
 import time
@@ -15,6 +17,8 @@ class bruh(Command):
             int(self.user_params[0])
             command = "get"
         except ValueError:
+            if not self.user_params[0]:
+                return
             command = self.user_params[0]
         if command == "get":
             if self.user_params[0] == "get":
@@ -49,7 +53,7 @@ class bruh(Command):
                 thread = bruh_doc['thread']
 
                 if thread != self.thread_id and (
-                        self.thread_id not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
+                        int(self.thread_id) not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
                     response_text = "@{}\nThis Bruh Moment is not accessible in this thread.".format(
                         self.author.first_name,
                         bruh_id, thread,

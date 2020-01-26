@@ -115,6 +115,7 @@ if os.path.exists("database.json"):
             database['deployment'] += 1
         else:
             database['deployment'] = 0
+        database['last_deployment_time'] = time.time()
     with open('database.json', 'w') as file:
         json.dump(database, file)
 else:

@@ -5,15 +5,17 @@ import requests
 import json
 import random
 
+
 class version_name(Command):
 
     def run(self):
         person = json.loads(requests.get("https://anfi.tk/greekApi/person/random").text)["name"]
-        alliterations: list = json.loads(requests.get("https://api.datamuse.com/words?sp={}*&md=p".format(person[0])).text)
-        for word in alliterations:
-            print(word)
+        alliterations: list = json.loads(
+            requests.get("https://api.datamuse.com/words?sp={}*&md=p".format(person[0])).text)
+        for i in range(len(alliterations) - 1, -1, -1):
+            word = alliterations[i]
             if "tags" not in word or "adj" not in word['tags']:
-                alliterations.remove(word)
+                del alliterations[i]
         adjective: str = random.choice(alliterations)["word"]
         adjective = adjective.capitalize()
         response_text = (

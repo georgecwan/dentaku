@@ -4,6 +4,8 @@ from fbchat import Message
 class frank(Command):
     def run(self):
         response_text = ""
+        if len(self.user_params) == 0:
+            response_text = "*Indecipherable toxic junk*"
         try:
             text = self.message_object.replied_to.text
             for i in text.split(" "):
@@ -16,9 +18,9 @@ class frank(Command):
                     i = i[0]+i[2:]
                     response_text += i+" "
             except:
-                response_text = "*Indecipherable toxic junk*"
+                response_text = "Something's not right. I can feel it."
         except:
-            response_text = "*Indecipherable toxic junk*"
+            response_text = "Everything is going badly and I don't know why."
 
         self.client.send(
             Message(text=response_text, mentions=None),

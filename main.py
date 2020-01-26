@@ -136,8 +136,8 @@ else:
 
 if 'testing' not in database:
     print("Testing mode will restrict all bot interactions to direct messages, or ThreadType.USER.")
-    database['testing'] = input("Turn on testing mode? (y/n)")
-    if input("Save this decision? (y/n)").lower() == 'y':
+    database['testing'] = input("Turn on testing mode? (y/n): ")
+    if input("Save this decision? (y/n): ").lower() == 'y':
         with open('database.json', 'w') as file:
             json.dump(database, file)
             print("Decision saved to database.json with the key 'testing'")

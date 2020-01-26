@@ -22,7 +22,8 @@ class help(Command):
             "author_id": self.author_id,
             "message_object": self.message_object,
             "thread_id": self.thread_id,
-            "thread_type": self.thread_type
+            "thread_type": self.thread_type,
+            "database": self.database
         }
         return new_command(p, self.client)
 

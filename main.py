@@ -138,7 +138,7 @@ for thread in database['subscription']:
         thread_id=client.uid, thread_type=ThreadType.USER)
 
  # Use a service account
-cred = credentials.Certificate('bruh-moment-860fc-e104b9f587f9.json')
+cred = credentials.Certificate(os.environ['G_CREDENTIALS'])
 firebase_admin.initialize_app(cred)
 
 gdb = firestore.client()

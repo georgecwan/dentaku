@@ -4,21 +4,24 @@ import fbchat
 
 class Action:
 
-    def __init__(self, parameters, client: Client):
-        self.database: dict = parameters['database']
-        self.author_id: int = parameters['author_id']
-        self.message_object: fbchat.Message = parameters['message_object']
-        self.thread_id: int = parameters['thread_id']
-        self.thread_type: fbchat.ThreadType = parameters['thread_type']
-        self.client: fbchat.Client = client
-        self.author: fbchat.User = self.client.fetchUserInfo(self.author_id)[self.author_id]
+    def __init__(self, parameters=None, client: Client = None):
+        self.database: dict = self.get(parameters, 'database')
+        self.author_id: int = self.get(parameters, 'author_id')
+        self.message_object: fbchat.Message = self.get(parameters, 'message_object')
+        self.thread_id: int = self.get(parameters, 'thread_id')
+        self.thread_type: fbchat.ThreadType = self.get(parameters, 'thread_type')
+
         self.documentation = {
             "parameters": "",
             "function": ""
         }
-        self.gdb = parameters['gdb']
-        client.markAsDelivered(self.thread_id, self.message_object.uid)
-        client.markAsRead(self.thread_id)
+
+        self.client: fbchat.Client = client
+        if client:
+            self.author: fbchat.User = self.client.fetchUserInfo(self.author_id)[self.author_id]
+            self.gdb = self.get(parameters, 'gdb')
+            client.markAsDelivered(self.thread_id, self.message_object.uid)
+            client.markAsRead(self.thread_id)
         self.define_documentation()
 
     def run(self):
@@ -27,3 +30,9 @@ class Action:
 
     def define_documentation(self):
         return
+
+    def get(self, parameters, property):
+        if parameters and property in parameters:
+            return parameters[property]
+        else:
+            return None

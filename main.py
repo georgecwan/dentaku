@@ -137,10 +137,12 @@ for thread in database['subscription']:
             database['deployment'])),
         thread_id=client.uid, thread_type=ThreadType.USER)
 
- # Use a service account
-cred = credentials.Certificate(os.environ['G_CREDENTIALS'])
-firebase_admin.initialize_app(cred)
+if 'G_CREDENTIALS' in os.environ:
+    cred = credentials.Certificate(os.environ['G_CREDENTIALS'])
+    firebase_admin.initialize_app(cred)
 
-gdb = firestore.client()
+    gdb = firestore.client()
+else:
+    gdb = None
 
 client.listen()

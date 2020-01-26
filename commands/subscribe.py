@@ -9,8 +9,8 @@ import os
 class subscribe(Command):
 
     def run(self):
-        if os.path.exists("../database.json"):
-            with open("../database.json", 'r') as file:
+        if os.path.exists("database.json"):
+            with open("database.json", 'r') as file:
                 database = json.load(file)
         else:
             database = {}

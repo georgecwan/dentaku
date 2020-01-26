@@ -90,6 +90,6 @@ class bruh(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "None",
-            "function": "More information on the vikingsDev website!"
+            "parameters": "command ID TEXT",
+            "function": "Accesses, removes, edits bruhs in the Bruh database. Commands: remove, edit. !bruh ID to get bruh #ID, !bruh edit ID TEXT to set ID to moment to text, !bruh removes bruh ID from the database."
         }

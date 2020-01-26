@@ -149,7 +149,7 @@ for thread in database['subscription']:
     client.send(Message(
         text="[" + datetime.now().strftime("%Y-%m-%d %-I:%M %p") + "] Dentaku deployed just now. #" + str(
             database['deployment'])),
-        thread_id=client.uid, thread_type=ThreadType.USER)
+        thread_id=thread, thread_type=ThreadType.USER)
 
 if 'G_CREDENTIALS' in os.environ:
     cred = credentials.Certificate(os.environ['G_CREDENTIALS'])

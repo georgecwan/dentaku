@@ -43,6 +43,7 @@ class dentaku_bot(Client):
                     "database": database,
                     "gdb": gdb
                 }
+                command = command.lower()
                 module = importlib.import_module(".." + command, "commands.subpkg")
                 new_command = getattr(module, command)
                 instance = new_command(parameters, client=self)

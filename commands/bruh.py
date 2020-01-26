@@ -17,12 +17,19 @@ class bruh(Command):
         except ValueError:
             command = self.user_params[0]
         if command == "get":
-            bruh_id = self.user_params[0]
-            bruh_doc = messenger_ref.collection(u'bruhs').document(bruh_id).get().to_dict()
+            if self.user_params[0] == "get":
+                bruh_id = self.user_params[1]
+            else:
+                bruh_id = self.user_params[0]
+
+            try:
+                bruh_doc = messenger_ref.collection(u'bruhs').document(bruh_id).get().to_dict()
+            except TypeError:
+                status = "Removed"
 
             status = bruh_doc['status']
             if status == 'Removed':
-                response_text = "@{}\nThis Bruh Moment no longer exists.".format(self.author.first_name)
+                response_text = "@{}\nThis Bruh Moment does not exist.".format(self.author.first_name)
             else:
                 bruh_moment = bruh_doc['moment']
                 bruh_moment = "> " + bruh_moment
@@ -80,7 +87,7 @@ class bruh(Command):
                 bruh_doc = bruh_ref.get().to_dict()
                 bruh_doc['moment'] = self.user_params[2]
                 bruh_ref.update(bruh_doc)
-                response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name,bruh_id)
+                response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name, bruh_id)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         self.client.send(
             Message(text=response_text, mentions=mentions),
@@ -91,5 +98,6 @@ class bruh(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "command ID TEXT",
-            "function": "Accesses, removes, edits bruhs in the Bruh database. Commands: remove, edit. !bruh ID to get bruh #ID, !bruh edit ID TEXT to set ID to moment to text, !bruh removes bruh ID from the database."
+            "function": "Accesses, removes, edits bruhs in the Bruh database. Commands: remove, edit. `!bruh ID` to get "
+                        "bruh #ID, `!bruh edit ID TEXT` to set moment to TEXT, `!bruh removes ID` bruh ID from the database. "
         }

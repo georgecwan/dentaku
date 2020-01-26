@@ -5,7 +5,7 @@ class frank(Command):
     def run(self):
         response_text = ""
         if len(self.user_params) == 0 and self.message_object.replied_to == None:
-            response_text = "*Indecipherable toxic junk*"
+            response_text = " *Indecipherable toxic junk* "
         try:
             text = self.message_object.replied_to.text
             for i in text.split(" "):

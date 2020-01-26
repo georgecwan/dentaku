@@ -17,15 +17,7 @@ class help(Command):
         # returns an instance from the module 'name'
         module = __import__('commands.' + name, globals(), locals(), [name], 0)
         new_command = getattr(module, name)
-        p = {
-            "user": self.user_params,
-            "author_id": self.author_id,
-            "message_object": self.message_object,
-            "thread_id": self.thread_id,
-            "thread_type": self.thread_type,
-            "database": self.database
-        }
-        return new_command(p, self.client)
+        return new_command()
 
     def run(self):
         response_text = "@{}".format(self.author.first_name)

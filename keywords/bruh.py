@@ -62,6 +62,6 @@ class bruh(Keyword):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "None",
-            "function": "More information on the vikingsDev website!"
+            "trigger": "bruh",
+            "function": "Logs the message in the Bruh Database."
         }

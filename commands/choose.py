@@ -3,7 +3,7 @@ from fbchat import Message
 from fbchat import Mention
 from random import randint
 
-class draw_name(Command):
+class choose(Command):
 
     def run(self):
         if len(self.user_params) == 0:

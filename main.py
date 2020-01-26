@@ -63,18 +63,31 @@ class dentaku_bot(Client):
         else:
             for word in keywords.keys():
                 if word in message_object.text:
-                    parameters = {
-                        "author_id": author_id,
-                        "message_object": message_object,
-                        "thread_id": thread_id,
-                        "thread_type": thread_type,
-                        "database": database,
-                        "gdb":gdb
-                    }
-                    module = importlib.import_module(".." + keywords[word], "keywords.subpkg")
-                    new_command = getattr(module, keywords[word])
-                    instance = new_command(parameters, client=self)
-                    instance.run()
+                    try:
+                        parameters = {
+                            "author_id": author_id,
+                            "message_object": message_object,
+                            "thread_id": thread_id,
+                            "thread_type": thread_type,
+                            "database": database,
+                            "gdb": gdb
+                        }
+                        module = importlib.import_module(".." + keywords[word], "keywords.subpkg")
+                        new_command = getattr(module, keywords[word])
+                        instance = new_command(parameters, client=self)
+                        instance.run()
+                    except ModuleNotFoundError:
+                        self.send(
+                            Message(text="Keyword did not map to an existing python module."),
+                            thread_id=thread_id,
+                            thread_type=thread_type,
+                        )
+                    except Exception as e:
+                        self.send(
+                            Message(text="Error: " + traceback.format_exc()),
+                            thread_id=thread_id,
+                            thread_type=thread_type,
+                        )
 
 
 def export_env():

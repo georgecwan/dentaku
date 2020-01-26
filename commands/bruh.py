@@ -1,6 +1,6 @@
 from fbchat import Message
 from fbchat import Mention
-import fbchat
+import time
 from commands.command import Command
 
 statuses = ['confirmed', 'big']
@@ -58,14 +58,18 @@ class bruh(Command):
                 else:
                     thread = self.client.fetchThreadInfo(thread)[thread]
                     thread = thread.name
+
+                    time_string = time.strftime('%Y-%m-%d %-I:%M %p', time.localtime(bruh_doc['time']))
+
                     response_text = ("@{}\n"
                                      "Bruh *#{}*\n"
                                      "Thread: *{}*\n"
-                                     "Status: *{}*\n\n"
+                                     "Status: *{}*\n"
+                                     "Time Bruhed: *{}*\n\n"
                                      "Triggered by *{}* with this message:\n"
                                      "{}\n"
                                      "This was the bruh moment, by *{}*:\n"
-                                     "{}").format(self.author.first_name, bruh_id, thread, status, author, trigger, bro,
+                                     "{}").format(self.author.first_name, bruh_id, thread, status, time_string, author, trigger, bro,
                                                   bruh_moment)
 
         elif command == "remove":

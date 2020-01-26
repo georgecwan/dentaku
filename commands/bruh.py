@@ -1,6 +1,8 @@
+import json
+
 from fbchat import Message
 from fbchat import Mention
-import fbchat
+import time
 from commands.command import Command
 
 statuses = ['confirmed', 'big']
@@ -15,6 +17,8 @@ class bruh(Command):
             int(self.user_params[0])
             command = "get"
         except ValueError:
+            if not self.user_params[0]:
+                return
             command = self.user_params[0]
         if command == "get":
             if self.user_params[0] == "get":
@@ -24,10 +28,10 @@ class bruh(Command):
 
             try:
                 bruh_doc = messenger_ref.collection(u'bruhs').document(bruh_id).get().to_dict()
+                status = bruh_doc['status']
             except TypeError:
                 status = "Removed"
 
-            status = bruh_doc['status']
             if status == 'Removed':
                 response_text = "@{}\nThis Bruh Moment does not exist.".format(self.author.first_name)
             else:
@@ -49,7 +53,7 @@ class bruh(Command):
                 thread = bruh_doc['thread']
 
                 if thread != self.thread_id and (
-                        self.thread_id not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
+                        int(self.thread_id) not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
                     response_text = "@{}\nThis Bruh Moment is not accessible in this thread.".format(
                         self.author.first_name,
                         bruh_id, thread,
@@ -58,14 +62,18 @@ class bruh(Command):
                 else:
                     thread = self.client.fetchThreadInfo(thread)[thread]
                     thread = thread.name
+
+                    time_string = time.strftime('%Y-%m-%d %-I:%M %p', time.localtime(bruh_doc['time']))
+
                     response_text = ("@{}\n"
                                      "Bruh *#{}*\n"
                                      "Thread: *{}*\n"
-                                     "Status: *{}*\n\n"
+                                     "Status: *{}*\n"
+                                     "Time Bruhed: *{}*\n\n"
                                      "Triggered by *{}* with this message:\n"
                                      "{}\n"
                                      "This was the bruh moment, by *{}*:\n"
-                                     "{}").format(self.author.first_name, bruh_id, thread, status, author, trigger, bro,
+                                     "{}").format(self.author.first_name, bruh_id, thread, status, time_string, author, trigger, bro,
                                                   bruh_moment)
 
         elif command == "remove":

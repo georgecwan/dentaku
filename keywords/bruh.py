@@ -1,7 +1,7 @@
 from fbchat import Message
 from fbchat import Mention
 from keywords.keyword import Keyword
-
+import time
 statuses = ['confirmed', 'big']
 
 
@@ -46,7 +46,8 @@ class bruh(Keyword):
             u'thread': self.thread_id,
             u'author': self.author_id,
             u'bro': bro,
-            u'status': status
+            u'status': status,
+            u'time': int(time.time())
         })
         messenger_ref.update({u'latest_id': messenger_bruhs + 1})
         response_text = """

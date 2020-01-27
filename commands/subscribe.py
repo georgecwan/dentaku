@@ -25,8 +25,7 @@ class subscribe(Command):
                                """.format(self.author.first_name)
             else:
                 response_text = """
-                               @{}
-                               No action taken. You were are currently not subscribed to deployments.
+                               @{} No action taken. You are currently not subscribed to deployments.
                                """.format(self.author.first_name)
         else:
             if self.author_id in database['subscription']:

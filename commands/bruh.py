@@ -55,10 +55,7 @@ class bruh(Command):
                 if thread != self.thread_id and (
                         int(self.thread_id) not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
                     response_text = "@{}\nThis Bruh Moment is not accessible in this thread.".format(
-                        self.author.first_name,
-                        bruh_id, thread,
-                        author, trigger, bro,
-                        bruh_moment)
+                        self.author.first_name)
                 else:
                     thread = self.client.fetchThreadInfo(thread)[thread]
                     thread = thread.name
@@ -84,15 +81,20 @@ class bruh(Command):
                 status = bruh_doc['status']
             except TypeError:
                 status = "Removed"
-
-            if status == "Removed":
-                response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
+            thread = bruh_doc['thread']
+            if thread != self.thread_id and (
+                    int(self.thread_id) not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
+                response_text = "@{}\nThis Bruh Moment is not accessible in this thread.".format(
+                    self.author.first_name)
             else:
-                bruh_doc['status'] = bruh_doc['moment'] = bruh_doc['trigger'] = bruh_doc['bro'] = author = bruh_doc[
-                    'author'] = bruh_doc['thread'] = "Removed"
+                if status == "Removed":
+                    response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
+                else:
+                    bruh_doc['status'] = bruh_doc['moment'] = bruh_doc['trigger'] = bruh_doc['bro'] = author = bruh_doc[
+                        'author'] = bruh_doc['thread'] = "Removed"
 
-                bruh_ref.update(bruh_doc)
-                response_text = "@{}\nBruh #{} has been removed.".format(self.author.first_name, bruh_id)
+                    bruh_ref.update(bruh_doc)
+                    response_text = "@{}\nBruh #{} has been removed.".format(self.author.first_name, bruh_id)
         elif command == "edit":
             if len(self.user_params) < 3:
                 response_text = "@{}\nMissing {} parameters. Must be in the form !bruh edit ID NEW_BRUH_MOMENT".format(
@@ -106,12 +108,18 @@ class bruh(Command):
                 except TypeError:
                     status = "Removed"
 
-                if status == "Removed":
-                    response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
+                thread = bruh_doc['thread']
+                if thread != self.thread_id and (
+                        int(self.thread_id) not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
+                    response_text = "@{}\nThis Bruh Moment is not accessible in this thread.".format(
+                        self.author.first_name)
                 else:
-                    bruh_doc['moment'] = self.user_params[2]
-                    bruh_ref.update(bruh_doc)
-                    response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name, bruh_id)
+                    if status == "Removed":
+                        response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
+                    else:
+                        bruh_doc['moment'] = " ".join(self.user_params[2:])
+                        bruh_ref.update(bruh_doc)
+                        response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name, bruh_id)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         self.client.send(
             Message(text=response_text, mentions=mentions),

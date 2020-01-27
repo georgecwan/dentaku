@@ -16,7 +16,7 @@ class subscribe(Command):
             database = {}
             database['subscription'] = []
 
-        if self.user_params == ['remove']:
+        if self.user_params[0] == 'remove':
             if self.author_id in database['subscription']:
                 database['subscription'].remove(self.author_id)
                 response_text = """

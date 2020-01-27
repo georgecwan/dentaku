@@ -21,7 +21,7 @@ class spellcheck(Command):
                     if "\n"+i.lower()+"\n" not in text and i.lower() != "a" and i.lower() != "zymin":
                         mis += " " + i
                 if mis != "":
-                    response_text = "@" + self.author.first_name + " Mispelled words:" + mis
+                    response_text = "@" + self.author.first_name + " Misspelled words:" + mis
                 else:
                     response_text = "@" + self.author.first_name + " Seems legit"
             except AttributeError:
@@ -31,7 +31,7 @@ class spellcheck(Command):
                         if "\n" + i.translate(str.maketrans('', '', string.punctuation)).lower() + "\n" not in text and i.lower() != "a" and i.lower() != "zymin":
                             mis += " " + i
                     if mis != "":
-                        response_text = "@" + self.author.first_name + " Mispelled words:" + mis
+                        response_text = "@" + self.author.first_name + " Misspelled words:" + mis
                     else:
                         response_text = "@" + self.author.first_name + " Seems legit"
                 #except:

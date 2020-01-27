@@ -8,7 +8,7 @@ statuses = ['confirmed', 'big']
 class bruh(Keyword):
 
     def run(self):
-        if self.client.uid == self.author_id:
+        if self.client.uid == self.author_id or self.author_id == "100045950177697":
             return
 
         replied_to: Message = self.message_object.replied_to

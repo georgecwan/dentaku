@@ -18,21 +18,25 @@ Windows: `Notepad export.sh` and accept the prompt to create the new file (or cr
     export EMAIL="YOUR_FACEBOOK_ACCOUNT_EMAIL"
     export PASSWORD="YOUR_FACEBOOK_ACCOUNT_PASSWORD"
     export BITLY_GAT="YOUR_BITLY_GENERIC_ACCESS_TOKEN"
+    export G_CREDENTIALS="PATH_TO_YOUR_SERVICE_ACCOUNT_JSON"
     ```
     > Note: Replace the strings with your own information, but keep the quotation marks! <br>
     > Get your bit.ly [Generic Access Token](https://bitly.com/a/oauth_apps), which is required if you want to use commands with link shorteners. <br>
+    > Get your service account credentials, which is required if you want to use commands with Google Cloud integration. This project uses [Firebase](https://firebase.google.com/docs/firestore/quickstart).<br>
     > (Remember to hit save in the text editor before activating the variables!) <br>
-1. Activate the variables and venv. <br>
-    macOS/Linux: `source export.sh` `source venv/bin/activate` <br>
-    Windows: (The variables are automatically set when main.py is run)   `venv\Scripts\activate.bat` <br>
+1. Activate the venv. <br>
+    macOS/Linux:  `source venv/bin/activate` <br>
+    Windows: `venv\Scripts\activate.bat` <br>
 1. Install the required packages. `pip install -r requirements.txt` <br>
 1. Run the bot. `python main.py` <br>
     You should see this:
     ```
-    Logging in [YOUR_FACEBOOK_ACCOUNT_EMAIL]...
-    Login of [YOU_FACEBOOK_ACCOUNT_EMAIL] successful.
-    Listening...
+    Logging in knarf8700@gmail.com...
+    Login of knarf8700@gmail.com successful.
+    Testing mode will restrict all bot interactions to direct messages, or ThreadType.USER.
+    Turn on testing mode? (y/n): 
     ```
+Follow the dialog, and at the end, you should see `Listening...` which confirms that your bot is on and listening to Messenger.
 > Keep Dentaku running and check your Messenger! You should have received a message from yourself, saying "Dentaku is online." Test the 'help' command by sending `!help` to the chat. <br>
 > Now you can make your own commands by following the guidelines below. :)
 

@@ -20,8 +20,7 @@ class subscribe(Command):
             if self.author_id in database['subscription']:
                 database['subscription'].remove(self.author_id)
                 response_text = """
-                               @{}
-                               You have been unsubscribed from deployment notifications!
+                               @{} You have been unsubscribed from deployment notifications!
                                """.format(self.author.first_name)
             else:
                 response_text = """
@@ -35,7 +34,7 @@ class subscribe(Command):
             else:
                 database['subscription'].append(self.author_id)
                 response_text = """
-                           @{}\nYou have been subscribed to deployment notifications!
+                           @{} You have been subscribed to deployment notifications!
                            """.format(self.author.first_name)
 
         with open("database.json", 'w') as outfile:

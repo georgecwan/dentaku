@@ -9,8 +9,8 @@ import os
 class subscribe(Command):
 
     def run(self):
-        if os.path.exists("../database.json"):
-            with open("../database.json", 'r') as file:
+        if os.path.exists("database.json"):
+            with open("database.json", 'r') as file:
                 database = json.load(file)
         else:
             database = {}
@@ -29,12 +29,17 @@ class subscribe(Command):
                                No action taken. You were are currently not subscribed to deployments.
                                """.format(self.author.first_name)
         else:
-            database['subscription'].append(self.author_id)
-            response_text = """
+            if self.author_id in database['subscription']:
+                response_text = """
+                               @{} You were already subscribed!
+                               """.format(self.author.first_name)
+            else:
+                database['subscription'].append(self.author_id)
+                response_text = """
                            @{}\nYou have been subscribed to deployment notifications!
                            """.format(self.author.first_name)
 
-        with open("../database.json", 'w') as outfile:
+        with open("database.json", 'w') as outfile:
             json.dump(database, outfile)
 
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
@@ -47,6 +52,6 @@ class subscribe(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "None",
-            "function": "Subscribes a user to Dentaku updates."
+            "parameters": "remove",
+            "function": "Subscribes a user to Dentaku updates. Removes user if parameter remove is present."
         }

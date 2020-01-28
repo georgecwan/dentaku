@@ -7,13 +7,15 @@ class countdown(Command):
 
     def run(self):
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
-        if 'countdown' not in self.database:
-            self.database['countdown'] = "enabled"
-        if self.user_params[0].lower() == "disable":
+        if len(self.user_params) == 0:
+            response_text = "@" + self.author.first_name + " Countdown is currently " + self.database['countdown']
+        elif self.user_params[0].lower() == "no":
             self.database['countdown'] = "disabled"
-        elif self.user_params[0].lower() == "enable":
-            self.database['countdown'] == "disabled"
-        elif len(self.user_params) == 0 and self.database['countdown'] == "enabled":
+            response_text = "@" + self.author.first_name + " Countdown is now " + self.database['countdown']
+        elif self.user_params[0].lower() == "yes":
+            self.database['countdown'] = "enabled"
+            response_text = "@" + self.author.first_name + " Countdown is now " + self.database['countdown']
+        elif len(self.user_params) == 1 and self.database['countdown'] == "enabled":
             try:
                 count = int(self.user_params[0])
                 if count > 10:
@@ -23,12 +25,12 @@ class countdown(Command):
                 else:
                     response_text = "!countdown " + str(count - 1)
                 mentions = None
-
             except ValueError:
                 response_text = "You think you're soooo clever? Not anymore " + self.author.first_name + ", because I now have error catching!"
                 mentions = None
-        elif len(self.user_params) == 0:
-            response_text = "@" + self.author.first_name + "Countdown is now " + self.database['countdown']
+        else:
+            response_text = "Sorry, !countdown is currently disabled. Please type !countdown enable and try again."
+            mentions = None
 
         self.client.send(
             Message(text=response_text, mentions=mentions),
@@ -38,6 +40,6 @@ class countdown(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "NUMBER / DISABLE / ENABLE",
-            "function": "Counts down recursively from NUMBER or ENABLE/DISABLES the countdown."
+            "parameters": "NUMBER / YES / NO",
+            "function": "Counts down recursively from NUMBER or enables/disables the countdown."
         }

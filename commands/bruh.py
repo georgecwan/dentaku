@@ -164,7 +164,7 @@ class bruh(Command):
                     if status == "Removed":
                         response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
                     else:
-                        bruh_doc['moment'] = " ".join(self.user_params[2])
+                        bruh_doc['moment'] = "".join(self.user_params[2])
                         bruh_doc['image'] = True
                         bruh_ref.update(bruh_doc)
                         response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name, bruh_id)

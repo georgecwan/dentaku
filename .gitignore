@@ -10,3 +10,4 @@ database.json
 run-autodeploy
 update-autodeploy
 python-autodeploy
+session.json

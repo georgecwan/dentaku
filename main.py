@@ -11,6 +11,7 @@ import traceback
 from datetime import datetime
 import time
 from fbchat import ThreadType
+from fbchat import TypingStatus
 import importlib
 
 database = {}
@@ -23,6 +24,9 @@ class dentaku_bot(Client):
         if database['testing'].lower() == "y" and thread_type != ThreadType.USER:
             return
         if "!" in str(message_object.text)[0]:
+            client.setTypingStatus(
+                TypingStatus.TYPING, thread_id=thread_id, thread_type=thread_type
+            )
             message = str(message_object.text).replace("!", "").split(" ")
             command_index = 1
             if message[0] == '':
@@ -47,7 +51,7 @@ class dentaku_bot(Client):
                 module = importlib.import_module(".." + command, "commands.subpkg")
                 new_command = getattr(module, command)
                 instance = new_command(parameters, client=self)
-                instance.run()
+                instance.process()
             except ModuleNotFoundError:
                 print(traceback.format_exc())
                 self.send(

@@ -2,13 +2,18 @@ from fbchat import Message
 from fbchat import Mention
 from keywords.keyword import Keyword
 import time
+
 statuses = ['confirmed', 'big']
+bruh_blacklist = [
+    "100045950177697",
+    "100046347702556"
+]
 
 
 class bruh(Keyword):
 
     def run(self):
-        if self.client.uid == self.author_id or self.author_id == "100045950177697":
+        if self.client.uid == self.author_id or self.author_id in bruh_blacklist:
             return
 
         replied_to: Message = self.message_object.replied_to
@@ -26,7 +31,13 @@ class bruh(Keyword):
             messages.reverse()
             for m, i in zip(messages, range(len(messages))):
                 if self.message_object.uid == m.uid:
-                    bruh_moment = messages[i - 1].text
+                    bruh_moment = messages[i - 1]
+                    if len(bruh_moment.attachments) > 0:
+                        bruh_moment = bruh_moment.attachments[0]['mercury']['large_preview']['uri']
+                        image = True
+                    else:
+                        image = False
+                        bruh_moment = bruh_moment.text
                     bro = messages[i - 1].author
         trigger = self.message_object.text
 
@@ -47,7 +58,8 @@ class bruh(Keyword):
             u'author': self.author_id,
             u'bro': bro,
             u'status': status,
-            u'time': int(time.time())
+            u'time': int(time.time()),
+            u'image': image
         })
         messenger_ref.update({u'latest_id': messenger_bruhs + 1})
         response_text = """

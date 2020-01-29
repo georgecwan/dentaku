@@ -29,7 +29,7 @@ class countdown(Command):
                 response_text = "You think you're soooo clever? Not anymore " + self.author.first_name + ", because I now have error catching!"
                 mentions = None
         else:
-            response_text = "Sorry, !countdown is currently disabled. Please type !countdown enable and try again."
+            response_text = "Sorry, !countdown is currently disabled. Please type !countdown YES and try again."
             mentions = None
 
         self.client.send(

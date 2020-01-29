@@ -20,6 +20,9 @@ class bruh(Command):
             if not self.user_params[0]:
                 return
             command = self.user_params[0]
+
+        send_image = None
+
         if command == "get":
             if self.user_params[0] == "get":
                 bruh_id = self.user_params[1]
@@ -62,16 +65,30 @@ class bruh(Command):
 
                     time_string = time.strftime('%Y-%m-%d %-I:%M %p', time.localtime(bruh_doc['time']))
 
-                    response_text = ("@{}\n"
-                                     "Bruh *#{}*\n"
-                                     "Thread: *{}*\n"
-                                     "Status: *{}*\n"
-                                     "Time Bruhed: *{}*\n\n"
-                                     "Triggered by *{}* with this message:\n"
-                                     "{}\n"
-                                     "This was the bruh moment, by *{}*:\n"
-                                     "{}").format(self.author.first_name, bruh_id, thread, status, time_string, author, trigger, bro,
-                                                  bruh_moment)
+                    if 'image' in bruh_doc and bruh_doc['image']:
+                        response_text = ("@{}\n"
+                                         "Bruh *#{}*\n"
+                                         "Thread: *{}*\n"
+                                         "Status: *{}*\n"
+                                         "Time Bruhed: *{}*\n\n"
+                                         "Triggered by *{}* with this message:\n"
+                                         "{}\n"
+                                         "This was the bruh moment, by *{}*:").format(self.author.first_name, bruh_id, thread, status, time_string,
+                                                      author, trigger, bro,
+                                                      bruh_moment)
+                        send_image = bruh_moment
+                    else:
+                        response_text = ("@{}\n"
+                                         "Bruh *#{}*\n"
+                                         "Thread: *{}*\n"
+                                         "Status: *{}*\n"
+                                         "Time Bruhed: *{}*\n\n"
+                                         "Triggered by *{}* with this message:\n"
+                                         "{}\n"
+                                         "This was the bruh moment, by *{}*:\n"
+                                         "{}").format(self.author.first_name, bruh_id, thread, status, time_string,
+                                                      author, trigger, bro,
+                                                      bruh_moment)
 
         elif command == "remove":
             if len(self.user_params) == 2:
@@ -122,6 +139,33 @@ class bruh(Command):
                         response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
                     else:
                         bruh_doc['moment'] = " ".join(self.user_params[2:])
+                        bruh_doc['image'] = False
+                        bruh_ref.update(bruh_doc)
+                        response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name, bruh_id)
+        elif command == "editimg":
+            if len(self.user_params) < 3:
+                response_text = "@{}\nMissing {} parameters. Must be in the form !bruh edit ID NEW_BRUH_MOMENT".format(
+                    self.author.first_name, 3 - len(self.user_params))
+            else:
+                bruh_id = self.user_params[1]
+                bruh_ref = messenger_ref.collection(u'bruhs').document(bruh_id)
+                try:
+                    bruh_doc = bruh_ref.get().to_dict()
+                    status = bruh_doc['status']
+                except TypeError:
+                    status = "Removed"
+
+                thread = bruh_doc['thread']
+                if thread != self.thread_id and (
+                        int(self.thread_id) not in messenger_ref.get().to_dict()['threads'][str(thread)]['shared']):
+                    response_text = "@{}\nThis Bruh Moment is not accessible in this thread.".format(
+                        self.author.first_name)
+                else:
+                    if status == "Removed":
+                        response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
+                    else:
+                        bruh_doc['moment'] = " ".join(self.user_params[2])
+                        bruh_doc['image'] = True
                         bruh_ref.update(bruh_doc)
                         response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name, bruh_id)
         else:
@@ -132,6 +176,12 @@ class bruh(Command):
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+        if send_image:
+            self.client.sendRemoteImage(
+                send_image,
+                thread_id=self.thread_id,
+                thread_type=self.thread_type,
+            )
 
     def define_documentation(self):
         self.documentation = {

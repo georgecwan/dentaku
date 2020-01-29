@@ -1,5 +1,5 @@
 git fetch upstream
 git checkout master
-git merge upstream/master --no-edit
+git merge upstream/dev --no-edit
 
 # Hi George

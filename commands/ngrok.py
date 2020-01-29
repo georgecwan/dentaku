@@ -2,6 +2,7 @@ from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
 import subprocess
+import requests
 
 
 class ngrok(Command):

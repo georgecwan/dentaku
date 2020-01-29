@@ -76,7 +76,7 @@ class bruh(Command):
                                          "This was the bruh moment, by *{}*:").format(self.author.first_name, bruh_id, thread, status, time_string,
                                                       author, trigger, bro,
                                                       bruh_moment)
-                        send_image = bruh_moment
+                        send_image = bruh_doc['moment']
                     else:
                         response_text = ("@{}\n"
                                          "Bruh *#{}*\n"

@@ -73,9 +73,10 @@ class bruh(Command):
                                          "Time Bruhed: *{}*\n\n"
                                          "Triggered by *{}* with this message:\n"
                                          "{}\n"
-                                         "This was the bruh moment, by *{}*:").format(self.author.first_name, bruh_id, thread, status, time_string,
-                                                      author, trigger, bro,
-                                                      bruh_moment)
+                                         "This was the bruh moment, by *{}*:").format(self.author.first_name, bruh_id,
+                                                                                      thread, status, time_string,
+                                                                                      author, trigger, bro,
+                                                                                      bruh_moment)
                         send_image = bruh_doc['moment']
                     else:
                         response_text = ("@{}\n"
@@ -108,7 +109,8 @@ class bruh(Command):
                     if status == "Removed":
                         response_text = "@{}\nBruh #{} does not exist.".format(self.author.first_name, bruh_id)
                     else:
-                        bruh_doc['status'] = bruh_doc['moment'] = bruh_doc['trigger'] = bruh_doc['bro'] = author = bruh_doc[
+                        bruh_doc['status'] = bruh_doc['moment'] = bruh_doc['trigger'] = bruh_doc['bro'] = author = \
+                        bruh_doc[
                             'author'] = bruh_doc['thread'] = "Removed"
 
                         bruh_ref.update(bruh_doc)
@@ -169,7 +171,8 @@ class bruh(Command):
                         bruh_ref.update(bruh_doc)
                         response_text = "@{}\nBruh #{} has been edited.".format(self.author.first_name, bruh_id)
         else:
-            response_text = "@{}\n Not a valid command. Use either !bruh ID, !bruh remove ID, or !bruh edit ID TEXT".format(self.author.first_name)
+            response_text = "@{}\n Not a valid command. Use either !bruh ID, !bruh remove ID, or !bruh edit ID TEXT".format(
+                self.author.first_name)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         self.client.send(
             Message(text=response_text, mentions=mentions),

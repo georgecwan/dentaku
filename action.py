@@ -1,5 +1,7 @@
 from fbchat import Client
 import fbchat
+from fbchat import TypingStatus
+import asyncio
 
 
 class Action:
@@ -23,6 +25,12 @@ class Action:
             client.markAsDelivered(self.thread_id, self.message_object.uid)
             client.markAsRead(self.thread_id)
         self.define_documentation()
+
+    def process(self):
+        self.run()
+        self.client.setTypingStatus(
+            TypingStatus.STOPPED, thread_id=self.thread_id, thread_type=self.thread_type
+        )
 
     def run(self):
         print("Running abstract command...")

@@ -17,7 +17,7 @@ class ngrok(Command):
             response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
         pub_url = response['tunnels'][0]['public_url']
         response_text = """
-        @{}\nPublic URL:{}
+        @{}\nPublic URL: {}
         """.format(self.author.first_name, pub_url)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 

@@ -11,6 +11,7 @@ class ngrok(Command):
     def run(self):
         try:
             response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
+            pub_url = response['tunnels'][0]['public_url']
         except:
             p = subprocess.Popen("exec " + "~/ngrok tcp 22", stdout=subprocess.PIPE, shell=True)
             while(True):

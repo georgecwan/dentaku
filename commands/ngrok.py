@@ -9,11 +9,13 @@ import requests
 
 class ngrok(Command):
     def run(self):
-        if 'ngrok-status' not in self.database or self.database['ngrok-status'] != 'on':
+        try:
+            response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
+        except:
             p = subprocess.Popen("exec " + "~/ngrok tcp 22", stdout=subprocess.PIPE, shell=True)
             self.database['ngrok-status'] = 'on'
-        response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
-        pub_url = response['tuneels'][0]['public_url']
+            response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
+        pub_url = response['tunnels'][0]['public_url']
         response_text = """
         @{}\nPublic URL:{}
         """.format(self.author.first_name, pub_url)

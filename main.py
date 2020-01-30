@@ -28,6 +28,9 @@ class dentaku_bot(Client):
                 TypingStatus.TYPING, thread_id=thread_id, thread_type=thread_type
             )
             message = str(message_object.text).replace("!", "").split(" ")
+            print(message)
+            if message == ['']:
+                return
             command_index = 1
             if message[0] == '':
                 for each in message:

@@ -23,11 +23,14 @@ class dentaku_bot(Client):
         global database
         if database['testing'].lower() == "y" and thread_type != ThreadType.USER:
             return
-        if "!" in str(message_object.text)[0]:
+        if "!" in str(message_object.text)[0] and len(message_object.text) > 1:
             client.setTypingStatus(
                 TypingStatus.TYPING, thread_id=thread_id, thread_type=thread_type
             )
             message = str(message_object.text).replace("!", "").split(" ")
+            print(message)
+            if message == ['']:
+                return
             command_index = 1
             if message[0] == '':
                 for each in message:

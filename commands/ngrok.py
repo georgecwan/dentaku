@@ -13,9 +13,13 @@ class ngrok(Command):
             response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
         except:
             p = subprocess.Popen("exec " + "~/ngrok tcp 22", stdout=subprocess.PIPE, shell=True)
-            self.database['ngrok-status'] = 'on'
-            response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
-        pub_url = response['tunnels'][0]['public_url']
+            while(True):
+                try:
+                    response = json.loads(requests.get('http://localhost:4040/api/tunnels').text)
+                    pub_url = response['tunnels'][0]['public_url']
+                    break
+                except:
+                    print("Attempting ngrok connection again...")
         response_text = """
         @{}\nPublic URL: {}
         """.format(self.author.first_name, pub_url)
@@ -26,3 +30,9 @@ class ngrok(Command):
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "None",
+            "function": "Sending the address for the ngrok tcp link."
+        }

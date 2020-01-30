@@ -30,6 +30,7 @@ class bruh(Keyword):
             else:
                 image = False
                 bruh_moment = replied_to.text
+            bro = replied_to.author
         else:
             messages = self.client.fetchThreadMessages(thread_id=self.thread_id, limit=10)
             messages.reverse()

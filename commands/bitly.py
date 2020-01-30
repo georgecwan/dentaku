@@ -32,6 +32,6 @@ class bitly(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "REPLIED_MESSAGE",
-            "function": "frank-ify a REPLIED_MESSAGE"
+            "parameters": "LINK or REPLIED_MESSAGE",
+            "function": "Returns a bit.ly for the link entered."
         }

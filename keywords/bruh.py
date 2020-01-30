@@ -24,8 +24,12 @@ class bruh(Keyword):
             else:
                 status = "unconfirmed"
         if replied_to:
-            bruh_moment = replied_to.text
-            bro = replied_to.author
+            if len(replied_to.attachments) > 0:
+                bruh_moment = replied_to.attachments[0]['mercury']['large_preview']['uri']
+                image = True
+            else:
+                image = False
+                bruh_moment = replied_to.text
         else:
             messages = self.client.fetchThreadMessages(thread_id=self.thread_id, limit=10)
             messages.reverse()

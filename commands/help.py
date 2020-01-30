@@ -11,7 +11,6 @@ modules.remove("command")
 modules.remove("rate_limit")
 modules.remove("__init__")
 
-
 class help(Command):
 
     def get_instance(self, name):
@@ -23,18 +22,26 @@ class help(Command):
     def run(self):
         response_text = "@{}".format(self.author.first_name)
         if len(self.user_params) == 0:
-            response_text += " Please signify if you would like to see part 1 or 2 of the commands list."
+            response_text += " Please signify which part (1-4) of the commands list you would like to see."
         elif len(self.user_params) == 1:
             try:
                 # sends general information about all commands
                 start = 0
                 end = len(modules)
                 if float(self.user_params[0]) == 1:
-                    response_text += " Part 1/2"
-                    end = math.ceil(len(modules) / 2)
+                    response_text += " Part 1/4"
+                    end = math.ceil(len(modules) / 4)
                 elif float(self.user_params[0]) == 2:
-                    response_text += " Part 2/2"
+                    response_text += " Part 2/4"
+                    start = math.ceil(len(modules) / 4)
+                    end = math.ceil(len(modules) / 2)
+                elif float(self.user_params[0]) == 3:
+                    response_text += " Part 3/4"
                     start = math.ceil(len(modules) / 2)
+                    end = math.ceil(3 * len(modules) / 4)
+                elif float(self.user_params[0]) == 4:
+                    response_text += " Part 4/4"
+                    start = math.ceil(3 * len(modules) / 4)
                 for x in modules[start:end]:
                     instance = self.get_instance(x)
                     response_text += "\n\n!" + x + ": " + instance.documentation["function"]

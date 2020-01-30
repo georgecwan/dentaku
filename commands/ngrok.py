@@ -30,3 +30,9 @@ class ngrok(Command):
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "None",
+            "function": "Sending the address for the ngrok tcp link."
+        }

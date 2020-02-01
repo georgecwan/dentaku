@@ -2,7 +2,6 @@ from commands.command import Command
 from fbchat import Message, Mention, MessageReaction, FBchatException
 from random import choice as choose
 from random import seed, randint
-auto = "on"
 
 
 def find_reply_id(message):
@@ -76,6 +75,8 @@ class react(Command):
             return "invalid"
 
     def run(self):
+        if "auto" not in self.database:
+            self.database["auto"] = "off"
         seed(randint(0, 100))
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         if len(self.user_params) > 0:
@@ -94,20 +95,19 @@ class react(Command):
             if len(self.user_params) > 1:
                 response_text = ""
                 if self.user_params[0] == "auto":
-                    global auto
                     if self.user_params[1] == "on":
                         # auto react is now on.
-                        auto = "on"
+                        self.database["auto"] = "on"
                     elif self.user_params[1] == "off":
                         # auto react is now off.
-                        auto = "off"
+                        self.database["auto"] = "off"
                     elif self.user_params[1] == "status":
                         # checks if auto is on/off.
                         response_text = "@" + self.author.first_name \
-                                + "\nDentaku's auto react is currently " + auto + "."
+                                + "\nDentaku's auto react is currently " + self.database["auto"] + "."
                 if response_text == "":
                     response_text = "@" + self.author.first_name \
-                                    + "\nAuto react is now " + auto + "." \
+                                    + "\nAuto react is now " + self.database["auto"] + "." \
                                     + "\n\nLearn more about auto_react by calling !help !auto_react!"
                 self.client.send(
                     Message(text=response_text, mentions=mentions),

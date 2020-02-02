@@ -55,8 +55,6 @@ class rps(Command):
         elif hand.SCISSOR == user_choice:
             win = 1 if bot_choice != hand.ROCK else 0
 
-
-
         self.client.send(
             Message(text="@{} ".format(self.author.first_name) + bot_choice.name.lower().capitalize() + "!",
                     mentions=mentions),
@@ -73,7 +71,7 @@ class rps(Command):
         else:
             response_text = "@{} A tie!".format(self.author.first_name)
         response_text += "\n({}/3)\nDentaku {} - {} {}".format(self.memory['round'], self.memory['bot'],
-                                                                    self.memory['user'], self.author.first_name)
+                                                               self.memory['user'], self.author.first_name)
 
         self.client.send(
             Message(text=response_text, mentions=mentions),

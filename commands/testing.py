@@ -35,8 +35,7 @@ class testing(Command):
             else:
                 response_text = "@{} You do not have sufficient permissions to change this mode.".format(
                     self.author.first_name)
-        with open("database.json", 'w') as outfile:
-            json.dump(self.database, outfile)
+        self.save_db()
 
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 

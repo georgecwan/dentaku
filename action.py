@@ -1,3 +1,5 @@
+import json
+
 from fbchat import Client
 import fbchat
 from fbchat import TypingStatus
@@ -12,7 +14,7 @@ class Action:
         self.message_object: fbchat.Message = self.get(parameters, 'message_object')
         self.thread_id: int = self.get(parameters, 'thread_id')
         self.thread_type: fbchat.ThreadType = self.get(parameters, 'thread_type')
-
+        self.trigger = self.get(parameters, 'trigger')
         self.documentation = {
             "parameters": "",
             "function": ""
@@ -24,6 +26,12 @@ class Action:
             self.gdb = self.get(parameters, 'gdb')
             client.markAsDelivered(self.thread_id, self.message_object.uid)
             client.markAsRead(self.thread_id)
+        if parameters:
+            if 'memory' not in self.database:
+                self.database['memory']: dict = {}
+            self.memory = self.database['memory']
+            if str(self.author_id) not in self.memory: self.memory[str(self.author_id)]: dict = {}
+            self.memory = self.memory[str(self.author_id)]
         self.define_documentation()
 
     def process(self):
@@ -44,3 +52,7 @@ class Action:
             return parameters[property]
         else:
             return None
+
+    def save_db(self):
+        with open("database.json", 'w') as outfile:
+            json.dump(self.database, outfile)

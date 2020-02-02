@@ -26,7 +26,6 @@ class react(Command):
         "LOL": "😆", "LMAO": "😆", "(:": "😆",
         # wow react "😮"
         "wow": "😮", "whoa": "😮", "woah": "😮", "wows": "😮", "wtf": "😮", ":O": "😮", "O:": "😮", "truck": "😮",
-        "omg": "😮",
         # sad react "😢"
         "sad": "😢", "crying": "😢", "sadness": "😢", "cry": "😢", ":(": "😢", ";-;": "😢", "</3": "😢", "):": "😢",
         "oof": "😢", "oeuf": "😢",
@@ -34,10 +33,10 @@ class react(Command):
         "angry": "😠", "angr": "😠", "ugh": "😠", ">:(": "😠", "mad": "😠", "):<": "😠", "amgery": "😠",
         # thumbs up react "👍"
         "thumbs_up": "👍", "yes": "👍", "good": "👍", "nice": "👍", "like": "👍", "up": "👍", "okay": "👍", "ok": "👍",
-        "k": "👍", "yea": "👍", "fax": "👍", "agree": "👍", "concur": "👍", "yeah": "👍", "ya": "👍", "yup": "👍",
+        "k": "👍", "yea": "👍", "fax": "👍", "agree": "👍", "concur": "👍",
         # thumbs down react "👎"
         "thumbs_down": "👎", "no": "👎", "bad": "👎", "ew": "👎", "dislike": "👎", "down": "👎", "not_okay": "👎",
-        "not_ok": "👎", "nah": "👎", "disagree": "👎", "boo": "👎", "nope": "👎",
+        "not_ok": "👎", "nah": "👎", "disagree": "👎", "boo": "👎",
         # random emoji!
         "random": "run_random", "r": "run_random", "react": "run_random"
     }
@@ -75,40 +74,15 @@ class react(Command):
             return "invalid"
 
     def run(self):
-        if "auto" not in self.database:
-            self.database["auto"] = "off"
         seed(randint(0, 100))
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         if len(self.user_params) > 0:
             if self.user_params[0] == "help":
                 response_text = "@" + self.author.first_name
-                response_text += " These are the possible react commands: \n```"
+                response_text += "These are the possible react commands: \n```"
                 for x in self.emoji_dict.keys():
                     response_text += "\n{}".format(x)
                 response_text += "\n```"
-                self.client.send(
-                    Message(text=response_text, mentions=mentions),
-                    thread_id=self.thread_id,
-                    thread_type=self.thread_type
-                )
-                exit()
-            if len(self.user_params) > 1:
-                response_text = ""
-                if self.user_params[0] == "auto":
-                    if self.user_params[1] == "on":
-                        # auto react is now on.
-                        self.database["auto"] = "on"
-                    elif self.user_params[1] == "off":
-                        # auto react is now off.
-                        self.database["auto"] = "off"
-                    elif self.user_params[1] == "status":
-                        # checks if auto is on/off.
-                        response_text = "@" + self.author.first_name \
-                                + "\nDentaku's auto react is currently " + self.database["auto"] + "."
-                if response_text == "":
-                    response_text = "@" + self.author.first_name \
-                                    + "\nAuto react is now " + self.database["auto"] + "." \
-                                    + "\n\nLearn more about auto_react by calling !help !auto_react!"
                 self.client.send(
                     Message(text=response_text, mentions=mentions),
                     thread_id=self.thread_id,

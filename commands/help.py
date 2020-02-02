@@ -11,7 +11,6 @@ modules.remove("command")
 modules.remove("rate_limit")
 modules.remove("__init__")
 
-
 class help(Command):
 
     def get_instance(self, name):

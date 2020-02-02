@@ -42,6 +42,7 @@ class dentaku_bot(Client):
                 command = message[0]
             try:
                 parameters = {
+                    "trigger": command.lower(),
                     "user": message[command_index:],
                     "author_id": author_id,
                     "message_object": message_object,
@@ -73,6 +74,7 @@ class dentaku_bot(Client):
                 if word.lower() in message_object.text.lower():
                     try:
                         parameters = {
+                            "trigger": word.lower(),
                             "author_id": author_id,
                             "message_object": message_object,
                             "thread_id": thread_id,

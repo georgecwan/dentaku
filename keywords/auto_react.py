@@ -14,8 +14,8 @@ class auto_react(Keyword):
         msg = self.message_object.text.split()
         ed = react.react.emoji_dict
         for m in msg:
-            if m in ed:
-                emoji = ed[m]
+            if m.lower() in ed:
+                emoji = ed[m.lower()]
                 return MessageReaction(emoji)
 
     def run(self):

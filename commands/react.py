@@ -10,6 +10,8 @@ def find_reply_id(message):
         if x.startswith("reply_to_id="):
             x = x.replace("reply_to_id='", "")
             x = x.replace("',", "")
+            x = x.replace("reply_to_id=", "")  # for x = "reply_to_id=None" case
+            x = x.replace(",", "")
             return x
 
 
@@ -76,7 +78,7 @@ class react(Command):
 
     def run(self):
         if "auto" not in self.database:
-            self.database["auto"] = "off"
+            self.database["auto"] = "on"
         seed(randint(0, 100))
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         if len(self.user_params) > 0:
@@ -91,7 +93,16 @@ class react(Command):
                     thread_id=self.thread_id,
                     thread_type=self.thread_type
                 )
-                exit()
+                return
+            if len(self.user_params) == 1 and self.user_params[0] == "auto":
+                response_text = "@" + self.author.first_name \
+                                + "\nIf you're looking for auto react, use `!react auto [on/off]`."
+                self.client.send(
+                    Message(text=response_text, mentions=mentions),
+                    thread_id=self.thread_id,
+                    thread_type=self.thread_type
+                )
+                return
             if len(self.user_params) > 1:
                 response_text = ""
                 if self.user_params[0] == "auto":
@@ -107,14 +118,13 @@ class react(Command):
                                 + "\nDentaku's auto react is currently " + self.database["auto"] + "."
                 if response_text == "":
                     response_text = "@" + self.author.first_name \
-                                    + "\nAuto react is now " + self.database["auto"] + "." \
-                                    + "\n\nLearn more about auto_react by calling !help !auto_react!"
+                                    + "\nAuto react is now " + self.database["auto"] + "."
                 self.client.send(
                     Message(text=response_text, mentions=mentions),
                     thread_id=self.thread_id,
                     thread_type=self.thread_type
                 )
-                exit()
+                return
         m = self.message_object
         reply_id = find_reply_id(m)
         try:

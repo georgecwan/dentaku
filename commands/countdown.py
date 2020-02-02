@@ -6,6 +6,8 @@ from fbchat import Mention
 class countdown(Command):
 
     def run(self):
+        if 'countdown' not in self.database:
+            self.database['countdown'] = "enabled"
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         if len(self.user_params) == 0:
             response_text = "@" + self.author.first_name + " Countdown is currently " + self.database['countdown']

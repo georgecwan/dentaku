@@ -9,6 +9,7 @@ class hand(Enum):
     ROCK = 1
     PAPER = 2
     SCISSOR = 3
+    SCISSORS = 3
     R = 1
     P = 2
     S = 3
@@ -29,6 +30,15 @@ class rps(Command):
     def run(self):
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
+        if not self.user_params:
+            response_text = "@{} To begin your game, type !rps rock or !rps scissors or !rps paper.".format(self.author.first_name)
+            self.client.send(
+                Message(text=response_text, mentions=mentions),
+                thread_id=self.thread_id,
+                thread_type=self.thread_type
+            )
+            return
+
         if 'round' not in self.memory:
             self.client.send(
                 Message(text="@{} New round begun!".format(self.author.first_name),
@@ -41,7 +51,17 @@ class rps(Command):
         try:
             user_choice = hand(int(self.user_params[0]))
         except:
-            user_choice = hand[self.user_params[0].upper()]
+            try:
+                user_choice = hand[self.user_params[0].upper()]
+            except:
+                response_text = "@{} Invalid input.".format(
+                    self.author.first_name)
+                self.client.send(
+                    Message(text=response_text, mentions=mentions),
+                    thread_id=self.thread_id,
+                    thread_type=self.thread_type
+                )
+                return
 
         if 'bot' not in self.memory: self.memory['bot'] = 0
         if 'user' not in self.memory: self.memory['user'] = 0

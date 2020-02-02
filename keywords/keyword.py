@@ -10,9 +10,10 @@ class Keyword(Action):
             "trigger": "",
             "function": ""
         }
-        if 'keywords' not in self.memory:
-            self.memory['keywords'] = {}
-        self.memory = self.memory['keywords']
-        if self.trigger  not in self.memory:
-            self.memory[self.trigger] = {}
+        if parameters:
+            if 'keywords' not in self.memory:
+                self.memory['keywords'] = {}
+            self.memory = self.memory['keywords']
+            if self.trigger  not in self.memory:
+                self.memory[self.trigger] = {}
 

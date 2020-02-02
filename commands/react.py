@@ -28,10 +28,10 @@ class react(Command):
         "LOL": "😆", "LMAO": "😆", "(:": "😆",
         # wow react "😮"
         "wow": "😮", "whoa": "😮", "woah": "😮", "wows": "😮", "wtf": "😮", ":O": "😮", "O:": "😮", "truck": "😮",
-        "omg": "😮",
+        "omg": "😮", "cool": "😮",
         # sad react "😢"
         "sad": "😢", "crying": "😢", "sadness": "😢", "cry": "😢", ":(": "😢", ";-;": "😢", "</3": "😢", "):": "😢",
-        "oof": "😢", "oeuf": "😢",
+        "oof": "😢", "oeuf": "😢", "rip": "😢",
         # angry react "😠"
         "angry": "😠", "angr": "😠", "ugh": "😠", ">:(": "😠", "mad": "😠", "):<": "😠", "amgery": "😠",
         # thumbs up react "👍"
@@ -49,7 +49,7 @@ class react(Command):
         if len(self.user_params) == 0:
             return None
         elif len(self.user_params) == 1:
-            emoji = self.user_params[0].strip()
+            emoji = self.user_params[0].strip().lower()
             try:
                 emoji = MessageReaction(emoji)
                 return emoji
@@ -78,7 +78,7 @@ class react(Command):
 
     def run(self):
         if "auto" not in self.database:
-            self.database["auto"] = "on"
+            self.database["auto"] = "off"
         seed(randint(0, 100))
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         if len(self.user_params) > 0:

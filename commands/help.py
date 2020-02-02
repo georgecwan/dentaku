@@ -46,9 +46,11 @@ class help(Command):
                     instance = self.get_instance(x)
                     response_text += "\n\n!" + x + ": " + instance.documentation["function"]
                 response_text += "\n\nIf you want to learn more about a specific command, send '!help !COMMAND_NAME'."
-            except:
+            except ValueError:
                 # sends detailed information about a specific command
                 c_name = str(self.user_params[0]).replace("!", "", 1)
+                print(c_name)
+                print(modules)
                 if c_name in modules:
                     instance = self.get_instance(c_name)
                     response_text += """

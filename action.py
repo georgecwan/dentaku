@@ -26,11 +26,12 @@ class Action:
             self.gdb = self.get(parameters, 'gdb')
             client.markAsDelivered(self.thread_id, self.message_object.uid)
             client.markAsRead(self.thread_id)
-        if 'memory' not in self.database:
-            self.database['memory']: dict = {}
-        self.memory = self.database['memory']
-        if str(self.author_id) not in self.memory: self.memory[str(self.author_id)]: dict = {}
-        self.memory = self.memory[str(self.author_id)]
+        if parameters:
+            if 'memory' not in self.database:
+                self.database['memory']: dict = {}
+            self.memory = self.database['memory']
+            if str(self.author_id) not in self.memory: self.memory[str(self.author_id)]: dict = {}
+            self.memory = self.memory[str(self.author_id)]
         self.define_documentation()
 
     def process(self):

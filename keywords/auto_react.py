@@ -19,14 +19,19 @@ class auto_react(Keyword):
                 return MessageReaction(emoji)
 
     def run(self):
+        # if self.client.uid == self.author_id:
+        #     return
+        if "auto" not in self.database:
+            self.database["auto"] = "off"
         if self.database["auto"] == "off":
-            exit()
+            return
         reply_id = react.find_reply_id(self.message_object)
-        self.client.reactToMessage(reply_id, self.find_reaction_emoji())
+        if reply_id != "None":
+            self.client.reactToMessage(reply_id, self.find_reaction_emoji())
 
     def define_documentation(self):
         self.documentation = {
             "trigger": "Words that make a bot emotional.",
             "function": "Allows Dentaku to react automatically at trigger words."
-                        + "\n\nTo turn auto_react {}, type `!react auto {}`".format(self.auto_not(), self.auto_not())
+                        + "\n\nTo turn auto_react on/off, type `!react auto [on/off]`"
         }

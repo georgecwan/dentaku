@@ -27,7 +27,15 @@ class hand(Enum):
 class rps(Command):
 
     def run(self):
+        mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
+
         if 'round' not in self.memory:
+            self.client.send(
+                Message(text="@{} New round begun!".format(self.author.first_name),
+                        mentions=mentions),
+                thread_id=self.thread_id,
+                thread_type=self.thread_type
+            )
             self.memory['round'] = 1
         bot_choice = random.choice([hand.ROCK, hand.PAPER, hand.SCISSOR])
         try:
@@ -47,7 +55,7 @@ class rps(Command):
         elif hand.SCISSOR == user_choice:
             win = 1 if bot_choice != hand.ROCK else 0
 
-        mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
+
 
         self.client.send(
             Message(text="@{} ".format(self.author.first_name) + bot_choice.name.lower().capitalize() + "!",

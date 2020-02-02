@@ -25,7 +25,7 @@ class bruh(Keyword):
                 status = "unconfirmed"
         if replied_to:
             if len(replied_to.attachments) > 0:
-                bruh_moment = replied_to.attachments[0]['mercury']['large_preview']['uri']
+                bruh_moment = replied_to.attachments[0].large_preview_url
                 image = True
             else:
                 image = False
@@ -38,7 +38,7 @@ class bruh(Keyword):
                 if self.message_object.uid == m.uid:
                     bruh_moment = messages[i - 1]
                     if len(bruh_moment.attachments) > 0:
-                        bruh_moment = bruh_moment.attachments[0]['mercury']['large_preview']['uri']
+                        bruh_moment = bruh_moment.attachments[0].large_preview_url
                         image = True
                     else:
                         image = False

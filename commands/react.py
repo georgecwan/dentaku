@@ -47,7 +47,7 @@ class react(Command):
         if len(self.user_params) == 0:
             return None
         elif len(self.user_params) == 1:
-            emoji = self.user_params[0].strip()
+            emoji = self.user_params[0].strip().lower()
             try:
                 emoji = MessageReaction(emoji)
                 return emoji

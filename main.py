@@ -69,7 +69,7 @@ class dentaku_bot(Client):
                     thread_id=thread_id,
                     thread_type=thread_type,
                 )
-        else:
+        elif author_id != client.uid:
             for word in keywords.keys():
                 word = word.lower()
                 if word in message_object.text.lower():

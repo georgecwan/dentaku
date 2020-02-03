@@ -69,12 +69,13 @@ class dentaku_bot(Client):
                     thread_id=thread_id,
                     thread_type=thread_type,
                 )
-        else:
+        elif author_id != client.uid:
             for word in keywords.keys():
-                if word.lower() in message_object.text.lower():
+                word = word.lower()
+                if word in message_object.text.lower():
                     try:
                         parameters = {
-                            "trigger": word.lower(),
+                            "trigger": word,
                             "author_id": author_id,
                             "message_object": message_object,
                             "thread_id": thread_id,

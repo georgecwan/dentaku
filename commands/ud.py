@@ -18,8 +18,9 @@ class ud(Command):
             response_text = "@" + self.author.first_name + "\n" + soup.find_all("div", class_="meaning")[0].get_text()
         except:
             response_text = "@" + self.author.first_name + " Your query was not valid or may not exit on UD. Please try again."
+
         self.client.send(
-            Message(text=response_text, mentions=None),
+            Message(text=response_text, mentions=mentions),
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )

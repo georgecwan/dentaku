@@ -11,6 +11,7 @@ import traceback
 from datetime import datetime
 import time
 from fbchat import ThreadType
+from fbchat import TypingStatus
 import importlib
 
 database = {}
@@ -22,8 +23,14 @@ class dentaku_bot(Client):
         global database
         if database['testing'].lower() == "y" and thread_type != ThreadType.USER:
             return
-        if "!" in str(message_object.text)[0]:
+        if "!" in str(message_object.text)[0] and len(message_object.text) > 1:
+            client.setTypingStatus(
+                TypingStatus.TYPING, thread_id=thread_id, thread_type=thread_type
+            )
             message = str(message_object.text).replace("!", "").split(" ")
+            print(message)
+            if message == ['']:
+                return
             command_index = 1
             if message[0] == '':
                 for each in message:
@@ -35,6 +42,7 @@ class dentaku_bot(Client):
                 command = message[0]
             try:
                 parameters = {
+                    "trigger": command.lower(),
                     "user": message[command_index:],
                     "author_id": author_id,
                     "message_object": message_object,
@@ -47,7 +55,7 @@ class dentaku_bot(Client):
                 module = importlib.import_module(".." + command, "commands.subpkg")
                 new_command = getattr(module, command)
                 instance = new_command(parameters, client=self)
-                instance.run()
+                instance.process()
             except ModuleNotFoundError:
                 print(traceback.format_exc())
                 self.send(
@@ -61,11 +69,13 @@ class dentaku_bot(Client):
                     thread_id=thread_id,
                     thread_type=thread_type,
                 )
-        else:
+        elif author_id != client.uid:
             for word in keywords.keys():
-                if word.lower() in message_object.text.lower():
+                word = word.lower()
+                if word in message_object.text.lower():
                     try:
                         parameters = {
+                            "trigger": word,
                             "author_id": author_id,
                             "message_object": message_object,
                             "thread_id": thread_id,

@@ -13,6 +13,6 @@ class ass(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "trigger": "ass",
-            "function": "Likes ass."
+            "trigger": "bot",
+            "function": "Bot is here."
         }

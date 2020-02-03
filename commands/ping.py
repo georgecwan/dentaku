@@ -7,15 +7,17 @@ class ping(Command):
 
 	def run(self):
 		dt = datetime.utcnow().timestamp()*1000;
+		msg = ""
+
+		try:
+			getms = int(self.user_params[0])
+			msg = "Pong! " + str(int(dt) - getms) + "ms"
+		except IndexError:
+			millis = datetime.utcnow().timestamp()*1000;
+			msg = "!ping " + str(int(millis))
 
 		self.client.send(
-			Message(text = "Pong!"),
-			thread_id = self.thread_id,
-			thread_type = self.thread_type
-		)
-		ms = datetime.utcnow().timestamp()*1000;
-		self.client.send(
-			Message(text = str(int((int(ms) - int(dt)))) + "ms"),
+			Message(text = msg),
 			thread_id = self.thread_id,
 			thread_type = self.thread_type
 		)

@@ -15,7 +15,7 @@ whatarray['sugma']='i feel stupid coding this manually and i really want to stop
 
 class whats(Command):
     def run(self):
-        whats = self.user_params[0]
+        whats = " ".join(self.user_params)
         try:
             response_text = whatarray[whats]
         except KeyError:

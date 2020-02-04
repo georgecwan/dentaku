@@ -16,28 +16,27 @@ class subscribe(Command):
             database = {}
             database['subscription'] = []
 
-        if self.user_params == ['remove']:
-            if self.author_id in database['subscription']:
-                database['subscription'].remove(self.author_id)
-                response_text = """
-                               @{}
-                               You have been unsubscribed from deployment notifications!
-                               """.format(self.author.first_name)
-            else:
-                response_text = """
-                               @{}
-                               No action taken. You were are currently not subscribed to deployments.
-                               """.format(self.author.first_name)
-        else:
+        if not self.user_params:
             if self.author_id in database['subscription']:
                 response_text = """
-                               @{} You were already subscribed!
-                               """.format(self.author.first_name)
+                                   @{} You were already subscribed!
+                                   """.format(self.author.first_name)
             else:
                 database['subscription'].append(self.author_id)
                 response_text = """
-                           @{}\nYou have been subscribed to deployment notifications!
-                           """.format(self.author.first_name)
+                               @{} You have been subscribed to deployment notifications!
+                               """.format(self.author.first_name)
+        elif self.user_params[0] == 'remove':
+            if self.author_id in database['subscription']:
+                database['subscription'].remove(self.author_id)
+                response_text = """
+                               @{} You have been unsubscribed from deployment notifications!
+                               """.format(self.author.first_name)
+            else:
+                response_text = """
+                               @{} No action taken. You are currently not subscribed to deployments.
+                               """.format(self.author.first_name)
+
 
         with open("database.json", 'w') as outfile:
             json.dump(database, outfile)

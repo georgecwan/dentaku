@@ -9,7 +9,8 @@ class a_chance_at_uni(Command):
         if self.author.first_name == "Charley":
             response_text = "Well @" + self.author.first_name + " I think your 12 rejections are statistically compelling enough..."
         elif len(self.user_params) > 0:
-            response_text = "@" + self.author.first_name + "\n u op guaranteed acceptance at " + self.user_params[0]
+            uni = " ".join(self.user_params)
+            response_text = "@" + self.author.first_name + "\n u op guaranteed acceptance at " + uni
         else:
             response_text = "@" + self.author.first_name + "\n u op guaranteed acceptance at HYPSM"
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]

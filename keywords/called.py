@@ -2,7 +2,7 @@ from commands.command import Command
 from fbchat import Message
 
 
-class ass(Command):
+class called(Command):
     def run(self):
         if self.client.uid != self.author_id:
             self.client.send(

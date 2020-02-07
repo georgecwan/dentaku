@@ -34,7 +34,7 @@ class weather(Command):
                 response_text += "\nCurrent temperature: " + str(info['main']['temp']) + "ºC"
                 response_text += "\n\nMore info at "
             except:
-                response_text += "Check for yourself at "
+                response_text += " Check for yourself at "
             try:
                 link = "https://www.theweathernetwork.com/ca/search?q="
                 for i in self.user_params:

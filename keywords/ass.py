@@ -1,11 +1,14 @@
 from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
-
+import string
 
 class ass(Command):
     def run(self):
-        if self.client.uid != self.author_id:
+        msg = self.message_object.text.translate(str.maketrans('', '', string.punctuation)).lower()
+        trigger = msg.find("ass")
+        if self.client.uid != self.author_id and (trigger == 0 or msg[trigger-1] == " ")\
+                and (trigger + 3 == len(msg) or msg[trigger+3] == " "):
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
             self.client.send(
                 Message(text="@" + self.author.first_name + " I like ass.", mentions=mentions),

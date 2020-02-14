@@ -29,12 +29,12 @@ class weather(Command):
                 jsonurl = urlopen(url)
                 info = json.loads(jsonurl.read())
                 response_text += " Weather at "+ info['city']['name'] + ", " + info['city']['country'] +\
-                    "\n Population: " + str(info['city']['population'])
+                    "\nPopulation: " + str(info['city']['population'])
                 info = info['list'][0]
                 response_text += "\nCurrent temperature: " + str(info['main']['temp']) + "ºC"
                 response_text += "\n\nMore info at "
             except:
-                response_text += "Check for yourself at "
+                response_text += " Check for yourself at "
             try:
                 link = "https://www.theweathernetwork.com/ca/search?q="
                 for i in self.user_params:

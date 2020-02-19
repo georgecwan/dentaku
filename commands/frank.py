@@ -1,5 +1,6 @@
 from commands.command import Command
 from fbchat import Message
+from random import randint
 
 class frank(Command):
     def run(self):
@@ -10,7 +11,11 @@ class frank(Command):
             text = self.message_object.replied_to.text
             for i in text.split(" "):
                 if len(i) > 1:
-                    i = i[0] + i[2:]
+                    count = 0
+                    while count < len(i)/5:
+                        rand = randint(1, len(i))
+                        i = i[:rand] + i[rand+1:]
+                        count += 1
                 response_text += i + " "
         except AttributeError:
             try:

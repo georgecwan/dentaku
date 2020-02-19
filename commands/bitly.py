@@ -41,5 +41,5 @@ class bitly(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "LINK or REPLIED_MESSAGE",
-            "function": "Returns a bit.ly for the link entered."
+            "function": "Returns a bit.ly for the LINK."
         }

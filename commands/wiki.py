@@ -34,6 +34,6 @@ class wiki(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "SEARCH TERMS",
-            "function": "Gives you the link to a Wikipedia article to satisfy your thirst for knowledge."
+            "parameters": "SEARCH_TERM",
+            "function": "Looks for a Wikipedia article with SEARCH_TERM to quench your thirst for knowledge."
         }

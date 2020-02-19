@@ -1,8 +1,6 @@
-import json
 from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
-import os
 
 
 class testing(Command):
@@ -47,7 +45,7 @@ class testing(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "on/off",
-            "function": "Turns off or on testing mode. Only the person who is running the bot can run this command. "
-                        "With no paramemters, this command indicates whether testing mode is on or off. "
+            "parameters": "ON/OFF",
+            "function": "Turns ON or OFF testing mode. Only the person who is running the bot can run this command. "
+                        "With no parameters, this command indicates whether testing mode is on or off. "
         }

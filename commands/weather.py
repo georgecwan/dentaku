@@ -22,13 +22,18 @@ class weather(Command):
         response_text = "@" + self.author.first_name
         if len(self.user_params) == 0:
             response_text += " Please enter a city"
-        elif "show" in self.user_params:
+        elif "show" in [i.lower() for i in self.user_params]:
+            index = 0
+            for i in self.user_params:
+                if i.lower() == "show":
+                    break
+                index += 1
             try:
-                url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("%20".join(self.user_params[:self.user_params.index("show")]))
+                url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("%20".join(self.user_params[:index]))
                 jsonurl = urlopen(url)
                 info = json.loads(jsonurl.read())
                 response_text += " " + info['city']['name'] + ", " + info['city']['country']
-                command = self.user_params[self.user_params.index("show")+1].lower()
+                command = self.user_params[index+1].lower()
                 if command == "population":
                     response_text += "\nPopulation: " + str(info['city']['population'])
                 elif command == "sunrise":

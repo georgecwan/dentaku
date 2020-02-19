@@ -7,14 +7,6 @@ import bs4
 import requests
 import time
 
-#url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("Burnaby")
-#print(url)
-#jsonurl = urlopen(url)
-#info = json.loads(jsonurl.read())#['list'][0]
-#print(info)
-#print(info['city']['country'])
-#print(time.asctime( time.localtime(info['city']['sunset'])))
-
 class weather(Command):
 
     def run(self):
@@ -22,14 +14,32 @@ class weather(Command):
         response_text = "@" + self.author.first_name
         if len(self.user_params) == 0:
             response_text += " Please enter a city"
-
+        elif "show" in [i.lower() for i in self.user_params]:
+            index = 0
+            for i in self.user_params:
+                if i.lower() == "show":
+                    break
+                index += 1
+            try:
+                url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("%20".join(self.user_params[:index]))
+                jsonurl = urlopen(url)
+                info = json.loads(jsonurl.read())
+                response_text += " " + info['city']['name'] + ", " + info['city']['country']
+                command = self.user_params[index+1].lower()
+                if command == "population":
+                    response_text += "\nPopulation: " + str(info['city']['population'])
+                elif command == "sunrise":
+                    response_text += "\nSunrise: " + str(time.asctime( time.localtime(info['city']['sunrise'])))
+                elif command == "sunset":
+                    response_text += "\nSunset: " + str(time.asctime(time.localtime(info['city']['sunset'])))
+            except:
+                response_text += " No command found"
         elif self.user_params[0].lower() != "help":
             try:
                 url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("%20".join(self.user_params))
                 jsonurl = urlopen(url)
                 info = json.loads(jsonurl.read())
-                response_text += " Weather at "+ info['city']['name'] + ", " + info['city']['country'] +\
-                    "\nPopulation: " + str(info['city']['population'])
+                response_text += " Weather at "+ info['city']['name'] + ", " + info['city']['country']
                 info = info['list'][0]
                 response_text += "\nCurrent temperature: " + str(info['main']['temp']) + "ºC"
                 response_text += "\n\nMore info at "
@@ -53,7 +63,7 @@ class weather(Command):
                 response_text = "@" + self.author.first_name + " Dude is that even a place."
             response_text += " \nFor a full list of commands type !weather help"
         else:
-            response_text += " Possible Commands to add after the city:\nsunset, sunrise"
+            response_text += " You may type \"show\" after the city followed by:\npopulation, sunset, sunrise"
 
         self.client.send(
             Message(text=response_text, mentions= mentions),

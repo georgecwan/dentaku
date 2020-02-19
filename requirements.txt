@@ -9,7 +9,7 @@ chardet==3.0.4
 Command==0.1.0
 fbchat==1.9.6
 firebase-admin==3.2.1
-gitdb2==2.0.6
+gitdb2==3.0.2
 GitPython==3.0.5
 google-api-core==1.16.0
 google-api-python-client==1.7.11

@@ -7,14 +7,6 @@ import bs4
 import requests
 import time
 
-#url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("Burnaby")
-#print(url)
-#jsonurl = urlopen(url)
-#info = json.loads(jsonurl.read())#['list'][0]
-#print(info)
-#print(info['city']['country'])
-#print(time.asctime( time.localtime(info['city']['sunset'])))
-
 class weather(Command):
 
     def run(self):

@@ -7,17 +7,17 @@ class countdown(Command):
 
     def run(self):
         if 'countdown' not in self.database:
-            self.database['countdown'] = "enabled"
+            self.database['countdown'] = "on"
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         if len(self.user_params) == 0:
             response_text = "@" + self.author.first_name + " Countdown is currently " + self.database['countdown']
         elif self.user_params[0].lower() == "off":
-            self.database['countdown'] = "disabled"
+            self.database['countdown'] = "off"
             response_text = "@" + self.author.first_name + " Countdown is now " + self.database['countdown']
         elif self.user_params[0].lower() == "on":
-            self.database['countdown'] = "enabled"
+            self.database['countdown'] = "on"
             response_text = "@" + self.author.first_name + " Countdown is now " + self.database['countdown']
-        elif len(self.user_params) == 1 and self.database['countdown'] == "enabled":
+        elif len(self.user_params) == 1 and self.database['countdown'] == "on":
             try:
                 count = int(self.user_params[0])
                 if count > 10:

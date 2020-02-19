@@ -28,8 +28,13 @@ class weather(Command):
                 jsonurl = urlopen(url)
                 info = json.loads(jsonurl.read())
                 response_text += " " + info['city']['name'] + ", " + info['city']['country']
-                if self.user_params[self.user_params.index("show")+1].lower() == "population":
+                command = self.user_params[self.user_params.index("show")+1].lower()
+                if command == "population":
                     response_text += "\nPopulation: " + str(info['city']['population'])
+                elif command == "sunrise":
+                    response_text += "\nSunrise: " + str(time.asctime( time.localtime(info['city']['sunrise'])))
+                elif command == "sunset":
+                    response_text += "\nSunset: " + str(time.asctime(time.localtime(info['city']['sunset'])))
             except:
                 response_text += " No command found"
         elif self.user_params[0].lower() != "help":
@@ -61,7 +66,7 @@ class weather(Command):
                 response_text = "@" + self.author.first_name + " Dude is that even a place."
             response_text += " \nFor a full list of commands type !weather help"
         else:
-            response_text += " You may also type \"show\" followed by:\npopulation, sunset, sunrise"
+            response_text += " You may type \"show\" after the city followed by:\npopulation, sunset, sunrise"
 
         self.client.send(
             Message(text=response_text, mentions= mentions),

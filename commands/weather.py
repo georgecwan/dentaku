@@ -7,6 +7,13 @@ import bs4
 import requests
 import time
 
+url = 'http://api.openweathermap.org/data/2.5/forecast?q=Vancouver&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4'
+jsonurl = urlopen(url)
+info = json.loads(jsonurl.read())
+list = info['list'][0]
+#print(list)
+
+
 class weather(Command):
 
     def run(self):
@@ -32,6 +39,14 @@ class weather(Command):
                     response_text += "\nSunrise: " + str(time.asctime( time.localtime(info['city']['sunrise'])))
                 elif command == "sunset":
                     response_text += "\nSunset: " + str(time.asctime(time.localtime(info['city']['sunset'])))
+                elif command == "info":
+                    list = info['list'][0]
+                    response_text += ("\nForecast for " + str(list['dt_txt']) +
+                                    "\nCurrent condition: " + str(list['weather'][0]['description']) +
+                                    "\nCurrent temperature: " + str(list['main']['temp']) + "ºC"
+                                    "\nFeels like: " + str(list['main']['feels_like']) + "ºC"
+                                    "\nMinimum temperature: " + str(list['main']['temp_min']) + "ºC"
+                                    "\nMaximum temperature: " + str(list['main']['temp_max']) + "ºC")
             except:
                 response_text += " No command found"
         elif self.user_params[0].lower() != "help":
@@ -40,11 +55,15 @@ class weather(Command):
                 jsonurl = urlopen(url)
                 info = json.loads(jsonurl.read())
                 response_text += " Weather at "+ info['city']['name'] + ", " + info['city']['country']
-                info = info['list'][0]
-                response_text += "\nCurrent temperature: " + str(info['main']['temp']) + "ºC"
+                list = info['list'][0]
+                response_text += ("\nCurrent condition: " + str(list['weather'][0]['main']) +
+                        "\nCurrent temperature: " + str(list['main']['temp']) + "ºC")
+
                 response_text += "\n\nMore info at "
+                # Remove this if anti-zucc is added
+                time.sleep(1)
             except:
-                response_text += " Check for yourself at "
+                response_text += "\nCheck for yourself at "
             try:
                 link = "https://www.theweathernetwork.com/ca/search?q="
                 for i in self.user_params:
@@ -63,7 +82,7 @@ class weather(Command):
                 response_text = "@" + self.author.first_name + " Dude is that even a place."
             response_text += " \nFor a full list of commands type !weather help"
         else:
-            response_text += " You may type \"show\" after the city followed by:\npopulation, sunset, sunrise"
+            response_text += " You may type \"show\" after the city followed by:\ninfo, population, sunset, sunrise"
 
         self.client.send(
             Message(text=response_text, mentions= mentions),

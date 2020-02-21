@@ -2,6 +2,7 @@ from commands.command import Command
 from fbchat import Message
 from random import randint
 
+
 class frank(Command):
     def run(self):
         response_text = ""

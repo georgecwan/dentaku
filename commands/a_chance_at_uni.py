@@ -23,6 +23,6 @@ class a_chance_at_uni(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "UNIVERSITY_NAME",
+            "parameters": "UNIVERSITY_NAME (OPTIONAL)",
             "function": "Reminds you that you're good enough."
         }

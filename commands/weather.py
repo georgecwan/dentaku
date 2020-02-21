@@ -73,6 +73,6 @@ class weather(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "CITY, COUNTRY(OPTIONAL), INFORMATION(OPTIONAL)",
-            "function": "Gives you the link to a place to get the weather of a CITY because George isn't smart enough to get it for you."
+            "parameters": "CITY, COUNTRY(OPTIONAL), COMMAND(OPTIONAL)",
+            "function": "Gives you current information about a CITY because George figured out how to get it for you after a month."
         }

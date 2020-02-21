@@ -74,5 +74,5 @@ class help(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "COMMAND_NAME / PART",
-            "function": "Shows part of the general command options. Can show details about a specific COMMAND_NAME."
+            "function": "Shows PART of the general command options. Can show details about a specific COMMAND_NAME."
         }

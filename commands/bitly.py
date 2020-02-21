@@ -14,13 +14,21 @@ class bitly(Command):
                 url = steal.shorten_url(self.user_params[0])
                 response_text += url
             except:
-                response_text = "@" + self.author.first_name + " Could not find link to shorten"
+                try:
+                    url = steal.shorten_url("http://"+self.user_params[0])
+                    response_text += url
+                except:
+                    response_text = "@" + self.author.first_name + " Could not find link to shorten"
         elif self.message_object.replied_to != None:
             try:
                 url = steal.shorten_url(self.message_object.replied_to.text)
                 response_text += url
             except:
-                response_text = "@" + self.author.first_name + " Could not find link to shorten"
+                try:
+                    url = steal.shorten_url("http://"+self.message_object.replied_to.text)
+                    response_text += url
+                except:
+                    response_text = "@" + self.author.first_name + " Could not find link to shorten"
         else:
             response_text = "@" + self.author.first_name + " Could not find link to shorten"
 
@@ -33,5 +41,5 @@ class bitly(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "LINK or REPLIED_MESSAGE",
-            "function": "Returns a bit.ly for the link entered."
+            "function": "Returns a bit.ly for the LINK."
         }

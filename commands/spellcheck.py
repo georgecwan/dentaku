@@ -50,5 +50,5 @@ class spellcheck(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "REPLIED_MESSAGE",
-            "function": "Checks the spelling in REPLIED_MESSAGE for real words."
+            "function": "Checks the spelling in REPLIED_MESSAGE."
         }

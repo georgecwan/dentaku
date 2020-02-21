@@ -3,6 +3,7 @@ from fbchat import Message
 from fbchat import Mention
 import os
 import math
+
 modules = [x for x in os.listdir("commands") if x.endswith(".py")]
 modules = [x.replace(".py", "") for x in modules]
 modules.sort()
@@ -22,7 +23,13 @@ class help(Command):
     def run(self):
         response_text = "@{}".format(self.author.first_name)
         if len(self.user_params) == 0:
-            response_text += " Please signify which part (1-4) of the commands list you would like to see."
+            # Creates table of contents
+            response_text += " Please signify which part (1-4) of the commands list you would like to see. \
+                            \nPart 1: {}\nPart 2: {}\nPart 3: {}\nPart 4: {}".format(
+                modules[0] + " - " + modules[math.ceil(len(modules) / 4) - 1],
+                modules[math.ceil(len(modules) / 4)] + " - " + modules[math.ceil(len(modules) / 2) - 1],
+                modules[math.ceil(len(modules) / 2)] + " - " + modules[math.ceil(3 * len(modules) / 4) - 1],
+                modules[math.ceil(3 * len(modules) / 4)] + " - " + modules[-1])
         elif len(self.user_params) == 1:
             try:
                 # sends general information about all commands

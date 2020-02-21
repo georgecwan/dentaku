@@ -9,7 +9,7 @@ class contribute(Command):
         response_text = """
         @{} 
         \nYou can contribute to Dentaku here: https://github.com/VikingsDev/Dentaku
-        \nFor more information, check out vikingsDev Bounties: https://vikingsdev.ca/bounties
+        \nFor more information, check out VikingsDev Bounties: https://vikingsdev.ca/bounties
         \nHappy contributing!
         """.format(self.author.first_name)
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]

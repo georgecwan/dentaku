@@ -7,7 +7,7 @@ import bs4
 import requests
 import time
 
-url = 'http://api.openweathermap.org/data/2.5/forecast?q=Vancouver&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4'
+url = "http://api.openweathermap.org/data/2.5/forecast?q=Vancouver&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4"
 jsonurl = urlopen(url)
 info = json.loads(jsonurl.read())
 list = info['list'][0]

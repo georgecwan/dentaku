@@ -13,6 +13,7 @@ import time
 from fbchat import ThreadType
 from fbchat import TypingStatus
 import importlib
+from signal import signal, SIGINT
 
 database = {}
 
@@ -170,4 +171,12 @@ if 'G_CREDENTIALS' in os.environ:
 else:
     gdb = None
 
+def handler(signal_received, frame):
+    # Handle any cleanup here
+    print('SIGINT or CTRL-C detected. Exiting gracefully')
+    client.logout()
+    exit(0)
+
 client.listen()
+
+signal(SIGINT, handler)

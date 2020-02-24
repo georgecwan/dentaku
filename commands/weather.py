@@ -58,7 +58,6 @@ class weather(Command):
                 list = info['list'][0]
                 response_text += ("\nCurrent condition: " + str(list['weather'][0]['main']) +
                         "\nCurrent temperature: " + str(list['main']['temp']) + "ºC")
-
                 response_text += "\n\nMore info at "
                 # Remove this if anti-zucc is added
                 time.sleep(1)

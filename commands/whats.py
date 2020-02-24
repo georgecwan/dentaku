@@ -1,17 +1,17 @@
 from commands.command import Command
 from fbchat.models import *
 
-whatarray = {}
-whatarray['bofa']='bofA deez nUts'
-whatarray['ligma']='ligma b a l l s'
-whatarray['rhydon']='rhydon dis DICK'
-whatarray['sugandese']='sug an deez balls'
-whatarray['updog']='whats up dog <3 wanna get sum tonight no homo'
-whatarray['imagine dragons']='imagine me dragon deez nuts all over ur face'
-whatarray['candice']='candice dick fit in yo mouf'
-whatarray['parody']='u can get a parodyz bahls'
-whatarray['sugma']='i feel stupid coding this manually and i really want to stop'
-
+whatarray = {
+'bofa': 'bofA deez nUts',
+'ligma': 'ligma b a l l s',
+'rhydon': 'rhydon dis DICK',
+'sugandese': 'sug an deez balls',
+'updog': 'whats up dog <3 wanna get sum tonight no homo',
+'imagine dragons': 'imagine me dragon deez nuts all over ur face',
+'candice': 'candice dick fit in yo mouf',
+'parody': 'u can get a parodyz bahls',
+'sugma': 'i feel stupid coding this manually and i really want to stop'
+}
 
 class whats(Command):
     def run(self):

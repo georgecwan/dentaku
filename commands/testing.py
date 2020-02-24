@@ -1,8 +1,6 @@
-import json
 from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
-import os
 
 
 class testing(Command):
@@ -12,9 +10,9 @@ class testing(Command):
             response_text = "@{} Test mode is currently {} which corresponds to \"{}\" in database.json. This means that the bot can{} accept group chat commands.".format(
                 self.author.first_name, 'on' if self.database['testing'] == "y" else 'off', self.database['testing'],
                 ' *not*' if self.database['testing'] == "y" else '')
-        elif self.user_params[0].lower() == "on" or self.user_params[0].lower() == "off":
+        elif self.user_params[0].lower() == "on" or self.user_params[0].lower() == "off" or self.user_params[0].lower() == "y" or self.user_params[0].lower() == "n":
             if self.client.uid == self.author_id:
-                self.database['testing'] = 'y' if self.user_params[0] == "on" else 'n'
+                self.database['testing'] = 'y' if self.user_params[0].lower() == "on" or self.user_params[0].lower() == "y" else 'n'
                 response_text = "@{} Test mode has been set to {}, which corresponds to \"{}\" in database.json.".format(
                     self.author.first_name, self.user_params[0], self.database['testing'])
             else:
@@ -47,7 +45,7 @@ class testing(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "on/off",
-            "function": "Turns off or on testing mode. Only the person who is running the bot can run this command. "
-                        "With no paramemters, this command indicates whether testing mode is on or off. "
+            "parameters": "ON/OFF/Y/N",
+            "function": "Turns ON or OFF testing mode. Only the person who is running the bot can run this command. "
+                        "With no parameters, this command indicates whether testing mode is on or off. "
         }

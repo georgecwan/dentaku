@@ -74,5 +74,5 @@ class events(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "None",
-            "function": "Find out what the next 3 vikingsDev events are."
+            "function": "Find out what the next 3 VikingsDev events are."
         }

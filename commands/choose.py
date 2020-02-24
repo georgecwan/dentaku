@@ -3,11 +3,12 @@ from fbchat import Message
 from fbchat import Mention
 from random import randint
 
+
 class choose(Command):
 
     def run(self):
         if len(self.user_params) == 0:
-            response_text = "@" + self.author.first_name + " Please enter something. Anything"
+            response_text = "@" + self.author.first_name + " Please enter something. Anything."
         else:
             try:
                 if len(self.user_params) == 1:
@@ -31,6 +32,6 @@ class choose(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "NAMES or NUMBER",
-            "function": "Picks a random name out of the list or picks a random number. How spooky."
+            "parameters": "ITEMS or NUMBERS",
+            "function": "Picks a random ITEM out of the list or picks a random NUMBER from the specified range. How spooky."
         }

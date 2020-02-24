@@ -51,6 +51,6 @@ class subscribe(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "remove",
-            "function": "Subscribes a user to Dentaku updates. Removes user if parameter remove is present."
+            "parameters": "None or REMOVE",
+            "function": "Subscribes a user to Dentaku updates. Remove user if parameter REMOVE is present."
         }

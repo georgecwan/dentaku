@@ -39,14 +39,21 @@ class weather(Command):
                     response_text += "\nSunrise: " + str(time.asctime( time.localtime(info['city']['sunrise'])))
                 elif command == "sunset":
                     response_text += "\nSunset: " + str(time.asctime(time.localtime(info['city']['sunset'])))
-                elif command == "info":
-                    list = info['list'][0]
+                elif command == "forecast" or command == "forecasts":
+                    count = 1
+                    for i in info['list']:
+                        response_text += "\n"+str(count)+": "+i['dt_txt'][5:-3]
+                        count += 1
+                elif command.isdigit() and int(command) <= 40 and int(command) >0:
+                    list = info['list'][int(command)-1]
                     response_text += ("\nForecast for " + str(list['dt_txt']) +
-                                    "\nCurrent condition: " + str(list['weather'][0]['description']) +
-                                    "\nCurrent temperature: " + str(list['main']['temp']) + "ºC"
+                                    "\nForecasted condition: " + str(list['weather'][0]['description']) +
+                                    "\nForecasted temperature: " + str(list['main']['temp']) + "ºC"
                                     "\nFeels like: " + str(list['main']['feels_like']) + "ºC"
-                                    "\nMinimum temperature: " + str(list['main']['temp_min']) + "ºC"
-                                    "\nMaximum temperature: " + str(list['main']['temp_max']) + "ºC")
+                                    "\nMaximum temperature: " + str(list['main']['temp_max']) + "ºC"
+                                    "\nMinimum temperature: " + str(list['main']['temp_min']) + "ºC")
+                elif command.isdigit() and (int(command) <1 or int(command) >40):
+                    response_text += "Please enter a valid forecast number."
             except:
                 response_text += " No command found"
         elif self.user_params[0].lower() != "help":
@@ -82,7 +89,7 @@ class weather(Command):
                 response_text = "@" + self.author.first_name + " Dude is that even a place."
             response_text += " \nFor a full list of commands type !weather help"
         else:
-            response_text += " You may type \"show\" after the city followed by:\ninfo, population, sunset, sunrise"
+            response_text += " You may type \"show\" after the city followed by:\nforecast, population, sunset, sunrise, 1-40"
 
         self.client.send(
             Message(text=response_text, mentions= mentions),

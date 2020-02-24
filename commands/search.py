@@ -55,5 +55,5 @@ class search(Command):
 	def define_documentation(self):
 		self.documentation = {
 			"parameters": "SEARCH_TERM / SEARCH TERMS / REPLY TO MESSAGE",
-			"function": "Searches Google and gives you the best result for your search"
+			"function": "Searches Google for PARAMETERS and gives you the best result for your search"
 		}

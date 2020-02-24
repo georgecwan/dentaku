@@ -25,7 +25,7 @@ class spellcheck(Command):
                 else:
                     response_text = "@" + self.author.first_name + " Seems legit"
             except AttributeError:
-                #try:
+                try:
                     mis = ""
                     for i in self.user_params:
                         if "\n" + i.translate(str.maketrans('', '', string.punctuation)).lower() + "\n" not in text and i.lower() != "a" and i.lower() != "zymin":
@@ -34,8 +34,8 @@ class spellcheck(Command):
                         response_text = "@" + self.author.first_name + " Misspelled words:" + mis
                     else:
                         response_text = "@" + self.author.first_name + " Seems legit"
-                #except:
-                    #response_text = "@" + self.author.first_name + " Dude I can't even read your sentence."
+                except:
+                    response_text = "@" + self.author.first_name + " Dude I can't even read your sentence."
             except:
                 response_text = "@" + self.author.first_name + " Dude I can't even read your sentence."
 
@@ -50,5 +50,5 @@ class spellcheck(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "REPLIED_MESSAGE",
-            "function": "Checks the spelling in REPLIED_MESSAGE for real words."
+            "function": "Checks the spelling in REPLIED_MESSAGE."
         }

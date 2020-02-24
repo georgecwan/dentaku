@@ -7,17 +7,17 @@ class countdown(Command):
 
     def run(self):
         if 'countdown' not in self.database:
-            self.database['countdown'] = "enabled"
+            self.database['countdown'] = "on"
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         if len(self.user_params) == 0:
             response_text = "@" + self.author.first_name + " Countdown is currently " + self.database['countdown']
-        elif self.user_params[0].lower() == "no":
-            self.database['countdown'] = "disabled"
+        elif self.user_params[0].lower() == "off":
+            self.database['countdown'] = "off"
             response_text = "@" + self.author.first_name + " Countdown is now " + self.database['countdown']
-        elif self.user_params[0].lower() == "yes":
-            self.database['countdown'] = "enabled"
+        elif self.user_params[0].lower() == "on":
+            self.database['countdown'] = "on"
             response_text = "@" + self.author.first_name + " Countdown is now " + self.database['countdown']
-        elif len(self.user_params) == 1 and self.database['countdown'] == "enabled":
+        elif len(self.user_params) == 1 and self.database['countdown'] == "on":
             try:
                 count = int(self.user_params[0])
                 if count > 10:
@@ -31,7 +31,7 @@ class countdown(Command):
                 response_text = "You think you're soooo clever? Not anymore " + self.author.first_name + ", because I now have error catching!"
                 mentions = None
         else:
-            response_text = "Sorry, !countdown is currently disabled. Please type !countdown YES and try again."
+            response_text = "Sorry, !countdown is currently disabled. Please type !countdown ON and try again."
             mentions = None
 
         self.client.send(
@@ -42,6 +42,6 @@ class countdown(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "NUMBER / YES / NO",
-            "function": "Counts down recursively from NUMBER or enables/disables the countdown."
+            "parameters": "NUMBER / ON / OFF",
+            "function": "Counts down recursively from NUMBER or turns the countdown ON/OFF."
         }

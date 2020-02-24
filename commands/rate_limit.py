@@ -21,3 +21,9 @@ class rate_limit(Command):
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "None",
+            "function": "As far as we're concerned, this command doesn't exist."
+        }

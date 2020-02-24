@@ -188,7 +188,7 @@ class bruh(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "command ID TEXT",
+            "parameters": "COMMAND, ID, TEXT",
             "function": "Accesses, removes, edits bruhs in the Bruh database. Commands: remove, edit. `!bruh ID` to get "
                         "bruh #ID, `!bruh edit ID TEXT` to set moment to TEXT, `!bruh removes ID` bruh ID from the database. "
         }

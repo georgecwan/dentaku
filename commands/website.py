@@ -24,5 +24,5 @@ class website(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "None",
-            "function": "More information on the vikingsDev website!"
+            "function": "More information on the VikingsDev website!"
         }

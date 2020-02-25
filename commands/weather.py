@@ -43,9 +43,12 @@ class weather(Command):
                     count = 1
                     for i in info['list']:
                         response_text += "\n"+str(count)+": "+i['dt_txt'][5:-3]
-                        count += 1
-                    time.sleep(3)
-                elif command.isdigit() and int(command) <= 40 and int(command) >0:
+                        if count >= 10:
+                            break
+                        else:
+                            count += 1
+                    time.sleep(1) #REMOVE FOR ANTIZUCC
+                elif command.isdigit() and int(command) <= 10 and int(command) >0:
                     list = info['list'][int(command)-1]
                     response_text += ("\nForecast for " + str(list['dt_txt']) +
                                     "\nForecasted condition: " + str(list['weather'][0]['description']) +
@@ -53,8 +56,8 @@ class weather(Command):
                                     "\nFeels like: " + str(list['main']['feels_like']) + "ºC"
                                     "\nMaximum temperature: " + str(list['main']['temp_max']) + "ºC"
                                     "\nMinimum temperature: " + str(list['main']['temp_min']) + "ºC")
-                elif command.isdigit() and (int(command) <1 or int(command) >40):
-                    response_text += "Please enter a valid forecast number."
+                elif command.isdigit() and (int(command) <1 or int(command) >10):
+                    response_text += "\nPlease enter a valid forecast number."
             except:
                 response_text += " No command found"
         elif self.user_params[0].lower() != "help":

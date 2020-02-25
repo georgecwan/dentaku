@@ -44,6 +44,7 @@ class weather(Command):
                     for i in info['list']:
                         response_text += "\n"+str(count)+": "+i['dt_txt'][5:-3]
                         count += 1
+                    time.sleep(3)
                 elif command.isdigit() and int(command) <= 40 and int(command) >0:
                     list = info['list'][int(command)-1]
                     response_text += ("\nForecast for " + str(list['dt_txt']) +

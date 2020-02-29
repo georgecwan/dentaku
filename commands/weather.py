@@ -19,9 +19,7 @@ class weather(Command):
     def run(self):
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         response_text = "@" + self.author.first_name
-        if len(self.user_params) == 0:
-            response_text += " Please enter a city"
-        elif "show" in [i.lower() for i in self.user_params]:
+        if "show" in [i.lower() for i in self.user_params]:
             index = 0
             for i in self.user_params:
                 if i.lower() == "show":
@@ -59,10 +57,15 @@ class weather(Command):
                 elif command.isdigit() and (int(command) <1 or int(command) >40):
                     response_text += "\nPlease enter a valid forecast number."
             except:
-                response_text += " No command found"
-        elif self.user_params[0].lower() != "help":
+                response_text += " No command/city found"
+        elif len(self.user_params) != 0 and self.user_params[0].lower() == "help":
+            response_text += " You may type \"show\" after the city followed by:\nforecast, population, sunset, sunrise, 1-40"
+        else:
             try:
-                url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("%20".join(self.user_params))
+                if len(self.user_params) == 0:
+                    url = "http://api.openweathermap.org/data/2.5/forecast?q=Vancouver&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4"
+                else:
+                    url = "http://api.openweathermap.org/data/2.5/forecast?q={}&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4".format("%20".join(self.user_params))
                 jsonurl = urlopen(url)
                 info = json.loads(jsonurl.read())
                 response_text += " Weather at "+ info['city']['name'] + ", " + info['city']['country']
@@ -91,8 +94,6 @@ class weather(Command):
             except:
                 response_text = "@" + self.author.first_name + " Dude is that even a place."
             response_text += " \nFor a full list of commands type !weather help"
-        else:
-            response_text += " You may type \"show\" after the city followed by:\nforecast, population, sunset, sunrise, 1-40"
 
         self.client.send(
             Message(text=response_text, mentions= mentions),

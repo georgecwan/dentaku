@@ -166,7 +166,6 @@ for thread in database['subscription']:
 if 'G_CREDENTIALS' in os.environ:
     cred = credentials.Certificate(os.environ['G_CREDENTIALS'])
     firebase_admin.initialize_app(cred)
-
     gdb = firestore.client()
 else:
     gdb = None

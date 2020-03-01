@@ -25,8 +25,12 @@ class bruh(Keyword):
                 status = "unconfirmed"
         if replied_to:
             if len(replied_to.attachments) > 0:
-                bruh_moment = replied_to.attachments[0].large_preview_url
-                image = True
+                try:
+                    bruh_moment = replied_to.attachments[0].large_preview_url
+                    image = True
+                except:
+                    image = False
+                    bruh_moment = replied_to.text
             else:
                 image = False
                 bruh_moment = replied_to.text

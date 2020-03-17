@@ -56,6 +56,8 @@ class weather(Command):
                                     "\nMinimum temperature: " + str(list['main']['temp_min']) + "ºC")
                 elif command.isdigit() and (int(command) <1 or int(command) >40):
                     response_text += "\nPlease enter a valid forecast number."
+                else:
+                    response_text = "@" + self.author.first_name + "Please enter a valid command."
             except:
                 response_text += " No command/city found"
         elif len(self.user_params) != 0 and self.user_params[0].lower() == "help":

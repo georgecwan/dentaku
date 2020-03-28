@@ -12,6 +12,11 @@ class covid(Command):
             location = "Canada"
         else:
             location = " ".join(self.user_params)
+            if location.lower() == "usa" or location.lower() == "united states":
+                location = "US"
+            elif location.lower() == "uk" or location.lower() == "britain":
+                location = "UK"
+
         yesterday = str(date.today() - timedelta(days=1))[5:] + "-" + str(date.today() - timedelta(days=1))[:4]
         now = str(date.today())[5:] + "-" + str(date.today())[:4]
         try:

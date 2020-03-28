@@ -12,11 +12,7 @@ class covid(Command):
             location = "Canada"
         else:
             location = " ".join(self.user_params)
-            if location.lower() == "usa" or location.lower() == "united states":
-                location = "US"
-            elif location.lower() == "uk" or location.lower() == "britain":
-                location = "UK"
-
+            location = self.location_correct(location)
         yesterday = str(date.today() - timedelta(days=1))[5:] + "-" + str(date.today() - timedelta(days=1))[:4]
         now = str(date.today())[5:] + "-" + str(date.today())[:4]
         try:
@@ -49,11 +45,11 @@ class covid(Command):
             confirmed += list(response.loc[i])[2]
             deaths += list(response.loc[i])[3]
             recovered += list(response.loc[i])[4]
-        #try:
-        response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + countries[rows[0]] + ":" +
+        try:
+            response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + countries[rows[0]] + ":" +
                "\nConfirmed: " + str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
-        #except:
-        #    response_text = "@" + self.author.first_name + " Location not found."
+        except:
+            response_text = "@" + self.author.first_name + " Location not found."
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
         self.client.send(
@@ -67,3 +63,38 @@ class covid(Command):
             "parameters": "LOCATION",
             "function": "Returns the current coronavirus numbers for LOCATION."
         }
+
+    def location_correct(location):
+        if location.lower() == "usa" or location.lower() == "united states":
+            return("US")
+        elif location.lower() == "uk" or location.lower() == "britain":
+            return("UK")
+        elif location.lower() == "south korea" or location.lower() == "korea":
+            return("Korea, South")
+        elif location.lower() == "vatican city" or location.lower() == "vatican":
+            return("Holy See")
+        elif location.lower() == "bosnia":
+            return("Bosnia and Herzegovina")
+        elif location.lower() == "congo" or location.lower() == "drc" or location.lower() == "democratic republic of the congo":
+            return("Congo (Kinshasa)")
+        elif location.lower() == "republic of the congo":
+            return("Congo (Brazzaville)")
+        elif location.lower() == "ivory coast":
+            return("Cote d'Ivoire")
+        elif location.lower() == "macedonia":
+            return("North Macedonia")
+        elif location.lower() == "papua":
+            return("Papua New Guinea")
+        elif location.lower() == "saint kitts":
+            return("Saint Kitts and Nevis")
+        elif location.lower() == "saint vincent":
+            return("Saint Vincent and the Grenadines")
+        elif location.lower() == "taiwan":
+            return("Taiwan*")
+        elif location.lower() == "uae":
+            return("United Arab Emirates")
+        elif location.lower() == "palestine" or location.lower() == "gaza" or location.lower() == "west bank":
+            return("West Bank and Gaza")
+        elif location.lower() == "nz":
+            return("New Zealand")
+        return(location)

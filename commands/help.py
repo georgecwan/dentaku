@@ -35,7 +35,9 @@ class help(Command):
                 # sends general information about all commands
                 start = 0
                 end = len(modules)
-                if float(self.user_params[0]) == 1:
+                if self.user_params[0].lower() == "full":
+                    response_text += " Full List"
+                elif float(self.user_params[0]) == 1:
                     response_text += " Part 1/4"
                     end = math.ceil(len(modules) / 4)
                 elif float(self.user_params[0]) == 2:

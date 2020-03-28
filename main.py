@@ -13,6 +13,7 @@ import time
 from fbchat import ThreadType
 from fbchat import TypingStatus
 import importlib
+from signal import signal, SIGINT
 
 database = {}
 
@@ -165,9 +166,16 @@ for thread in database['subscription']:
 if 'G_CREDENTIALS' in os.environ:
     cred = credentials.Certificate(os.environ['G_CREDENTIALS'])
     firebase_admin.initialize_app(cred)
-
     gdb = firestore.client()
 else:
     gdb = None
 
+def handler(signal_received, frame):
+    # Handle any cleanup here
+    print('SIGINT or CTRL-C detected. Exiting gracefully')
+    client.logout()
+    exit(0)
+
 client.listen()
+
+signal(SIGINT, handler)

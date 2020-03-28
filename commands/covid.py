@@ -44,15 +44,15 @@ class covid(Command):
             confirmed += list(response.loc[i])[2]
             deaths += list(response.loc[i])[3]
             recovered += list(response.loc[i])[4]
-        try:
-            response_text = "@" + self.author.first_name + " Current COVID-19 numbers for " + countries[rows[0]] + ":\n"+ \
-                "Comfirmed: " + confirmed + "\nDeaths: " + deaths + "\nRecovered: " + recovered
-        except:
-            response_text = "@" + self.author.first_name + "Location not found."
+        #try:
+        response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + countries[rows[0]] + ":" +
+               "\nConfirmed: " + str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
+        #except:
+        #    response_text = "@" + self.author.first_name + " Location not found."
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
         self.client.send(
-            Message(text=response_text, mentions= mentions),
+            Message(text=response_text, mentions=mentions),
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )

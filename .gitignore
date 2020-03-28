@@ -1,7 +1,6 @@
 venv
 .idea
 export.sh
-export.sh
 __pycache__
 credentials.json
 token.pickle
@@ -12,3 +11,4 @@ update-autodeploy
 python-autodeploy
 session.json
 bruh-moment-860fc-bce2828d56b6.json
+autodeploy.conf

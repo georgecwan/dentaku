@@ -44,8 +44,11 @@ class covid(Command):
             confirmed += list(response.loc[i])[2]
             deaths += list(response.loc[i])[3]
             recovered += list(response.loc[i])[4]
-        response_text = "@" + self.author.first_name + " Current COVID-19 numbers for " + countries[tindex] + ":\n"+ \
-            "Comfirmed: " + confirmed + "\nDeaths: " + deaths + "\nRecovered: " + recovered
+        try:
+            response_text = "@" + self.author.first_name + " Current COVID-19 numbers for " + countries[rows[0]] + ":\n"+ \
+                "Comfirmed: " + confirmed + "\nDeaths: " + deaths + "\nRecovered: " + recovered
+        except:
+            response_text = "@" + self.author.first_name + "Location not found."
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
         self.client.send(

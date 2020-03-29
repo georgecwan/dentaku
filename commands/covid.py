@@ -31,23 +31,37 @@ class covid(Command):
                 response = pd.read_csv(url)
         province_state = response.pop('Province_State')
         response['Province_State'] = province_state
-        countries = list(response['Country_Region'])
-        rows = []
-        tindex = 0
-        confirmed = 0
-        deaths = 0
-        recovered = 0
-        for i in countries:
-            if i.lower() == location.lower():
-                rows.append(tindex)
-            tindex += 1
-        for i in rows:
-            confirmed += list(response.loc[i])[2]
-            deaths += list(response.loc[i])[3]
-            recovered += list(response.loc[i])[4]
         try:
-            response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + countries[rows[0]] + ":" +
+            countries = list(response['Country_Region'])
+            rows = []
+            tindex = 0
+            for i in countries:
+                if i.lower() == location.lower():
+                    rows.append(tindex)
+                tindex += 1
+            if len(rows) == 0:
+                country = False
+                regions = list(response['Province_State'])
+                tindex = 0
+                for i in regions:
+                    if i.lower() == location.lower():
+                        rows.append(tindex)
+                    tindex += 1
+                loc = regions[rows[0]]
+            else:
+                country = True
+                loc = countries[rows[0]]
+            confirmed = 0
+            deaths = 0
+            recovered = 0
+            for i in rows:
+                confirmed += list(response.loc[i])[2]
+                deaths += list(response.loc[i])[3]
+                recovered += list(response.loc[i])[4]
+            response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + loc + ":" +
                "\nConfirmed: " + str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
+            if not country:
+                response_text += "\n\nRecovered numbers are not available for regions."
         except:
             response_text = "@" + self.author.first_name + " Location not found."
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]

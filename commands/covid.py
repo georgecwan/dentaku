@@ -61,7 +61,7 @@ class covid(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "LOCATION",
-            "function": "Returns the current coronavirus numbers for LOCATION."
+            "function": "Returns the current coronavirus numbers for LOCATION. Updates ~4:50PM everyday."
         }
 
     def location_correct(location):

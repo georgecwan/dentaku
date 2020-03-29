@@ -47,7 +47,7 @@ class covid(Command):
                     if i.lower() == location.lower():
                         rows.append(tindex)
                     tindex += 1
-                loc = list(response['Combined_Key'])[rows[0]]
+                loc = regions[rows[0]] + ", " + countries[rows[0]]
             else:
                 country = True
                 loc = countries[rows[0]]

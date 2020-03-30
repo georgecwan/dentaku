@@ -41,22 +41,30 @@ class covid(Command):
             countries = list(response['Country_Region'])
             rows = []
             tindex = 0
-            for i in countries:
-                if i.lower() == location.lower():
-                    rows.append(tindex)
-                tindex += 1
-            if len(rows) == 0:
-                country = False
-                regions = list(response['Province_State'])
-                tindex = 0
-                for i in regions:
+            if country == "":
+                for i in countries:
                     if i.lower() == location.lower():
                         rows.append(tindex)
                     tindex += 1
-                loc = regions[rows[0]] + ", " + countries[rows[0]]
+                if len(rows) == 0:
+                    country = False
+                    regions = list(response['Province_State'])
+                    tindex = 0
+                    for i in regions:
+                        if i.lower() == location.lower():
+                            rows.append(tindex)
+                        tindex += 1
+                    loc = regions[rows[0]] + ", " + countries[rows[0]]
+                else:
+                    country = True
+                    loc = countries[rows[0]]
             else:
-                country = True
-                loc = countries[rows[0]]
+                regions = list(response['Province_State'])
+                for i in countries:
+                    if i.lower() == country.lower() and regions[tindex].lower() == location.lower():
+                        rows.append(tindex)
+                    loc = regions[rows[0]] + ", " + countries[rows[0]]
+                    country = False
             confirmed = 0
             deaths = 0
             recovered = 0
@@ -114,7 +122,8 @@ class covid(Command):
             "west bank": "West Bank and Gaza",
             "nz": "New Zealand",
             "washington dc": "District of Columbia",
-            "dc": "District of Columbia"
+            "dc": "District of Columbia",
+            "bc": "British Columbia"
         }
         if location.lower() in locs:
             return locs[location.lower()]

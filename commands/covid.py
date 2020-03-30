@@ -47,7 +47,6 @@ class covid(Command):
                         rows.append(tindex)
                     tindex += 1
                 if len(rows) == 0:
-                    country = False
                     regions = list(response['Province_State'])
                     tindex = 0
                     for i in regions:
@@ -56,7 +55,6 @@ class covid(Command):
                         tindex += 1
                     loc = regions[rows[0]] + ", " + countries[rows[0]]
                 else:
-                    country = True
                     loc = countries[rows[0]]
             else:
                 regions = list(response['Province_State'])
@@ -64,7 +62,6 @@ class covid(Command):
                     if i.lower() == country.lower() and regions[tindex].lower() == location.lower():
                         rows.append(tindex)
                     loc = regions[rows[0]] + ", " + countries[rows[0]]
-                    country = False
             confirmed = 0
             deaths = 0
             recovered = 0
@@ -74,7 +71,7 @@ class covid(Command):
                 recovered += list(response.loc[i])[4]
             response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + loc + ":" +
                "\nConfirmed: " + str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
-            if not country:
+            if "," in loc:
                 response_text += "\n\nRecovered numbers are not available for regions."
         except:
             response_text = "@" + self.author.first_name + " Location not found."

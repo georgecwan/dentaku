@@ -39,6 +39,7 @@ class covid(Command):
         response['Province_State'] = province_state
         try:
             countries = list(response['Country_Region'])
+            regions = None
             rows = []
             tindex = 0
             if country == "":
@@ -71,8 +72,9 @@ class covid(Command):
                 deaths += list(response.loc[i])[3]
                 recovered += list(response.loc[i])[4]
             response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + loc + ":" +
-               "\nConfirmed: " + str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
-            if "," in " ".join(self.user_params):
+                             "\nConfirmed: " + str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(
+                        recovered))
+            if regions is not None:
                 response_text += "\n\nRecovered numbers are not available for regions."
         except:
             response_text = "@" + self.author.first_name + " Location not found."

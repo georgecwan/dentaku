@@ -8,11 +8,17 @@ from datetime import date, timedelta
 class covid(Command):
 
     def run(self):
+        country = ""
         if len(self.user_params) == 0:
             location = "Canada"
         else:
             location = " ".join(self.user_params)
-            location = self.location_correct(location)
+            if "," in location:
+                loclist = location.split(",")
+                location = loclist[0].strip()
+                country = loclist[1].strip()
+            else:
+                location = self.location_correct(location)
         yesterday = str(date.today() - timedelta(days=1))[5:] + "-" + str(date.today() - timedelta(days=1))[:4]
         now = str(date.today())[5:] + "-" + str(date.today())[:4]
         try:
@@ -79,36 +85,37 @@ class covid(Command):
         }
 
     def location_correct(location):
-        if location.lower() == "usa" or location.lower() == "united states":
-            return("US")
-        elif location.lower() == "uk" or location.lower() == "britain":
-            return("UK")
-        elif location.lower() == "south korea" or location.lower() == "korea":
-            return("Korea, South")
-        elif location.lower() == "vatican city" or location.lower() == "vatican":
-            return("Holy See")
-        elif location.lower() == "bosnia":
-            return("Bosnia and Herzegovina")
-        elif location.lower() == "congo" or location.lower() == "drc" or location.lower() == "democratic republic of the congo":
-            return("Congo (Kinshasa)")
-        elif location.lower() == "republic of the congo":
-            return("Congo (Brazzaville)")
-        elif location.lower() == "ivory coast":
-            return("Cote d'Ivoire")
-        elif location.lower() == "macedonia":
-            return("North Macedonia")
-        elif location.lower() == "papua":
-            return("Papua New Guinea")
-        elif location.lower() == "saint kitts":
-            return("Saint Kitts and Nevis")
-        elif location.lower() == "saint vincent":
-            return("Saint Vincent and the Grenadines")
-        elif location.lower() == "taiwan":
-            return("Taiwan*")
-        elif location.lower() == "uae":
-            return("United Arab Emirates")
-        elif location.lower() == "palestine" or location.lower() == "gaza" or location.lower() == "west bank":
-            return("West Bank and Gaza")
-        elif location.lower() == "nz":
-            return("New Zealand")
-        return(location)
+        locs = {
+            "usa": "US",
+            "united states": "US",
+            "uk": "United Kingdom",
+            "britain": "United Kingdom",
+            "south korea": "Korea, South",
+            "korea": "Korea, South",
+            "vatican city": "Holy See",
+            "vatican": "Holy See",
+            "bosnia": "Bosnia and Herzegovina",
+            "congo": "Congo (Kinshasa)",
+            "drc": "Congo (Kinshasa)",
+            "democratic republic of the congo": "Congo (Kinshasa)",
+            "republic of the congo": "Congo (Brazzaville)",
+            "ivory coast": "Cote d'Ivoire",
+            "macedonia": "North Macedonia",
+            "papua": "Papua New Guinea",
+            "saint kitts": "Saint Kitts and Nevis",
+            "saint vincent": "Saint Vincent and the Grenadines",
+            "taiwan": "Taiwan*",
+            "republic of china": "Taiwan*",
+            "people's republic of china": "China",
+            "mainland china": "China",
+            "uae": "United Arab Emirates",
+            "palestine": "West Bank and Gaza",
+            "gaza": "West Bank and Gaza",
+            "west bank": "West Bank and Gaza",
+            "nz": "New Zealand",
+            "washington dc": "District of Columbia",
+            "dc": "District of Columbia"
+        }
+        if location.lower() in locs:
+            return locs[location.lower()]
+        return location

@@ -92,7 +92,7 @@ class covid(Command):
             "function": "Returns the current coronavirus numbers for LOCATION. Updates ~4:50PM everyday."
         }
 
-    def location_correct(location):
+    def location_correct(self, location):
         locs = {
             "usa": "US",
             "united states": "US",

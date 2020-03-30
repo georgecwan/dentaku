@@ -15,8 +15,8 @@ class covid(Command):
             location = " ".join(self.user_params)
             if "," in location:
                 loclist = location.split(",")
-                location = loclist[0].strip()
-                country = loclist[1].strip()
+                location = self.location_correct(loclist[0].strip())
+                country = self.location_correct(loclist[1].strip())
             else:
                 location = self.location_correct(location)
         yesterday = str(date.today() - timedelta(days=1))[5:] + "-" + str(date.today() - timedelta(days=1))[:4]

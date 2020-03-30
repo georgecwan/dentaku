@@ -35,7 +35,7 @@ class covid(Command):
                 response = pd.read_csv(url).drop(['FIPS', 'Admin2', 'Combined_Key', 'Lat', 'Long_'], axis=1)
             except:
                 response = pd.read_csv(url)
-        province_state = response.pop('Province_State')
+        province_state = response.pop('Province_State').astype(str)
         response['Province_State'] = province_state
         try:
             countries = list(response['Country_Region'])
@@ -61,7 +61,8 @@ class covid(Command):
                 for i in countries:
                     if i.lower() == country.lower() and regions[tindex].lower() == location.lower():
                         rows.append(tindex)
-                    loc = regions[rows[0]] + ", " + countries[rows[0]]
+                    tindex += 1
+                loc = regions[rows[0]] + ", " + countries[rows[0]]
             confirmed = 0
             deaths = 0
             recovered = 0
@@ -71,7 +72,7 @@ class covid(Command):
                 recovered += list(response.loc[i])[4]
             response_text = ("@" + self.author.first_name + " Current COVID-19 numbers for " + loc + ":" +
                "\nConfirmed: " + str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
-            if "," in loc:
+            if "," in " ".join(self.user_params):
                 response_text += "\n\nRecovered numbers are not available for regions."
         except:
             response_text = "@" + self.author.first_name + " Location not found."
@@ -120,7 +121,8 @@ class covid(Command):
             "nz": "New Zealand",
             "washington dc": "District of Columbia",
             "dc": "District of Columbia",
-            "bc": "British Columbia"
+            "bc": "British Columbia",
+            "ny": "New York"
         }
         if location.lower() in locs:
             return locs[location.lower()]

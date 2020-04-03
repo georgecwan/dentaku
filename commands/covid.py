@@ -53,22 +53,23 @@ class covid(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "LOCATION",
-            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers are live, local numbers update 5PM everyday."
+            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers are live, local numbers "
+                        "update 5PM everyday. "
         }
 
     def csv_read(self, location, country):
         yesterday = str(date.today() - timedelta(days=1))[5:] + "-" + str(date.today() - timedelta(days=1))[:4]
         now = str(date.today())[5:] + "-" + str(date.today())[:4]
         try:
-            url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{}.csv".format(
-                now)
+            url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data" \
+                  "/csse_covid_19_daily_reports/{}.csv".format(now)
             try:
                 response = pd.read_csv(url).drop(['FIPS', 'Admin2', 'Combined_Key', 'Lat', 'Long_'], axis=1)
             except:
                 response = pd.read_csv(url)
         except:
-            url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/{}.csv".format(
-                yesterday)
+            url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data" \
+                  "/csse_covid_19_daily_reports/{}.csv".format(yesterday)
             try:
                 response = pd.read_csv(url).drop(['FIPS', 'Admin2', 'Combined_Key', 'Lat', 'Long_'], axis=1)
             except:

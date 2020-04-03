@@ -7,12 +7,6 @@ import bs4
 import requests
 import time
 
-url = "http://api.openweathermap.org/data/2.5/forecast?q=Vancouver&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4"
-jsonurl = urlopen(url)
-info = json.loads(jsonurl.read())
-list = info['list'][0]
-#print(list)
-
 
 class weather(Command):
 
@@ -82,10 +76,7 @@ class weather(Command):
             try:
                 link = "https://www.theweathernetwork.com/ca/search?q="
                 for i in self.user_params:
-                    if i == "-t":
-                        break
-                    else:
-                        link += i + "%20"
+                    link += i + "%20"
                 webpage = requests.get(link)
                 text = str(bs4.BeautifulSoup(webpage.text, 'html.parser').find("li", class_="result"))
                 h = text.find("href")

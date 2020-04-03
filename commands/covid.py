@@ -3,6 +3,8 @@ from fbchat import Message
 from fbchat import Mention
 import pandas as pd
 from datetime import date, timedelta
+from bs4 import BeautifulSoup
+import requests
 
 
 class covid(Command):
@@ -10,7 +12,26 @@ class covid(Command):
     def run(self):
         country = ""
         if len(self.user_params) == 0:
-            location = "Canada"
+            location = "British Columbia"
+            response_text = self.csv_read(location, country)
+        elif self.user_params[0].lower() == "global" or self.user_params[0].lower() == "world" or  self.user_params[0].lower() == "total":
+            link = "https://www.worldometers.info/coronavirus/"
+            response = requests.get(link)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            text = str(soup.find("div", class_="maincounter-number").find("span"))
+            start = text.index(">") + 1
+            end = text.index("<", 1)
+            confirmed = text[start:end]
+            text = str(soup.find_all("div", class_="maincounter-number")[1].find("span"))
+            start = text.index(">") + 1
+            end = text.index("<", 1)
+            deaths = text[start:end]
+            text = str(soup.find_all("div", class_="maincounter-number")[2].find("span"))
+            start = text.index(">") + 1
+            end = text.index("<", 1)
+            recovered = text[start:end]
+            response_text = ("@" + self.author.first_name + " Current global COVID-19 numbers:" + "\nConfirmed: " +
+                             str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
         else:
             location = " ".join(self.user_params)
             if "," in location:
@@ -19,6 +40,23 @@ class covid(Command):
                 country = self.location_correct(loclist[1].strip())
             else:
                 location = self.location_correct(location)
+            response_text = self.csv_read(location, country)
+
+        mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
+
+        self.client.send(
+            Message(text=response_text, mentions=mentions),
+            thread_id=self.thread_id,
+            thread_type=self.thread_type
+        )
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "LOCATION",
+            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers are live, local numbers update 5PM everyday."
+        }
+
+    def csv_read(self, location, country):
         yesterday = str(date.today() - timedelta(days=1))[5:] + "-" + str(date.today() - timedelta(days=1))[:4]
         now = str(date.today())[5:] + "-" + str(date.today())[:4]
         try:
@@ -78,19 +116,7 @@ class covid(Command):
                 response_text += "\n\nRecovered numbers are not available for regions."
         except:
             response_text = "@" + self.author.first_name + " Location not found."
-        mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
-
-        self.client.send(
-            Message(text=response_text, mentions=mentions),
-            thread_id=self.thread_id,
-            thread_type=self.thread_type
-        )
-
-    def define_documentation(self):
-        self.documentation = {
-            "parameters": "LOCATION",
-            "function": "Returns the current coronavirus numbers for LOCATION. Updates ~4:50PM everyday."
-        }
+        return response_text
 
     def location_correct(self, location):
         locs = {

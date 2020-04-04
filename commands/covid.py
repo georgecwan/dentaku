@@ -39,7 +39,7 @@ class covid(Command):
             response = requests.get(link)
             soup = BeautifulSoup(response.text, 'html.parser')
             for rank in range(5):
-                source = soup.find_all("tr")[rank + 1]
+                source = soup.find_all("tr")[rank + 2]
                 text = str(source.find("a", class_="mt_a"))
                 start = text.index(">") + 1
                 end = text.index("<", 1)

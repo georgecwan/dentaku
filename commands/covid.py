@@ -11,6 +11,7 @@ class covid(Command):
 
     def run(self):
         country = ""
+        ranks = ["rank", "rankings", "ranks", "ranking"]
         if len(self.user_params) == 0:
             location = "British Columbia"
             response_text = self.csv_read(location, country)
@@ -32,6 +33,22 @@ class covid(Command):
             recovered = text[start:end]
             response_text = ("@" + self.author.first_name + " Current global COVID-19 numbers:" + "\nConfirmed: " +
                              str(confirmed) + "\nDeaths: " + str(deaths) + "\nRecovered: " + str(recovered))
+        elif self.user_params[0].lower() in ranks:
+            response_text = "@" + self.author.first_name + " Global COVID-19 rankings by confirmed cases:"
+            link = "https://www.worldometers.info/coronavirus/"
+            response = requests.get(link)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            for rank in range(5):
+                source = soup.find_all("tr")[rank + 1]
+                text = str(source.find("a", class_="mt_a"))
+                start = text.index(">") + 1
+                end = text.index("<", 1)
+                response_text += "\n" + text[start:end] + ": "
+                text = str(source.find_all("td")[1])
+                start = text.index(">") + 1
+                end = text.index("<", 1)
+                response_text += text[start:end]
+            response_text += "\n\n*China may be missing from the rankings due to issues on the website."
         else:
             location = " ".join(self.user_params)
             if "," in location:
@@ -52,9 +69,9 @@ class covid(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "LOCATION",
-            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers are live, local numbers "
-                        "update 5PM everyday. "
+            "parameters": "LOCATION or \"global\" or \"rankings\"",
+            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers and rankings are live,"
+                        "local numbers update 5PM everyday."
         }
 
     def csv_read(self, location, country):

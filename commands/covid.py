@@ -39,7 +39,7 @@ class covid(Command):
             response = requests.get(link)
             soup = BeautifulSoup(response.text, 'html.parser')
             for rank in range(5):
-                source = soup.find_all("tr")[rank + 2]
+                source = soup.find_all("tr")[rank + 9]
                 text = str(source.find("a", class_="mt_a"))
                 start = text.index(">") + 1
                 end = text.index("<", 1)
@@ -48,7 +48,6 @@ class covid(Command):
                 start = text.index(">") + 1
                 end = text.index("<", 1)
                 response_text += text[start:end]
-            response_text += "\n\n*China may be missing from the rankings due to issues on the website."
         else:
             location = " ".join(self.user_params)
             if "," in location:

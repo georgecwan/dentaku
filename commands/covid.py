@@ -69,7 +69,7 @@ class covid(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "LOCATION or \"global\" or \"rankings\"",
-            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers and rankings are live,"
+            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers and rankings are live, "
                         "local numbers update 5PM everyday."
         }
 

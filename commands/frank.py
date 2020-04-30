@@ -6,27 +6,21 @@ from random import randint
 class frank(Command):
     def run(self):
         response_text = ""
-        if len(self.user_params) == 0 and self.message_object.replied_to == None:
-            response_text = " *Indecipherable toxic junk* "
-        try:
-            text = self.message_object.replied_to.text
-            for i in text.split(" "):
-                if len(i) > 1:
-                    count = 0
-                    while count < len(i)/5:
-                        rand = randint(1, len(i))
-                        i = i[:rand] + i[rand+1:]
-                        count += 1
-                response_text += i + " "
-        except AttributeError:
-            try:
-                for i in self.user_params:
-                    i = i[0]+i[2:]
-                    response_text += i+" "
-            except:
-                response_text = "Something's not right. I can feel it."
-        except:
-            response_text = "Everything is going badly and I don't know why."
+        if self.message_object.replied_to is not None:
+            text = self.message_object.replied_to.text.split(" ")
+        elif len(self.user_params) > 0:
+            text = self.user_params
+        else:
+            text = ""
+            response_text = " *Indecipherable toxic junk*"
+        for i in text:
+            if len(i) > 1:
+                count = 0
+                while count < len(i) / 5:
+                    rand = randint(0, len(i))
+                    i = i[:rand] + i[rand + 1:]
+                    count += 1
+            response_text += i + " "
 
         self.client.send(
             Message(text=response_text, mentions=None),

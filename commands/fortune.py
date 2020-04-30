@@ -1,16 +1,21 @@
 from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
+import requests
 
-class a_chance_at_uni(Command):
+
+class fortune(Command):
 
     def run(self):
-        if len(self.user_params) > 0:
-            uni = " ".join(self.user_params)
-            response_text = "@" + self.author.first_name + "\nu op guaranteed acceptance at " + uni
-        else:
-            response_text = "@" + self.author.first_name + "\nu op guaranteed acceptance at HYPSM"
+        response_text = "@" + self.author.first_name
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
+        url = "https://helloacm.com/api/fortune/"
+        try:
+            response_text += " " + requests.get(url).json()
+        except:
+            pass
+        if response_text == "@" + self.author.first_name:
+            response_text += " Fortune unavailable"
 
         self.client.send(
             Message(text=response_text, mentions=mentions),
@@ -20,6 +25,6 @@ class a_chance_at_uni(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "UNIVERSITY_NAME (OPTIONAL)",
-            "function": "Reminds you that you're good enough."
+            "parameters": "None",
+            "function": "Gives you a random fortune."
         }

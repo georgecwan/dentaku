@@ -22,14 +22,15 @@ class help(Command):
 
     def run(self):
         response_text = "@{}".format(self.author.first_name)
-        if len(self.user_params) == 0:
+        if len(self.user_params) == 0 or int(self.user_params[0]) > 5:
             # Creates table of contents
             response_text += " Please signify which part (1-4) of the commands list you would like to see. \
-                            \nPart 1: {}\nPart 2: {}\nPart 3: {}\nPart 4: {}".format(
-                modules[0] + " - " + modules[math.ceil(len(modules) / 4) - 1],
-                modules[math.ceil(len(modules) / 4)] + " - " + modules[math.ceil(len(modules) / 2) - 1],
-                modules[math.ceil(len(modules) / 2)] + " - " + modules[math.ceil(3 * len(modules) / 4) - 1],
-                modules[math.ceil(3 * len(modules) / 4)] + " - " + modules[-1])
+                            \nPart 1: {}\nPart 2: {}\nPart 3: {}\nPart 4: {}\nPart 5: {}".format(
+                modules[0] + " - " + modules[math.ceil(len(modules) / 5) - 1],
+                modules[math.ceil(len(modules) / 5)] + " - " + modules[math.ceil(2 * len(modules) / 5) - 1],
+                modules[math.ceil(2 * len(modules) / 5)] + " - " + modules[math.ceil(3 * len(modules) / 5) - 1],
+                modules[math.ceil(3 * len(modules) / 5)] + " - " + modules[math.ceil(4 * len(modules) / 5) - 1],
+                modules[math.ceil(4 * len(modules) / 5)] + " - " + modules[-1])
         elif len(self.user_params) == 1:
             try:
                 # sends general information about all commands
@@ -38,19 +39,23 @@ class help(Command):
                 if self.user_params[0].lower() == "full":
                     response_text += " Full List"
                 elif float(self.user_params[0]) == 1:
-                    response_text += " Part 1/4"
-                    end = math.ceil(len(modules) / 4)
+                    response_text += " Part 1/5"
+                    end = math.ceil(len(modules) / 5)
                 elif float(self.user_params[0]) == 2:
-                    response_text += " Part 2/4"
-                    start = math.ceil(len(modules) / 4)
-                    end = math.ceil(len(modules) / 2)
+                    response_text += " Part 2/5"
+                    start = math.ceil(len(modules) / 5)
+                    end = math.ceil(2 * len(modules) / 5)
                 elif float(self.user_params[0]) == 3:
-                    response_text += " Part 3/4"
-                    start = math.ceil(len(modules) / 2)
-                    end = math.ceil(3 * len(modules) / 4)
+                    response_text += " Part 3/5"
+                    start = math.ceil(2 * len(modules) / 5)
+                    end = math.ceil(3 * len(modules) / 5)
                 elif float(self.user_params[0]) == 4:
-                    response_text += " Part 4/4"
-                    start = math.ceil(3 * len(modules) / 4)
+                    response_text += " Part 4/5"
+                    start = math.ceil(3 * len(modules) / 5)
+                    end = math.ceil(4 * len(modules) / 5)
+                elif float(self.user_params[0]) == 5:
+                    response_text += " Part 5/5"
+                    start = math.ceil(4 * len(modules) / 5)
                 for x in modules[start:end]:
                     instance = self.get_instance(x)
                     response_text += "\n\n!" + x + ": " + instance.documentation["function"]

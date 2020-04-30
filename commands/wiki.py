@@ -22,7 +22,7 @@ class wiki(Command):
                     text = text[:text.find("\"")]
                     link = "https://en.wikipedia.org" + text
                 response_text = "@" + self.author.first_name + " Here's what I found for you about " + " ".join(self.user_params) \
-                                + ":" + link
+                                + ": " + link
             except:
                 response_text = "@" + self.author.first_name + " Wikipedia cannot get a result."
 

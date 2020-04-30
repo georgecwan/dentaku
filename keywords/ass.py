@@ -11,7 +11,7 @@ class ass(Command):
                 and (trigger + 3 == len(msg) or msg[trigger+3] == " "):
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
             self.client.send(
-                Message(text="@" + self.author.first_name + " I like ass.", mentions=mentions),
+                Message(text="@" + self.author.first_name + " I like ass.", mentions=mentions, reply_to_id=self.message_object.uid),
                 thread_id=self.thread_id,
                 thread_type=self.thread_type
             )

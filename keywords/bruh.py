@@ -77,7 +77,7 @@ class bruh(Keyword):
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 
         self.client.send(
-            Message(text=response_text, mentions=mentions),
+            Message(text=response_text, mentions=mentions, reply_to_id=self.message_object.uid),
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )

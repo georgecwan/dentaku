@@ -1,6 +1,5 @@
 from commands.command import Command
 from fbchat import Message
-from fbchat import Mention
 try: 
 	import googlesearch
 except ImportError:  
@@ -13,7 +12,6 @@ class search(Command):
 		length = len(self.user_params)
 		index = 1;
 		query = ""
-
 
 		for i in self.user_params:
 			query += i

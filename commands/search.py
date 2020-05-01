@@ -1,9 +1,8 @@
 from commands.command import Command
 from fbchat import Message
-try: 
-	import googlesearch
-except ImportError:  
-	print("No module named 'google' found") 
+import requests
+from bs4 import BeautifulSoup
+import googlesearch
 
 
 class search(Command):
@@ -25,24 +24,33 @@ class search(Command):
 			for j in googlesearch.search(query, tld="ca", num=1, stop=1, pause=2):
 				print(j)
 
-		j += ""
+		if j == "":
+			query = ""
+			# get message from a replied thread
+			target = self.message_object.replied_to
+			if target is not None:
+				query = target.text
+			if query != "":
+				for j in googlesearch.search(query, tld="ca", num=1, stop=1, pause=2):
+					print(j)
 
-		k = ""
-		query = ""
-		# get message from a replied thread
-		target = self.message_object.replied_to
-		if target is not None:
-			query = target.text
-		if query != "":
-			for k in googlesearch.search(query, tld="ca", num=1, stop=1, pause=2):
-				print(k)
-
-		if k == "" and j == "":
+		if j == "":
 			response_text = "Please input a search term"
-		elif k == "" or j == "":
-			response_text = "Here is Google's top search! " + j + k
 		else:
-			response_text = "Here are Google's top searches for those terms!\n" + j + "\n" + k
+			response = requests.get(j)
+			soup = BeautifulSoup(response.text, 'html.parser')
+			metas = soup.find_all('meta')
+			title = ([meta.attrs['content'] for meta in metas if
+				   'property' in meta.attrs and meta.attrs['property'] == 'og:title'])
+			description = ([meta.attrs['content'] for meta in metas if
+				   'property' in meta.attrs and meta.attrs['property'] == 'og:description'])
+			response_text = "Here are Google's top searches for those terms!\n"
+			if len(title) > 0:
+				response_text = title[0] + "\n"
+			if len(description) > 0:
+				response_text += "Snippet: " + description[0] + "\n"
+
+			response_text += "\n" + j
 		
 		self.client.send(
 			Message(text=response_text),

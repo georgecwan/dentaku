@@ -22,5 +22,5 @@ class joke(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "None",
-            "function": "Sends a random joke."
+            "function": "Sends a random joke. May contain NSFW jokes."
         }

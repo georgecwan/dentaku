@@ -7,7 +7,7 @@ from random import randint
 class news(Command):
 
     def run(self):
-        if self.user_params[0].lower() == "us":
+        if len(self.user_params) > 0 and self.user_params[0].lower() == "us":
             url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=620bb40ce29b4ba6877ca164e3b9f008"
         else:
             url = "https://newsapi.org/v2/top-headlines?country=ca&apiKey=620bb40ce29b4ba6877ca164e3b9f008"

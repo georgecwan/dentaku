@@ -25,5 +25,5 @@ class news(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "None(Canada)/US",
-            "function": "What is Trump thinking?"
+            "function": "Get a random recent headline."
         }

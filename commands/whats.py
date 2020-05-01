@@ -1,5 +1,5 @@
 from commands.command import Command
-from fbchat.models import *
+from fbchat import Message
 
 whatarray = {
 'bofa': 'bofA deez nUts',
@@ -20,8 +20,10 @@ class whats(Command):
             response_text = whatarray[whats]
         except KeyError:
             response_text = "I cannot perform this request because your dick is too big and has proposed a ligma joke that has not been coded."
+        if whats.lower() == "help":
+            response_text = "JOKE_STARTERS: " + " ".join(whatarray)
         self.client.send(
-            Message(text=response_text, mentions=None),
+            Message(text=response_text),
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )

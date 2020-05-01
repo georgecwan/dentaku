@@ -23,7 +23,7 @@ class frank(Command):
             response_text += i + " "
 
         self.client.send(
-            Message(text=response_text, mentions=None),
+            Message(text=response_text),
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )

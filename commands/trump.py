@@ -3,15 +3,12 @@ from fbchat import Message
 import requests
 
 
-class joke(Command):
+class trump(Command):
 
     def run(self):
-        url = "https://sv443.net/jokeapi/v2/joke/Any"
+        url = "https://www.tronalddump.io/random/quote"
         json = requests.get(url).json()
-        if 'joke' in json:
-            response_text = json['joke']
-        else:
-            response_text = json['setup'] + "\n" + json['delivery']
+        response_text = json['appeared_at'][:10]+"\n"+json['value']+"\n"+json['_embedded']['source'][0]['url']
 
         self.client.send(
             Message(text=response_text),
@@ -22,5 +19,5 @@ class joke(Command):
     def define_documentation(self):
         self.documentation = {
             "parameters": "None",
-            "function": "Sends a random joke. May contain NSFW jokes."
+            "function": "What is Trump thinking?"
         }

@@ -1,26 +1,27 @@
 from commands.command import Command
 from fbchat import Message
 from fbchat import Mention
-from random import randint
+import random
 
 
 class choose(Command):
 
     def run(self):
+        response_text = None
         if len(self.user_params) == 0:
             response_text = "@" + self.author.first_name + " Please enter something. Anything."
         else:
             try:
                 if len(self.user_params) == 1:
-                    response_text = "@" + self.author.first_name + " Your lucky number is " + str(randint(1, float(self.user_params[0])))
-                elif len(self.user_params) == 2 and float(self.user_params[1]) > float(self.user_params[0]):
-                    response_text = "@" + self.author.first_name + " Your lucky number is " + str(randint(float(self.user_params[0]), float(self.user_params[1])))
-                else:
-                    draw = randint(0, len(self.user_params) - 1)
-                    response_text = "@" + self.author.first_name + " Your lucky item is " + self.user_params[draw]
+                    response_text = "@" + self.author.first_name + " Your lucky number is {}"\
+                        .format(random.randint(1, int(self.user_params[0])))
+                elif len(self.user_params) == 2 and int(self.user_params[1]) > int(self.user_params[0]):
+                    response_text = "@" + self.author.first_name + " Your lucky number is {}"\
+                        .format(random.randint(int(self.user_params[0]), int(self.user_params[1])))
             except:
-                draw = randint(0, len(self.user_params) - 1)
-                response_text = "@" + self.author.first_name + " Your lucky item is " + self.user_params[draw]
+                pass
+            if response_text is None:
+                response_text = "@" + self.author.first_name + " Your lucky item is " + random.choice(self.user_params)
 
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
 

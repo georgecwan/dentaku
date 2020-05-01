@@ -1,33 +1,20 @@
 from commands.command import Command
 from fbchat import Message
-from fbchat import Mention
-import bs4
 import requests
+from bs4 import BeautifulSoup
+
 
 class wiki(Command):
 
     def run(self):
-        mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
-        if len(self.user_params) == 0:
-            response_text = "@" + self.author.first_name + " Here you go." + "\n" + "https://en.wikipedia.org/wiki/Nothing"
-        else:
-            try:
-                link = "https://en.wikipedia.org/w/index.php?search="+"_".join(self.user_params)
-                webpage = requests.get(link)
-                text = str(bs4.BeautifulSoup(webpage.text, 'html.parser').find("div", class_="mw-search-result-heading"))
-                if text == "None":
-                    link = webpage.url
-                else:
-                    text = text[text.find("href") + 6:]
-                    text = text[:text.find("\"")]
-                    link = "https://en.wikipedia.org" + text
-                response_text = "@" + self.author.first_name + " Here's what I found for you about " + " ".join(self.user_params) \
-                                + ": " + link
-            except:
-                response_text = "@" + self.author.first_name + " Wikipedia cannot get a result."
+        link = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch={}&prop=info&inprop=url&format=json".format(
+            "%20".join(self.user_params))
+        result = requests.get(link).json()['query']['search'][0]
+        response_text = result['title'] + ":\n" + BeautifulSoup(result['snippet'], features="html.parser").text + "..."
+        response_text += "\n\nhttps://en.wikipedia.org/?curid={}".format(result['pageid'])
 
         self.client.send(
-            Message(text=response_text, mentions= mentions),
+            Message(text=response_text),
             thread_id=self.thread_id,
             thread_type=self.thread_type
         )

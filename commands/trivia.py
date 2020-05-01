@@ -3,6 +3,7 @@ from fbchat import Message
 from fbchat import Mention
 import requests
 import random
+from bs4 import BeautifulSoup
 
 
 class trivia(Command):
@@ -13,6 +14,10 @@ class trivia(Command):
         if self.database['trivia'] == "n/a" or len(self.user_params) == 0:
             url = "https://opentdb.com/api.php?amount=1"
             info = requests.get(url).json()['results'][0]
+            info['question'] = str(BeautifulSoup(info['question'], features="html.parser"))
+            info['correct_answer'] = str(BeautifulSoup(info['correct_answer'], features="html.parser"))
+            for n in range(len(info['incorrect_answers'])):
+                info['incorrect_answers'][n] = str(BeautifulSoup(info['incorrect_answers'][n], features="html.parser"))
             response_text = """Category: {}
 Difficulty: {}
 Q: {}""".format(info['category'], info['difficulty'], info['question'])

@@ -33,7 +33,7 @@ Q: {}""".format(info['category'], info['difficulty'], info['question'])
             for let in letters:
                 if choices[index] == info['correct_answer']:
                     answer = index
-                choices[index] = let + ": " + choices[index]
+                choices[index] = let + ") " + choices[index]
                 index += 1
             self.database['trivia'] = choices[answer]
             for c in choices:

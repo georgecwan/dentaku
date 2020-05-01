@@ -22,7 +22,7 @@ class help(Command):
 
     def run(self):
         response_text = "@{}".format(self.author.first_name)
-        if len(self.user_params) == 0 or int(self.user_params[0]) > 5:
+        if len(self.user_params) == 0:
             # Creates table of contents
             response_text += " Please signify which part (1-4) of the commands list you would like to see. \
                             \nPart 1: {}\nPart 2: {}\nPart 3: {}\nPart 4: {}\nPart 5: {}".format(
@@ -56,6 +56,8 @@ class help(Command):
                 elif float(self.user_params[0]) == 5:
                     response_text += " Part 5/5"
                     start = math.ceil(4 * len(modules) / 5)
+                else:
+                    raise ValueError
                 for x in modules[start:end]:
                     instance = self.get_instance(x)
                     response_text += "\n\n!" + x + ": " + instance.documentation["function"]

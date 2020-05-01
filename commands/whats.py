@@ -10,7 +10,7 @@ whatarray = {
 'imagine dragons': 'imagine me dragon deez nuts all over ur face',
 'candice': 'candice dick fit in yo mouf',
 'parody': 'u can get a parodyz bahls',
-'sugma': 'i feel stupid coding this manually and i really want to stop'
+'sugma': 'i feel stupid coding this manually and i really want to stop -joying 2020'
 }
 
 class whats(Command):

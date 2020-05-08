@@ -66,13 +66,6 @@ class covid(Command):
             thread_type=self.thread_type
         )
 
-    def define_documentation(self):
-        self.documentation = {
-            "parameters": "LOCATION or \"global\" or \"rankings\"",
-            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers and rankings are live, "
-                        "local numbers update 5PM everyday."
-        }
-
     def csv_read(self, location, country):
         yesterday = str(date.today() - timedelta(days=1))[5:] + "-" + str(date.today() - timedelta(days=1))[:4]
         now = str(date.today())[5:] + "-" + str(date.today())[:4]
@@ -172,3 +165,10 @@ class covid(Command):
         if location.lower() in locs:
             return locs[location.lower()]
         return location
+
+    def define_documentation(self):
+        self.documentation = {
+            "parameters": "LOCATION or \"global\" or \"rankings\"",
+            "function": "Returns the current coronavirus numbers for LOCATION. Global numbers and rankings are live, "
+                        "local numbers update 5PM everyday."
+        }

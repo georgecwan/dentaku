@@ -114,7 +114,7 @@ def export_env():
 
 
 export_env()
-cookies=[]
+cookies = []
 try:
     # Load the session cookies
     with open('cookies.json', 'r') as f:

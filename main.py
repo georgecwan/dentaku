@@ -114,7 +114,17 @@ def export_env():
 
 
 export_env()
-client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'))
+cookies=[]
+try:
+    # Load the session cookies
+    with open('cookies.json', 'r') as f:
+        cookies = json.load(f)
+except:
+    # If it fails, never mind, we'll just login again
+    pass
+client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'), session_cookies=cookies)
+with open('cookies.json', 'w') as f:
+    json.dump(client.getSession(), f)
 
 if os.path.exists("database.json"):
     with open("database.json", 'r') as file:

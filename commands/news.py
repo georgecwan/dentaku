@@ -56,6 +56,6 @@ class news(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "COUNTRY/LIST",
+            "parameters": "COUNTRY / \"list\"",
             "function": "Get a random recent headline."
         }

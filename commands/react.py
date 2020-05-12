@@ -96,7 +96,7 @@ class react(Command):
                 return
             if len(self.user_params) == 1 and self.user_params[0] == "auto":
                 response_text = "@" + self.author.first_name \
-                                + "\nIf you're looking for auto react, use `!react auto [on/off]`."
+                                + "\nIf you're looking for auto react, use `!react auto [status/on/off]`."
                 self.client.send(
                     Message(text=response_text, mentions=mentions),
                     thread_id=self.thread_id,
@@ -116,9 +116,12 @@ class react(Command):
                         # checks if auto is on/off.
                         response_text = "@" + self.author.first_name \
                                 + "\nDentaku's auto react is currently " + self.database["auto"] + "."
-                if response_text == "":
+                    if response_text == "":
+                        response_text = "@" + self.author.first_name \
+                                        + "\nAuto react is now " + self.database["auto"] + "."
+                else:
                     response_text = "@" + self.author.first_name \
-                                    + "\nAuto react is now " + self.database["auto"] + "."
+                                        + "S orry, I didn't get that."
                 self.client.send(
                     Message(text=response_text, mentions=mentions),
                     thread_id=self.thread_id,

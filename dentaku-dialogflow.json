@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dentaku-fyaltw",
+  "private_key_id": "4122ea2597be8130fe38c4644e3b5423f564022e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDjVU9Qs04pmgsu\nAgfZAI71JDx51A8rCiduYqdyRen13/FBjOQidYZWK3PdgNF0V4q38vfS179iiB+Y\neGSzpIb9NQM1mqmYdS8pri9aSaU+tiv1StgK8crk5yj7nK0bpeaOBVGDOcG2TefI\nTOchJ000yn9zFSFM9SiCqig1sUilioYkmH85Ve6SL1wj1NbFjfm0OGpq553hr6R+\nIqr0V5rF6rzAe6n5zFNojvIHEN2V2BJj68Tgf0lJUmnYbWp9KdFgO5ATxMCeECcv\nQo9RKZnuBufzSqM6agNFHMH7JM1yHDT5/w2ePtZ5zAGYr8LjIY3cKdZK8NeF+T2y\noB7zf28PAgMBAAECggEAIgfKvD9jI3oiU0xNhW/+dnbqsKgMbzpxZaZR/5q0p7BS\nyqe/HONv7SVLDmzyrdJO+zNdYswWI7dR136qQHQQGwZdCSCyY5ajLT+cag0dNfKK\nSQlfpt/EKhjqeyPcjAd9KGRma9jxBQvLdyH/9WgPOChaBM20cvM+EbVMGKGFyPXX\n1z0SkAs5q3PZJvT4fnjjPfzThsMhJ5eION9mxSYr64NSn2dwRKptZsy7k2j9w6Px\nLu6QGnPF3MRjg0ui0vB/xvn0xiusOdbl0SJAGiyaNnblb4t3RVGyzem3gGy5wafP\n/kIWhq+YMATdMvYDUhB3fjN0xLXyxUtzKItPazPJaQKBgQD32sioRkfXW8JSttjr\npsgPGe6RLJPye0UCOSaNxqU0KEPL73Zu/5IVpHCC2b5Y/WVjNk8A5LwXcN7foB+l\nAJSel+irwUKDxpFfPI9JWGSuqyJYo0riGFm52ECPIDuDbEmSgs/LyZl1GOG8NCTR\nWfDH4bUw9c1dannCYo2lSfWu5wKBgQDqzeDbwsXRADAkgPt2i2hWAsg198oTUMrZ\nXtdbLX1ZVDPs+YR5xWg7JpU7kksQPJpg7JC/hVlSNvWCX60uzVLi+SCgmpHvqsDF\nGllfJFDJ1R+dP51Apj7+I8TYp+QAEvWmSVxNR2tjgJetIs4hJK4ai9RSc73kQOK4\nYxiLDc0BmQKBgFCWrZmxSFiouDVmyH9OukvWtbA0W2KDXDvN01BT35Fm6ixcDxkm\nNhydXAvfurl6osWwed2jgdjpVT5G9SMUXj52zCtUakkofkoGCdziRdJZSJCjf4ym\nOD5qJwuigldIFV/y8pejVCcz0On91l7PrK+BHwXtVjnijfZ7Tu0IcD7PAoGAIDk0\n3LP0NeSSts/EstYa8YLcOxvQbaouzHoJkAfEJhg6MBFmLtf6n/OBk3VWO9o1TYvp\nqX8BbRkBxGyg9cVT1LZf1eqgkIWcgvBEx5vSQoCvIAN070RhbLs37ovL7H6tm66B\nrlFY2YTyS95073N7OUVrVA1yR/rnompnGd5A/jECgYEAut+0Uodnw1TsKyQyXfz4\nb65CvQHZXG4ZT7UhUs5j1GTAvnS07eieIhS7aWK8cPIBtjX3Q9WxXmaz42WCGPE4\nyrNf9b/2rOKq9KWCqNXeYKaj/SgeaPgMYcEY0I+PLm5om8xhNOyiDIElF5MB2dFN\nzMjqv94bxrpw7fDDbzF/BfA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dentaku@dentaku-fyaltw.iam.gserviceaccount.com",
+  "client_id": "109820557942898112528",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dentaku%40dentaku-fyaltw.iam.gserviceaccount.com"
+}

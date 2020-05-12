@@ -27,13 +27,13 @@ Q: {}""".format(info['category'], info['difficulty'], info['question'])
             random.shuffle(choices)
             index = 0
             if info['type'] == "multiple":
-                letters = ["A", "B", "C", "D"]
+                letters = ["a", "b", "c", "d"]
             else:
-                letters = ["A", "B"]
+                letters = ["a", "b"]
             for let in letters:
                 if choices[index] == info['correct_answer']:
                     answer = index
-                choices[index] = let + ": " + choices[index]
+                choices[index] = let + ") " + choices[index]
                 index += 1
             self.database['trivia'] = choices[answer]
             for c in choices:
@@ -47,7 +47,7 @@ Q: {}""".format(info['category'], info['difficulty'], info['question'])
         else:
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
             response_text = "@" + self.author.first_name + " "
-            if self.database['trivia'][0] == self.user_params[0].upper():
+            if self.database['trivia'][0] == self.user_params[0].lower():
                 response_text += "Congrats! You got it right!"
             else:
                 response_text += "Oof, the answer was actually "+self.database['trivia']

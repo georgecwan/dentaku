@@ -30,6 +30,6 @@ class whats(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "JOKE_STARTER",
+            "parameters": "JOKE_STARTER / \"help\"",
             "function": "Try sending a JOKE_STARTER."
         }

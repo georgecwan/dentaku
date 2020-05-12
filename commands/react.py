@@ -141,6 +141,7 @@ class react(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "REPLIED_MESSAGE, EMOJI",
+            "parameters": "REPLIED_MESSAGE, EMOJI / \"auto\", [status/on/off]",
             "function": "Reacts to a REPLIED_MESSAGE with the specified EMOJI."
+                        "Also controls the status of AUTO_REACT."
         }

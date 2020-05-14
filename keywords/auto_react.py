@@ -22,7 +22,7 @@ class auto_react(Keyword):
         # if self.client.uid == self.author_id:
         #     return
         if "auto" not in self.database:
-            self.database["auto"] = "off"
+            self.database["auto"] = "on"
         if self.database["auto"] == "off":
             return
         reply_id = react.find_reply_id(self.message_object)

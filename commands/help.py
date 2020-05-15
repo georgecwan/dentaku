@@ -12,6 +12,7 @@ modules.remove("command")
 modules.remove("rate_limit")
 modules.remove("__init__")
 
+
 class help(Command):
 
     def get_instance(self, name):
@@ -22,46 +23,38 @@ class help(Command):
 
     def run(self):
         response_text = "@{}".format(self.author.first_name)
+        partlength = 6  # Number of parts to !help there are.
         if len(self.user_params) == 0:
             # Creates table of contents
-            response_text += " Please signify which part (1-4) of the commands list you would like to see. \
-                            \nPart 1: {}\nPart 2: {}\nPart 3: {}\nPart 4: {}\nPart 5: {}".format(
-                modules[0] + " - " + modules[math.ceil(len(modules) / 5) - 1],
-                modules[math.ceil(len(modules) / 5)] + " - " + modules[math.ceil(2 * len(modules) / 5) - 1],
-                modules[math.ceil(2 * len(modules) / 5)] + " - " + modules[math.ceil(3 * len(modules) / 5) - 1],
-                modules[math.ceil(3 * len(modules) / 5)] + " - " + modules[math.ceil(4 * len(modules) / 5) - 1],
-                modules[math.ceil(4 * len(modules) / 5)] + " - " + modules[-1])
+            response_text += " Please signify which part (1-{}) of the commands list you would like to see." \
+                .format(partlength)
+            for num in range(partlength):
+                comNames = modules[math.ceil((num) * len(modules) / partlength)] + " - " \
+                           + modules[math.ceil((num + 1) * len(modules) / partlength) - 1]
+                response_text += "\nPart {}: {}".format(num + 1, comNames)
+        elif self.user_params[0].lower() == "list":
+            response_text += " List of Commands:"
+            for n in modules:
+                response_text += "\n!" + n
         elif len(self.user_params) == 1:
             try:
                 # sends general information about all commands
-                start = 0
-                end = len(modules)
                 if self.user_params[0].lower() == "full":
                     response_text += " Full List"
-                elif float(self.user_params[0]) == 1:
-                    response_text += " Part 1/5"
-                    end = math.ceil(len(modules) / 5)
-                elif float(self.user_params[0]) == 2:
-                    response_text += " Part 2/5"
-                    start = math.ceil(len(modules) / 5)
-                    end = math.ceil(2 * len(modules) / 5)
-                elif float(self.user_params[0]) == 3:
-                    response_text += " Part 3/5"
-                    start = math.ceil(2 * len(modules) / 5)
-                    end = math.ceil(3 * len(modules) / 5)
-                elif float(self.user_params[0]) == 4:
-                    response_text += " Part 4/5"
-                    start = math.ceil(3 * len(modules) / 5)
-                    end = math.ceil(4 * len(modules) / 5)
-                elif float(self.user_params[0]) == 5:
-                    response_text += " Part 5/5"
-                    start = math.ceil(4 * len(modules) / 5)
+                    start = 0
+                    end = len(modules)
+                elif 0 < int(self.user_params[0]) <= partlength:
+                    part = int(self.user_params[0])
+                    response_text += " Part {}/{}".format(part, partlength)
+                    start = math.ceil((part-1) * len(modules) / partlength)
+                    end = math.ceil(part * len(modules) / partlength)
                 else:
                     raise ValueError
                 for x in modules[start:end]:
                     instance = self.get_instance(x)
                     response_text += "\n\n!" + x + ": " + instance.documentation["function"]
-                response_text += "\n\nIf you want to learn more about a specific command, send '!help !COMMAND_NAME'."
+                response_text += ("\n\nIf you want to learn more about a specific command, send '!help !COMMAND_NAME'."
+                                  "\nIf you want to see all possible comamnds, send '!help list.'")
             except ValueError:
                 # sends detailed information about a specific command
                 c_name = str(self.user_params[0]).replace("!", "", 1)
@@ -89,6 +82,6 @@ class help(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "COMMAND_NAME / PART",
+            "parameters": "COMMAND_NAME / PART / \"list\"",
             "function": "Shows PART of the general command options. Can show details about a specific COMMAND_NAME."
         }

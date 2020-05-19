@@ -44,7 +44,7 @@ class covid(Command):
                 start = text.index(">") + 1
                 end = text.index("<", 1)
                 response_text += "\n" + text[start:end] + ": "
-                text = str(source.find_all("td")[1])
+                text = str(source.find_all("td")[2])
                 start = text.index(">") + 1
                 end = text.index("<", 1)
                 response_text += text[start:end]

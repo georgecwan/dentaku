@@ -10,7 +10,7 @@ class swear(Command):
             response_text = "The swear counter has been reset."
         elif 'swears' in self.thread_data and len(self.thread_data['swears']) > 0:
             response_text = "Swear Counter:"
-            for id, count in self.thread_data['swears'].items():
+            for id, count in sorted(self.thread_data['swears'].items(), key=lambda x: x[1], reverse=True):
                 response_text += "\n{}: {}".format(self.getName(id), count)
         else:
             response_text = "Not enough people swore."

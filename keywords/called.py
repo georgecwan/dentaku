@@ -19,6 +19,6 @@ class called(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "trigger": "bot",
-            "function": "Bot is here."
+            "trigger": "Dentaku",
+            "function": "I am Dentaku."
         }

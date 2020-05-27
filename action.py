@@ -60,3 +60,7 @@ class Action:
     def save_db(self):
         with open("database.json", 'w') as outfile:
             json.dump(self.database, outfile)
+
+    def getName(self, id):
+        # Returns the full name of the user based on their ID
+        return self.client.fetchUserInfo(id)[id].name

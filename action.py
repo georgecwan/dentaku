@@ -30,6 +30,10 @@ class Action:
             if 'memory' not in self.database:
                 self.database['memory']: dict = {}
             self.memory = self.database['memory']
+            if str(self.thread_id) not in self.memory: self.memory[str(self.thread_id)]: dict = {}
+            self.memory = self.memory[str(self.thread_id)]
+            if 'thread' not in self.memory: self.memory['thread']: dict = {}
+            self.thread_data = self.memory['thread']
             if str(self.author_id) not in self.memory: self.memory[str(self.author_id)]: dict = {}
             self.memory = self.memory[str(self.author_id)]
         self.define_documentation()

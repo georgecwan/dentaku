@@ -27,6 +27,6 @@ class talk(Command):
 
     def define_documentation(self):
         self.documentation = {
-            "trigger": "bot",
+            "trigger": "Bot",
             "function": "Hello from bot."
         }

@@ -15,6 +15,7 @@ class language(Keyword):
             else:
                 swearDict[self.author_id] += 1
 
+            self.save_db()
             response_text = "@{} WATCH YOUR LANGUAGE\nSwear Count: {}"\
                 .format(self.author.first_name.upper(),swearDict[self.author_id])
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]

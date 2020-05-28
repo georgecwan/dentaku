@@ -10,6 +10,7 @@ class trivia(Command):
 
     def run(self):
         mentions = None
+        commands = ["easy", "medium", "hard"]
         if 'triviaAnswer' not in self.thread_data:
             self.thread_data['triviaAnswer'] = "n/a"
         if 'trivia' not in self.thread_data:
@@ -33,7 +34,8 @@ Medium: Sets difficulty
 Hard: Sets difficulty
 
 Add the command after !trivia to use them.'''
-        elif len(self.user_params) > 0 and self.thread_data['triviaAnswer'] != "n/a":
+        elif len(self.user_params) > 0 and self.thread_data['triviaAnswer'] != "n/a"\
+                and self.user_params[0].lower() not in commands:
             # Receives the answer for the question
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
             response_text = "@" + self.author.first_name + " "

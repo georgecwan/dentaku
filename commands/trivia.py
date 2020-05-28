@@ -28,7 +28,9 @@ class trivia(Command):
                 response_text = "Nobody has answered yet. Try sending !trivia to begin."
         elif len(self.user_params) > 0 and self.user_params[0].lower() == "help":
             response_text = '''Possible commands:
-Easy, Medium, Hard: Sets difficulty of the question.
+Easy: Sets difficulty
+Medium: Sets difficulty
+Hard: Sets difficulty
 
 Add the command after !trivia to use them.'''
         elif len(self.user_params) > 0 and self.thread_data['triviaAnswer'] != "n/a":

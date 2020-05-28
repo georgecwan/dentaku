@@ -42,7 +42,10 @@ class trivia(Command):
             self.save_db()
         else:
             # Generates question to send
-            url = "https://opentdb.com/api.php?amount=1"
+            if len(self.user_params) > 0 and self.user_params[0].lower in ["easy", "medium", "hard"]:
+                url = "https://opentdb.com/api.php?amount=1&difficulty=" + self.user_params[0].lower()
+            else:
+                url = "https://opentdb.com/api.php?amount=1"
             info = requests.get(url).json()['results'][0]
             info['question'] = str(BeautifulSoup(info['question'], features="html.parser"))
             info['correct_answer'] = str(BeautifulSoup(info['correct_answer'], features="html.parser"))

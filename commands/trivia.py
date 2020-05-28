@@ -9,9 +9,39 @@ from bs4 import BeautifulSoup
 class trivia(Command):
 
     def run(self):
-        if 'trivia' not in self.database:
-            self.database['trivia'] = "n/a"
-        if self.database['trivia'] == "n/a" or len(self.user_params) == 0:
+        mentions = None
+        if 'triviaAnswer' not in self.thread_data:
+            self.thread_data['triviaAnswer'] = "n/a"
+        if 'trivia' not in self.thread_data:
+            self.thread_data['trivia'] = {}
+        if len(self.user_params) > 0 and self.user_params[0].lower() == "reset":
+            # Resets trivia ranking
+            self.thread_data['trivia'] = {}
+            response_text = "The trivia ranking has been reset."
+        elif len(self.user_params) > 0 and self.user_params[0].lower()[:4] == "rank":
+            # Prints trivia ranking
+            if len(self.thread_data['trivia']) > 0:
+                response_text = "Trivia Ranking:"
+                for id, count in sorted(self.thread_data['trivia'].items(), key=lambda x: x[1], reverse=True):
+                    response_text += "\n{}: {}".format(self.getName(id), count)
+            else:
+                response_text = "Nobody has answered yet. Try sending !trivia to begin."
+        elif len(self.user_params) > 0 and self.thread_data['triviaAnswer'] != "n/a":
+            # Receives the answer for the question
+            mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
+            response_text = "@" + self.author.first_name + " "
+            if self.author_id not in self.thread_data['trivia']:
+                self.thread_data['trivia'][self.author_id] = 0
+            if self.thread_data['triviaAnswer'][0] == self.user_params[0].lower():
+                response_text += "Congrats! You got it right!"
+                self.thread_data['trivia'][self.author_id] += 1
+            else:
+                response_text += "Oof, the answer was actually " + self.thread_data['triviaAnswer']
+            response_text += "\nYou now have {} points.".format(self.thread_data['trivia'][self.author_id])
+            self.thread_data['triviaAnswer'] = "n/a"
+            self.save_db()
+        else:
+            # Generates question to send
             url = "https://opentdb.com/api.php?amount=1"
             info = requests.get(url).json()['results'][0]
             info['question'] = str(BeautifulSoup(info['question'], features="html.parser"))
@@ -35,32 +65,19 @@ Q: {}""".format(info['category'], info['difficulty'], info['question'])
                     answer = index
                 choices[index] = let + ") " + choices[index]
                 index += 1
-            self.database['trivia'] = choices[answer]
+            self.thread_data['triviaAnswer'] = choices[answer]
             for c in choices:
                 response_text += "\n"+c
             response_text += "\n\nTo answer, type !trivia followed by the letter of your choice."
-            self.client.send(
-                Message(text=response_text),
-                thread_id=self.thread_id,
-                thread_type=self.thread_type
-            )
-        else:
-            mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
-            response_text = "@" + self.author.first_name + " "
-            if self.database['trivia'][0] == self.user_params[0].lower():
-                response_text += "Congrats! You got it right!"
-            else:
-                response_text += "Oof, the answer was actually "+self.database['trivia']
-            self.database['trivia'] = "n/a"
 
-            self.client.send(
-                Message(text=response_text, mentions=mentions),
-                thread_id=self.thread_id,
-                thread_type=self.thread_type
-            )
+        self.client.send(
+            Message(text=response_text, mentions=mentions),
+            thread_id=self.thread_id,
+            thread_type=self.thread_type
+        )
 
     def define_documentation(self):
         self.documentation = {
-            "parameters": "None/ANSWER",
+            "parameters": "None / ANSWER / [ranking/reset]",
             "function": "Asks a trivia question."
         }

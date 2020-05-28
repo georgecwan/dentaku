@@ -13,7 +13,7 @@ class swear(Command):
             for id, count in sorted(self.thread_data['swears'].items(), key=lambda x: x[1], reverse=True):
                 response_text += "\n{}: {}".format(self.getName(id), count)
         else:
-            response_text = "Not enough people swore."
+            response_text = "Not enough people swore yet."
 
         self.client.send(
             Message(text=response_text),

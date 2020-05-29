@@ -46,10 +46,17 @@ Add the command after !trivia to use them.'''
                 self.thread_data['trivia'][self.author_id] += self.thread_data['triviaValue']
             else:
                 response_text += "Oof, the answer was actually " + self.thread_data['triviaAnswer']
+                self.thread_data['trivia'][self.author_id] -= self.thread_data['triviaValue']/2
             response_text += "\nYou now have {} points.".format(self.thread_data['trivia'][self.author_id])
             self.thread_data['triviaAnswer'] = "n/a"
             self.save_db()
         else:
+            # Punishment for skipping questions
+            if self.thread_data['triviaAnswer'] != "n/a":
+                if self.author_id in self.thread_data['trivia']:
+                    self.thread_data['trivia'][self.author_id] -= 1
+                else:
+                    self.thread_data['trivia'][self.author_id] = -1
             # Generates question to send
             if len(self.user_params) > 0 and self.user_params[0].lower() in ["easy", "medium", "hard"]:
                 url = "https://opentdb.com/api.php?amount=1&difficulty=" + self.user_params[0].lower()
@@ -64,11 +71,11 @@ Add the command after !trivia to use them.'''
 Difficulty: {}
 Q: {}""".format(info['category'], info['difficulty'], info['question'])
             if info['difficulty'] == "easy":
-                self.thread_data['triviaValue'] = 1
-            elif info['difficulty'] == "medium":
                 self.thread_data['triviaValue'] = 2
+            elif info['difficulty'] == "medium":
+                self.thread_data['triviaValue'] = 4
             else:
-                self.thread_data['triviaValue'] = 3
+                self.thread_data['triviaValue'] = 6
             choices = [info['correct_answer']]
             for c in info['incorrect_answers']:
                 choices.append(c)

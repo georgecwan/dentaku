@@ -10,7 +10,7 @@ class trivia(Command):
 
     def run(self):
         mentions = None
-        commands = ["easy", "medium", "hard"]
+        commands = ["easy", "medium", "hard", "multiple", "boolean"]
         admins = ["George Wan"]
         if 'triviaAnswer' not in self.thread_data:
             self.thread_data['triviaAnswer'] = "n/a"
@@ -33,9 +33,11 @@ class trivia(Command):
                 response_text = "Nobody has answered yet. Try sending !trivia to begin."
         elif len(self.user_params) > 0 and self.user_params[0].lower() == "help":
             response_text = '''Possible commands:
-Easy: Sets difficulty
-Medium: Sets difficulty
-Hard: Sets difficulty
+Easy: Easy question
+Medium: Medium question
+Hard: Hard question
+Boolean: T/F question
+Multiple: MC question
 
 Add the command after !trivia to use them.'''
         elif len(self.user_params) > 0 and self.thread_data['triviaAnswer'] != "n/a"\
@@ -64,10 +66,13 @@ Add the command after !trivia to use them.'''
                 else:
                     self.thread_data['trivia'][self.author_id] = -1
             # Generates question to send
-            if len(self.user_params) > 0 and self.user_params[0].lower() in ["easy", "medium", "hard"]:
-                url = "https://opentdb.com/api.php?amount=1&difficulty=" + self.user_params[0].lower()
-            else:
-                url = "https://opentdb.com/api.php?amount=1"
+            url = "https://opentdb.com/api.php?amount=1"
+            if len(self.user_params) > 0:
+                for i in [x.lower() for x in self.user_params]:
+                    if i in ["easy", "medium", "hard"]:
+                        url += "&difficulty=" + i
+                    elif i in ["multiple", "boolean"]:
+                        url += "&type=" + i
             info = requests.get(url).json()['results'][0]
             info['question'] = str(BeautifulSoup(info['question'], features="html.parser"))
             info['correct_answer'] = str(BeautifulSoup(info['correct_answer'], features="html.parser"))
@@ -82,6 +87,8 @@ Q: {}""".format(info['category'], info['difficulty'], info['question'])
                 self.thread_data['triviaValue'] = 3
             else:
                 self.thread_data['triviaValue'] = 4
+            if info['type'] == "boolean":
+                self.thread_data['triviaValue'] -= 1
             choices = [info['correct_answer']]
             for c in info['incorrect_answers']:
                 choices.append(c)

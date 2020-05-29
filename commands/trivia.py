@@ -46,7 +46,7 @@ Add the command after !trivia to use them.'''
                 self.thread_data['trivia'][self.author_id] += self.thread_data['triviaValue']
             else:
                 response_text += "Oof, the answer was actually " + self.thread_data['triviaAnswer']
-                self.thread_data['trivia'][self.author_id] -= self.thread_data['triviaValue']/2
+                self.thread_data['trivia'][self.author_id] -= int(self.thread_data['triviaValue']/2)
             response_text += "\nYou now have {} points.".format(self.thread_data['trivia'][self.author_id])
             self.thread_data['triviaAnswer'] = "n/a"
             self.save_db()

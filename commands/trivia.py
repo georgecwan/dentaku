@@ -50,6 +50,8 @@ Add the command after !trivia to use them.'''
             response_text += "\nYou now have {} points.".format(self.thread_data['trivia'][self.author_id])
             self.thread_data['triviaAnswer'] = "n/a"
             self.save_db()
+        elif len(self.user_params) > 0 and self.user_params[0].lower() not in commands:
+            return
         else:
             # Punishment for skipping questions
             if self.thread_data['triviaAnswer'] != "n/a":

@@ -47,7 +47,7 @@ Add the command after !trivia to use them.'''
                 self.thread_data['trivia'][self.author_id] += self.thread_data['triviaValue']
             else:
                 response_text += "Oof, the answer was actually " + self.thread_data['triviaAnswer']
-                self.thread_data['trivia'][self.author_id] -= int(self.thread_data['triviaValue']/2)
+                self.thread_data['trivia'][self.author_id] -= 1
             response_text += "\nYou now have {} points.".format(self.thread_data['trivia'][self.author_id])
             self.thread_data['triviaAnswer'] = "n/a"
             self.save_db()
@@ -76,9 +76,9 @@ Q: {}""".format(info['category'], info['difficulty'], info['question'])
             if info['difficulty'] == "easy":
                 self.thread_data['triviaValue'] = 2
             elif info['difficulty'] == "medium":
-                self.thread_data['triviaValue'] = 4
+                self.thread_data['triviaValue'] = 3
             else:
-                self.thread_data['triviaValue'] = 6
+                self.thread_data['triviaValue'] = 4
             choices = [info['correct_answer']]
             for c in info['incorrect_answers']:
                 choices.append(c)

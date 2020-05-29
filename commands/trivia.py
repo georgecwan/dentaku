@@ -16,10 +16,13 @@ class trivia(Command):
             self.thread_data['triviaAnswer'] = "n/a"
         if 'trivia' not in self.thread_data:
             self.thread_data['trivia'] = {}
-        if len(self.user_params) > 0 and self.user_params[0].lower() == "reset" and self.author.name in admins:
-            # Resets trivia ranking
-            self.thread_data['trivia'] = {}
-            response_text = "The trivia ranking has been reset."
+        if len(self.user_params) > 0 and self.user_params[0].lower() == "reset":
+            if self.author.name in admins:
+                # Resets trivia ranking
+                self.thread_data['trivia'] = {}
+                response_text = "The trivia ranking has been reset."
+            else:
+                response_text = "You are not authorized to use this command."
         elif len(self.user_params) > 0 and self.user_params[0].lower()[:4] == "rank":
             # Prints trivia ranking
             if len(self.thread_data['trivia']) > 0:
@@ -47,7 +50,7 @@ Add the command after !trivia to use them.'''
                 self.thread_data['trivia'][self.author_id] += self.thread_data['triviaValue']
             else:
                 response_text += "Oof, the answer was actually " + self.thread_data['triviaAnswer']
-                self.thread_data['trivia'][self.author_id] -= int(self.thread_data['triviaValue']/2)
+                self.thread_data['trivia'][self.author_id] -= 1
             response_text += "\nYou now have {} points.".format(self.thread_data['trivia'][self.author_id])
             self.thread_data['triviaAnswer'] = "n/a"
             self.save_db()
@@ -76,9 +79,9 @@ Q: {}""".format(info['category'], info['difficulty'], info['question'])
             if info['difficulty'] == "easy":
                 self.thread_data['triviaValue'] = 2
             elif info['difficulty'] == "medium":
-                self.thread_data['triviaValue'] = 4
+                self.thread_data['triviaValue'] = 3
             else:
-                self.thread_data['triviaValue'] = 6
+                self.thread_data['triviaValue'] = 4
             choices = [info['correct_answer']]
             for c in info['incorrect_answers']:
                 choices.append(c)

@@ -6,10 +6,9 @@ import requests
 class trump(Command):
 
     def run(self):
-        response_text = "Trump thinks that: "
-        url = "https://api.whatdoestrumpthink.com/api/v1/quotes/random"
+        url = "https://www.tronalddump.io/random/quote"
         json = requests.get(url).json()
-        response_text += json['message']
+        response_text = json['appeared_at'][:10]+"\n"+json['value']+"\n"+json['_embedded']['source'][0]['url']
 
         self.client.send(
             Message(text=response_text),

@@ -11,11 +11,12 @@ class trivia(Command):
     def run(self):
         mentions = None
         commands = ["easy", "medium", "hard"]
+        admins = [100010019206647]
         if 'triviaAnswer' not in self.thread_data:
             self.thread_data['triviaAnswer'] = "n/a"
         if 'trivia' not in self.thread_data:
             self.thread_data['trivia'] = {}
-        if len(self.user_params) > 0 and self.user_params[0].lower() == "reset" and self.author_id == 100010019206647:
+        if len(self.user_params) > 0 and self.user_params[0].lower() == "reset" and self.author_id in admins:
             # Resets trivia ranking
             self.thread_data['trivia'] = {}
             response_text = "The trivia ranking has been reset."

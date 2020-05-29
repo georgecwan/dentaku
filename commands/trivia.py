@@ -16,10 +16,13 @@ class trivia(Command):
             self.thread_data['triviaAnswer'] = "n/a"
         if 'trivia' not in self.thread_data:
             self.thread_data['trivia'] = {}
-        if len(self.user_params) > 0 and self.user_params[0].lower() == "reset" and self.author.name in admins:
-            # Resets trivia ranking
-            self.thread_data['trivia'] = {}
-            response_text = "The trivia ranking has been reset."
+        if len(self.user_params) > 0 and self.user_params[0].lower() == "reset":
+            if self.author.name in admins:
+                # Resets trivia ranking
+                self.thread_data['trivia'] = {}
+                response_text = "The trivia ranking has been reset."
+            else:
+                response_text = "You are not authorized to use this command."
         elif len(self.user_params) > 0 and self.user_params[0].lower()[:4] == "rank":
             # Prints trivia ranking
             if len(self.thread_data['trivia']) > 0:

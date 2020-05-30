@@ -16,20 +16,24 @@ class trivia(Command):
         admins = ["George Wan"]
         if 'triviaAnswer' not in self.thread_data:
             self.thread_data['triviaAnswer'] = "n/a"
-        if 'trivia' not in self.thread_data:
-            self.thread_data['trivia'] = {}
+        if 'triviaPoints' not in self.thread_data:
+            # Remove the try except after !trivia has been run on all Dentaku Instances
+            try:
+                self.thread_data['triviaPoints'] = self.thread_data['trivia']
+            except:
+                self.thread_data['triviaPoints'] = {}
         if len(self.user_params) > 0 and self.user_params[0].lower() == "reset":
             if self.author.name in admins:
                 # Resets trivia ranking
-                self.thread_data['trivia'] = {}
+                self.thread_data['triviaPoints'] = {}
                 response_text = "The trivia ranking has been reset."
             else:
                 response_text = "You are not authorized to use this command."
         elif len(self.user_params) > 0 and self.user_params[0].lower()[:4] == "rank":
             # Prints trivia ranking
-            if len(self.thread_data['trivia']) > 0:
+            if len(self.thread_data['triviaPoints']) > 0:
                 response_text = "Trivia Ranking:"
-                for id, count in sorted(self.thread_data['trivia'].items(), key=lambda x: x[1], reverse=True):
+                for id, count in sorted(self.thread_data['triviaPoints'].items(), key=lambda x: x[1], reverse=True):
                     response_text += "\n{}: {}".format(self.getName(id), count)
             else:
                 response_text = "Nobody has answered yet. Try sending !trivia to begin."
@@ -76,15 +80,15 @@ Add the number after !trivia to receive a question from the category.'''
             # Receives the answer for the question
             mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
             response_text = "@" + self.author.first_name + " "
-            if self.author_id not in self.thread_data['trivia']:
-                self.thread_data['trivia'][self.author_id] = 0
+            if self.author_id not in self.thread_data['triviaPoints']:
+                self.thread_data['triviaPoints'][self.author_id] = 0
             if self.thread_data['triviaAnswer'][0] == self.user_params[0].lower():
                 response_text += "Congrats! You got it right!"
-                self.thread_data['trivia'][self.author_id] += self.thread_data['triviaValue']
+                self.thread_data['triviaPoints'][self.author_id] += self.thread_data['triviaValue']
             else:
                 response_text += "Oof, the answer was actually " + self.thread_data['triviaAnswer']
-                self.thread_data['trivia'][self.author_id] -= 1
-            response_text += "\nYou now have {} points.".format(self.thread_data['trivia'][self.author_id])
+                self.thread_data['triviaPoints'][self.author_id] -= 1
+            response_text += "\nYou now have {} points.".format(self.thread_data['triviaPoints'][self.author_id])
             self.thread_data['triviaAnswer'] = "n/a"
             self.save_db()
         elif len(self.user_params) > 0 and self.user_params[0].lower() not in commands:
@@ -92,10 +96,10 @@ Add the number after !trivia to receive a question from the category.'''
         else:
             # Punishment for skipping questions
             if self.thread_data['triviaAnswer'] != "n/a":
-                if self.author_id in self.thread_data['trivia']:
-                    self.thread_data['trivia'][self.author_id] -= 1
+                if self.author_id in self.thread_data['triviaPoints']:
+                    self.thread_data['triviaPoints'][self.author_id] -= 1
                 else:
-                    self.thread_data['trivia'][self.author_id] = -1
+                    self.thread_data['triviaPoints'][self.author_id] = -1
                 prevAns = "The answer to the previous question was " + self.thread_data['triviaAnswer']
                 self.client.send(
                     Message(text=prevAns),

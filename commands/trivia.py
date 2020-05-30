@@ -20,6 +20,7 @@ class trivia(Command):
             # Remove the try except after !trivia has been run on all Dentaku Instances
             try:
                 self.thread_data['triviaPoints'] = self.thread_data['trivia']
+                self.thread_data['trivia'] = None
             except:
                 self.thread_data['triviaPoints'] = {}
         if len(self.user_params) > 0 and self.user_params[0].lower() == "reset":

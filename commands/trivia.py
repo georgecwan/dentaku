@@ -10,7 +10,9 @@ class trivia(Command):
 
     def run(self):
         mentions = None
-        commands = ["easy", "medium", "hard", "multiple", "boolean"]
+        commands = ["easy", "medium", "hard", "multiple", "boolean", "1", "2", "3", "4", "5", "6", "7","8",
+                    "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
+                    "24"]
         admins = ["George Wan"]
         if 'triviaAnswer' not in self.thread_data:
             self.thread_data['triviaAnswer'] = "n/a"
@@ -39,7 +41,36 @@ Hard: Hard question
 Boolean: T/F question
 Multiple: MC question
 
+To see the category commands please send '!trivia categories'
 Add the command after !trivia to use them.'''
+        elif len(self.user_params) > 0 and self.user_params[0].lower()[:7] == "categor":
+            response_text = '''Available Categories:
+1: General Knowledge
+2: Books
+3: Film
+4: Music
+5: Theatre
+6: Television
+7: Video Games
+8: Board Games
+9: Science
+10: Computers
+11: Mathematics
+12: Mythology
+13: Sports
+14: Geography
+15: History
+16: Politics
+17: Art
+18: Celebrities
+19: Animals
+20: Vehicles
+21: Comics
+22: Science: Gadgets
+23: For Weebs
+24: Cartoons/Animations
+
+Add the number after !trivia to receive a question from the category.'''
         elif len(self.user_params) > 0 and self.thread_data['triviaAnswer'] != "n/a"\
                 and self.user_params[0].lower() not in commands:
             # Receives the answer for the question
@@ -65,6 +96,12 @@ Add the command after !trivia to use them.'''
                     self.thread_data['trivia'][self.author_id] -= 1
                 else:
                     self.thread_data['trivia'][self.author_id] = -1
+                prevAns = "The answer to the previous question was " + self.thread_data['triviaAnswer']
+                self.client.send(
+                    Message(text=prevAns),
+                    thread_id=self.thread_id,
+                    thread_type=self.thread_type
+                )
             # Generates question to send
             url = "https://opentdb.com/api.php?amount=1"
             if len(self.user_params) > 0:
@@ -73,6 +110,8 @@ Add the command after !trivia to use them.'''
                         url += "&difficulty=" + i
                     elif i in ["multiple", "boolean"]:
                         url += "&type=" + i
+                    elif i.isdigit() and 1 <= int(i) <= 24:
+                        url += "&category={}".format(int(i) + 8)
             info = requests.get(url).json()['results'][0]
             info['question'] = str(BeautifulSoup(info['question'], features="html.parser"))
             info['correct_answer'] = str(BeautifulSoup(info['correct_answer'], features="html.parser"))

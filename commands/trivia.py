@@ -17,11 +17,7 @@ class trivia(Command):
         if 'triviaAnswer' not in self.thread_data:
             self.thread_data['triviaAnswer'] = "n/a"
         if 'triviaPoints' not in self.thread_data:
-            # Remove the try except after !trivia has been run on all Dentaku Instances
-            try:
-                self.thread_data['triviaPoints'] = self.thread_data['trivia'].pop()
-            except:
-                self.thread_data['triviaPoints'] = {}
+            self.thread_data['triviaPoints'] = {}
         if len(self.user_params) > 0 and self.user_params[0].lower() == "reset":
             if self.author.name in admins:
                 # Resets trivia ranking

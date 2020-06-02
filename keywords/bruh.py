@@ -48,6 +48,9 @@ class bruh(Keyword):
                         image = False
                         bruh_moment = bruh_moment.text
                     bro = messages[i - 1].author
+        if not image and len(bruh_moment) > 300:
+            bruh_moment = bruh_moment[:301] + "..."
+
         trigger = self.message_object.text
 
         messenger_ref = self.gdb.collection(u'bruhs').document(u'messenger')

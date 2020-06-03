@@ -9,13 +9,8 @@ class fortune(Command):
     def run(self):
         response_text = "@" + self.author.first_name
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
-        url = "https://helloacm.com/api/fortune/"
-        try:
-            response_text += " " + requests.get(url).json()
-        except:
-            pass
-        if response_text == "@" + self.author.first_name:
-            response_text += " Fortune unavailable"
+        url = "http://yerkee.com/api/fortune"
+        response_text += " " + requests.get(url).json()['fortune']
 
         self.client.send(
             Message(text=response_text, mentions=mentions),

@@ -21,7 +21,7 @@ class whats(Command):
         except KeyError:
             response_text = "I cannot perform this request because your dick is too big and has proposed a ligma joke that has not been coded."
         if whats.lower() == "help":
-            response_text = "JOKE_STARTERS: " + " ".join(whatarray)
+            response_text = "JOKE_STARTERS: " + ", ".join(whatarray)
         self.client.send(
             Message(text=response_text),
             thread_id=self.thread_id,

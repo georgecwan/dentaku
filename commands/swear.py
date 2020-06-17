@@ -5,9 +5,14 @@ from fbchat import Message
 class swear(Command):
 
     def run(self):
+        admins = ["George Wan"]
         if len(self.user_params) > 0 and self.user_params[0].lower() == "reset":
-            self.thread_data['swears'] = {}
-            response_text = "The swear counter has been reset."
+            if self.author.name in admins:
+                # Resets trivia ranking
+                self.thread_data['swears'] = {}
+                response_text = "The swear counter has been reset."
+            else:
+                response_text = "You are not authorized to use this command."
         elif 'swears' in self.thread_data and len(self.thread_data['swears']) > 0:
             response_text = "Swear Counter:"
             for id, count in sorted(self.thread_data['swears'].items(), key=lambda x: x[1], reverse=True):

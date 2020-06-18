@@ -122,7 +122,8 @@ try:
 except:
     # If it fails, never mind, we'll just login again
     pass
-client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'), session_cookies=cookies)
+user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36"
+client = dentaku_bot(os.getenv('EMAIL'), os.getenv('PASSWORD'), user_agent=user_agent, session_cookies=cookies)
 with open('cookies.json', 'w') as f:
     json.dump(client.getSession(), f)
 

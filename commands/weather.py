@@ -14,6 +14,7 @@ class weather(Command):
         mentions = [Mention(self.author_id, length=len(self.author.first_name) + 1)]
         response_text = "@" + self.author.first_name
         if "show" in [i.lower() for i in self.user_params]:
+            # Additional Info Commands
             index = 0
             for i in self.user_params:
                 if i.lower() == "show":
@@ -55,8 +56,10 @@ class weather(Command):
             except:
                 response_text += " No command/city found"
         elif len(self.user_params) != 0 and self.user_params[0].lower() == "help":
+            # Help
             response_text += " You may type \"show\" after the city followed by:\nforecast, population, sunset, sunrise, 1-40"
         else:
+            # Generic Command
             try:
                 if len(self.user_params) == 0:
                     url = "http://api.openweathermap.org/data/2.5/forecast?q=Vancouver&units=metric&APPID=6f68045e525e16f8232fb0e5f19987c4"
